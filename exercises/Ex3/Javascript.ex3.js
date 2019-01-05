@@ -5,7 +5,7 @@ See https://www.mathsisfun.com/prime-factorization.html
 */
 
 function is_prime(x){
-  // will return true if number is prime, false otherwise
+  // will return true if x is prime, false otherwise
   if(x==2 || x==3){ // 2 and 3 are primes
     return true;
   }

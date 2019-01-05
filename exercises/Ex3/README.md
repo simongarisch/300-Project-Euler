@@ -1,14 +1,30 @@
-## Project Euler Exercise 1
+## Project Euler Exercise 3
 
-If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9.
-The sum of these multiples is 23.
-Find the sum of all the multiples of 3 or 5 below 1000.
+The prime factors of 13195 are 5, 7, 13 and 29.
+What is the largest prime factor of the number 600851475143 ?
+See https://www.mathsisfun.com/prime-factorization.html
 
 ```python
-sum = 0
-for i in range(1000):
-    if i % 3 == 0 or i % 5 == 0:
-        sum += i
+def is_prime(x):
+    # will return true if x is prime, false otherwise
+    if x == 2 or x == 3:
+        return True
+    for i in range(2, x):
+        if x % i == 0:
+            return False
+    return True
 
-print(sum) # 233,168
+
+largest = None         # the largest prime factor
+target = 600851475143  # for a target number
+
+'''
+Every composite number has a factor less than or equal
+to its square root.
+'''
+for i in range(2, int(target ** 0.5 + 1)):
+    if is_prime(i) and target % i == 0:
+        largest = i
+
+print(largest)  # 6,857
 ```
