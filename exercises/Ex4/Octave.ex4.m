@@ -1,14 +1,21 @@
 %{
-If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9.
-The sum of these multiples is 23.
-Find the sum of all the multiples of 3 or 5 below 1000.
+A palindromic number reads the same both ways. The largest palindrome made from
+the product of two 2-digit numbers is 9009 = 91 * 99.
+Find the largest palindrome made from the product of two 3-digit numbers.
 %}
 
-sum = 0;
-for i = 1:999
-  if(mod(i,3) == 0 || mod(i,5) == 0)
-    sum += i;
+function retval = is_palindromic_number(x)
+  # returns true if x is a palindromic number, false otherwise
+  strx = num2str(x);
+  if(strx == fliplr(strx))
+    retval = true;  
+  else
+    retval = false;
   end
 end
+
+largest = 0;
+# go through pairs of three digit numbers
+# these are all numbers from 100 -> 999
 
 disp(sum) # 233,168

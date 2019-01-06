@@ -14,7 +14,7 @@ function is_palindromic_number(x)
     end
 end
 
-largest = 0;
+largest = 0
 -- go through pairs of three digit numbers
 -- these are all numbers from 100 -> 999
 for i = 100,999 do

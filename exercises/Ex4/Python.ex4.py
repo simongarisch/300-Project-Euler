@@ -12,7 +12,7 @@ def is_palindromic_number(x):
         return False
 
 
-largest = 0;
+largest = 0
 # go through pairs of three digit numbers
 # these are all numbers from 100 -> 999
 for i in range(100, 1000):
