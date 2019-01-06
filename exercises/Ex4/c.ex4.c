@@ -41,7 +41,7 @@ int is_palindromic_number(long int x){
 
   // create strxrev, a reversal of the strx char string
   int len = strlen(strx);
-  char *strxrev = (char*)malloc((len + 1) * sizeof(char));
+  char *strxrev = (char*)malloc((len) * sizeof(char));
   strxrev[len] = '\0';
   for(int i = 0; i < len; i++) {
     strxrev[i] = strx[len - 1 - i];
