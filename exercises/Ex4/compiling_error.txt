@@ -1,0 +1,4 @@
+C:\Users\simon.garisch\Desktop\git\300-Project-Euler\exercises\Ex4\c.ex4.c: In function 'is_palindromic_number':
+C:\Users\simon.garisch\Desktop\git\300-Project-Euler\exercises\Ex4\c.ex4.c:25:1: error: expected ';' before '}' token
+ }
+ ^

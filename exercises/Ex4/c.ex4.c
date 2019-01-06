@@ -1,18 +1,32 @@
 /*
-If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9.
-The sum of these multiples is 23.
-Find the sum of all the multiples of 3 or 5 below 1000.
+A palindromic number reads the same both ways. The largest palindrome made from
+the product of two 2-digit numbers is 9009 = 91 * 99.
+Find the largest palindrome made from the product of two 3-digit numbers.
 */
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int is_palindromic_number(int x){
+  // returns true if x is a palindromic number, false otherwise
+  char strx[4];
+  sprintf(strx, "%d", x);  // convert x to a char string
+
+  int len = strlen(strx);
+  char *strxrev = (char*)malloc((len + 1) * sizeof(char));
+  strxrev[len] = '\0';
+  for(int i = 0; i < len; i++) {
+    strxrev[i] = strx[len - 1 - i];
+  }
+
+  printf("%s\n", strx);
+  printf("%s\n", strxrev)
+}
 
 int main(){
-  int sum = 0;
-  for(int i=1; i<1000; i++){
-    if(i % 3 == 0 || i % 5 == 0){
-      sum = sum + i;
-    }
-  }
-  printf("%d\n", sum); // 233,168
+  int x = 801;
+  printf("%d\n", x);
+  is_palindromic_number(x);
   return 0;
 }
