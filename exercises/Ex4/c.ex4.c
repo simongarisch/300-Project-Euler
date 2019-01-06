@@ -8,11 +8,38 @@ Find the largest palindrome made from the product of two 3-digit numbers.
 #include <stdlib.h>
 #include <string.h>
 
-int is_palindromic_number(int x){
+#define TRUE 1
+#define FALSE 0
+
+int is_palindromic_number(long int x);
+
+
+int main(){
+  long int result, largest = 0;
+  // go through pairs of three digit numbers
+  // these are all numbers from 100 -> 999
+  for(int i=100; i<1000; i++){
+    for(int j=100; j<1000; j++){
+      result = i * j;
+      if(is_palindromic_number(result)){
+        if(result > largest){
+          largest = result;
+        }
+      }
+    }
+  }
+
+  printf("%ld\n", largest);  // 906609
+  return 0;
+}
+
+
+int is_palindromic_number(long int x){
   // returns true if x is a palindromic number, false otherwise
   char strx[4];
-  sprintf(strx, "%d", x);  // convert x to a char string
+  sprintf(strx, "%ld", x);  // convert x to a char string
 
+  // create strxrev, a reversal of the strx char string
   int len = strlen(strx);
   char *strxrev = (char*)malloc((len + 1) * sizeof(char));
   strxrev[len] = '\0';
@@ -20,13 +47,13 @@ int is_palindromic_number(int x){
     strxrev[i] = strx[len - 1 - i];
   }
 
-  printf("%s\n", strx);
-  printf("%s\n", strxrev)
-}
+  // check if the number is a palindrome
+  int palindrome = strcmp(strx, strxrev) == 0;
+  free(strxrev);
 
-int main(){
-  int x = 801;
-  printf("%d\n", x);
-  is_palindromic_number(x);
-  return 0;
+  if(palindrome){
+    return TRUE;
+  }else{
+    return FALSE;
+  }
 }
