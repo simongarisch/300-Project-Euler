@@ -1,13 +1,32 @@
 
-# If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9.
-# The sum of these multiples is 23.
-# Find the sum of all the multiples of 3 or 5 below 1000.
+# A palindromic number reads the same both ways. The largest palindrome made from
+# the product of two 2-digit numbers is 9009 = 91 * 99.
+# Find the largest palindrome made from the product of two 3-digit numbers.
 
-sum <- 0
-for(i in 1:999){
-  if((i %% 3 == 0) || (i %% 5 == 0)){
-    sum <- sum + i
+library(stringi)
+
+is_palindromic_number <- function(x){
+    # returns true if x is a palindromic number, false otherwise
+    strx <- toString(x)
+    if(strx == stringi::stri_reverse(strx)){
+      return(TRUE)
+    }else{
+      return(FALSE)
+    }
+}
+
+largest <- 0
+# go through pairs of three digit numbers
+# these are all numbers from 100 -> 999
+for(i in 100:999){
+  for(j in 100:999){
+    result <- i * j
+    if(is_palindromic_number(result)){
+      if(result > largest){
+        largest <- result
+      }
+    }
   }
 }
 
-print(sum) # 233,168
+print(largest)  # 906609
