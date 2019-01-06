@@ -1,18 +1,39 @@
 /*
-If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9.
-The sum of these multiples is 23.
-Find the sum of all the multiples of 3 or 5 below 1000.
+The prime factors of 13195 are 5, 7, 13 and 29.
+What is the largest prime factor of the number 600851475143 ?
 */
 
 #include <iostream>
+#include <cmath>
+
+int is_prime(long long int x);
 
 int main(){
-  int sum = 0;
-  for(int i=1; i<1000; i++){
-    if(i % 3 == 0 || i % 5 == 0){
-      sum = sum + i;
+  long long int largest = 0;            // the largest prime factor
+  long long int target = 600851475143;  // for a target number
+
+  for(long long int i=2; i<(long long int)pow(target, 0.5); i++){
+    if(target % i == 0){  // it's a factor
+      if(is_prime(i)){        // and it's a prime
+        largest = i;
+      }
     }
   }
-  std::cout << sum << std::endl; // 233,168
+
+  std::cout << largest << std::endl;  // 6,857
   return 0;
+}
+
+
+int is_prime(long long int x){
+  // will return true if x is prime, false otherwise
+  if(x == 2 || x == 3){
+    return 1;
+  }
+  for(long long int i=2; i<x; i++){
+    if(x % i == 0){
+      return 0;
+    }
+  }
+  return 1;
 }
