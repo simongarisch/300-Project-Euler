@@ -25,6 +25,7 @@ class Ex4{
   }
 
   static bool is_palindromic_number(long x){
+    // returns true if x is a palindromic number, false otherwise
     string strx = x.ToString();
     var arr = strx.ToCharArray();
     Array.Reverse(arr);
