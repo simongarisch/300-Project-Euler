@@ -4,16 +4,20 @@ The sum of these multiples is 23.
 Find the sum of all the multiples of 3 or 5 below 1000.
 */
 
-public class JavaEx1 {
+public class JavaEx6 {
 
     public static void main(String[] args) {
-        int sum = 0;
-        for(int i=1; i<1000; i++){
-          if(i % 3 == 0 || i % 5 == 0){
-            sum += i;
-          }
-        }
-        System.out.println(sum); // 233,168
+      long sum = 0;
+      long sum_of_squares = 0;
+
+      for(int i=0; i<=100; i++){
+        sum += i;
+        sum_of_squares += (long)Math.pow(i, 2);
+      }
+
+      long square_of_sum = (long)Math.pow(sum, 2);
+
+      System.out.println(square_of_sum - sum_of_squares);  // 25,164,150
     }
 
 }
