@@ -6,7 +6,10 @@ What is the 10,001st prime number?
 
 function is_prime(x){
   // will return true if number is prime, false otherwise
-  if(x==2 || x==3){ // 2 and 3 are primes
+  if(x==0 || x==1){
+    return false;
+  }
+  if(x==2){
     return true;
   }
 
@@ -18,14 +21,12 @@ function is_prime(x){
   return true;
 }
 
-var primes = [2, 3];
-while(primes.length < 10001){
-  // add one to your last prime and begin searching from there
-  var number = primes[primes.length-1] + 1;
-  while(!is_prime(number)){
-    number++;
+var number=0, counter=0;
+while(counter < 10001){
+  number++;
+  if(is_prime(number)){
+    counter++;
   }
-  primes.push(number);
 }
 
-console.log(primes[primes.length-1]); // 104,743
+console.log(number); // 104,743
