@@ -1,14 +1,24 @@
 /*
-If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9.
-The sum of these multiples is 23.
-Find the sum of all the multiples of 3 or 5 below 1000.
+2520 is the smallest number that can be divided by each of the numbers
+from 1 to 10 without any remainder.
+What is the smallest positive number that is evenly divisible by all of
+the numbers from 1 to 20?
 */
 
-var sum = 0;
-for(var i=0; i<1000; i++){
-  if(i % 3== 0 || i % 5 == 0){
-    sum += i;
+function is_divisible_to_20(x){
+  // returns true if x is evenly divisible by all of the
+  // numbers from 1 to 20, false otherwise.
+  for(var i=1; i<=20; i++){
+    if(x % i != 0){
+      return false;
+    }
   }
+  return true;
 }
 
-console.log(sum); // 233,168
+var counter = 1;
+while(!is_divisible_to_20(counter)){
+  counter += 1;
+}
+
+console.log(counter); // 232,792,560

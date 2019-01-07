@@ -6,14 +6,25 @@ Find the sum of all the multiples of 3 or 5 below 1000.
 
 using System;
 
-class Ex1{
+class Ex5{
+
   static void Main(){
-    int sum = 0;
-    for(int i=1; i<1000; i++){
-      if(i % 3 == 0 || i % 5 == 0){
-        sum += i;
+    long counter = 1;
+    while(!is_divisible_to_20(counter)){
+      counter = counter + 1;
+    }
+    Console.WriteLine(counter);  // 232,792,560
+  }
+
+  static bool is_divisible_to_20(long x){
+    // returns true if x is evenly divisible by all of the
+    // numbers from 1 to 20, false otherwise.
+    for(int i=1; i<=20; i++){
+      if(x % i != 0){
+        return false;
       }
     }
-    Console.WriteLine(sum); // 233,168
+    return true;
   }
+
 }
