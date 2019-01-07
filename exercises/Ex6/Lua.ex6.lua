@@ -1,14 +1,24 @@
 --[[
-If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9.
-The sum of these multiples is 23.
-Find the sum of all the multiples of 3 or 5 below 1000.
+The sum of the squares of the first ten natural numbers is,
+1^2 + 2^2 + ... + 10^2 = 385
+The square of the sum of the first ten natural numbers is,
+(1 + 2 + ... + 10)^2 = 55^2 = 3025
+
+Hence the difference between the sum of the squares of the first ten natural
+numbers and the square of the sum is 3025 − 385 = 2640.
+
+Find the difference between the sum of the squares of the first one hundred
+natural numbers and the square of the sum.
 --]]
 
 sum = 0
-for i = 1, 999 do
-  if(i % 3 == 0 or i % 5 == 0) then
-    sum = sum + i
-  end
+sum_of_squares = 0
+
+for i = 1,100 do
+  sum = sum + i
+  sum_of_squares = sum_of_squares + i ^ 2
 end
 
-print(sum) -- 233,168
+square_of_sum = sum ^ 2
+
+print(square_of_sum - sum_of_squares)  -- 25,164,150

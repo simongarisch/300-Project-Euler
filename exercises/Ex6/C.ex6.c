@@ -7,12 +7,16 @@ Find the sum of all the multiples of 3 or 5 below 1000.
 #include <stdio.h>
 
 int main(){
-  int sum = 0;
-  for(int i=1; i<1000; i++){
-    if(i % 3 == 0 || i % 5 == 0){
-      sum = sum + i;
-    }
+  long sum = 0;
+  long sum_of_squares = 0;
+
+  for(int i=0; i<=100; i++){
+    sum = sum + i;
+    sum_of_squares = sum_of_squares + i ** 2;
   }
-  printf("%d\n", sum); // 233,168
+
+  long square_of_sum = sum ** 2
+
+  printf("%ld\n", square_of_sum - sum_of_squares)  # 25,164,150
   return 0;
 }
