@@ -1,13 +1,30 @@
 
-# If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9.
-# The sum of these multiples is 23.
-# Find the sum of all the multiples of 3 or 5 below 1000.
+# By listing the first six prime numbers: 2, 3, 5, 7, 11, and 13, we can see
+# that the 6th prime is 13.
+# What is the 10,001st prime number?
 
-sum <- 0
-for(i in 1:999){
-  if((i %% 3 == 0) || (i %% 5 == 0)){
-    sum <- sum + i
+is_prime <- function(x){
+  if(x == 0 || x == 1){
+    return(FALSE)
+  }
+  if(x == 2){
+    return(TRUE)
+  }
+  for(i in 3:x-1){
+    if(x %% i == 0){
+      return(FALSE)
+    }
+  }
+  return(TRUE)
+}
+
+
+number = counter = 0
+while(counter < 10001){
+  number = number + 1
+  if(is_prime(number)){
+    counter = counter + 1
   }
 }
 
-print(sum) # 233,168
+print(number)  # 104,743

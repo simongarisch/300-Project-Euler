@@ -7,7 +7,9 @@ What is the 10,001st prime number?
 ```python
 def is_prime(x):
     # will return true if x is prime, false otherwise
-    if x == 2 or x == 3:
+    if x == 0 or x == 1:
+        return False
+    if x == 2:
         return True
     for i in range(2, x):
         if x % i == 0:
@@ -15,13 +17,11 @@ def is_prime(x):
     return True
 
 
-primes = [2, 3]
-while(len(primes) < 10001):
-    # add one to your last prime and begin searching from there
-    number = primes[-1] + 1
-    while not is_prime(number):
-        number += 1
-    primes.append(number)
+number = counter = 0
+while counter < 10001:
+    number += 1
+    if is_prime(number):
+        counter += 1
 
-print(primes[-1])  # 104,743
+print(number)  # 104,743
 ```
