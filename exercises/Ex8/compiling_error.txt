@@ -1,0 +1,13 @@
+U:\git\300-Project-Euler\exercises\Ex8\C++.ex8.cpp: In function 'int main()':
+U:\git\300-Project-Euler\exercises\Ex8\C++.ex8.cpp:26:19: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+                   "71636269561882670428252483600823257530420752963450";
+                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+U:\git\300-Project-Euler\exercises\Ex8\C++.ex8.cpp:53:28: error: 'endl' was not declared in this scope
+   std::cout << greatest << endl;  // 23,514,624,000
+                            ^~~~
+U:\git\300-Project-Euler\exercises\Ex8\C++.ex8.cpp:53:28: note: suggested alternative:
+In file included from /usr/lib/gcc/x86_64-pc-cygwin/7.3.0/include/c++/iostream:39:0,
+                 from U:\git\300-Project-Euler\exercises\Ex8\C++.ex8.cpp:2:
+/usr/lib/gcc/x86_64-pc-cygwin/7.3.0/include/c++/ostream:590:5: note:   'std::endl'
+     endl(basic_ostream<_CharT, _Traits>& __os)
+     ^~~~
