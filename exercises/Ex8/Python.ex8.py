@@ -30,7 +30,6 @@ for i in range(len(numstr)-12):
     for j in range(13):
         char = numstr[i+j:i+j+1]
         product *= int(char)
-
     if product > greatest:
         greatest = product
 
