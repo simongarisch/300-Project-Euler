@@ -32,6 +32,7 @@ int main(){
 
   long long int greatest=0, product;
   char calcstr[14];
+  char onechar[2];
 
   for(int i=0; i<strlen(numstr)-12; i++){
     product = 1;
@@ -39,13 +40,15 @@ int main(){
     calcstr[13] = '\0';
 
     for(int j=0; j<13; j++){
-      product = product * atol(&calcstr[j]);
+      strncpy(onechar, calcstr+j, 1);
+      onechar[1] = '\0';
+      product = product * atoi(onechar);
     }
+
     if(product > greatest){
       greatest = product;
     }
   }
-
 
   printf("%lld\n", greatest);  // 23,514,624,000
 
