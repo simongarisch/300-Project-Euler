@@ -1,5 +1,6 @@
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 int main(){
@@ -24,10 +25,29 @@ int main(){
                   "05886116467109405077541002256983155200055935729725"
                   "71636269561882670428252483600823257530420752963450";
 
-  printf("%s\n", numstr);
-  printf("%d\n", strlen(numstr));  // 1000
-  char * sub = strndup(numstr, 4);
-  printf("%s\n", sub);             // '7316'
+  //printf("%s\n", numstr);
+  //printf("%d\n", strlen(numstr));  // 1000
+  //char * sub = strndup(numstr, 4);
+  //printf("%s\n", sub);             // '7316'
+
+  long long int greatest=0, product;
+  char calcstr[14];
+
+  for(int i=0; i<strlen(numstr)-12; i++){
+    product = 1;
+    strncpy(calcstr, numstr+i, 13);
+    calcstr[13] = '\0';
+
+    for(int j=0; j<13; j++){
+      product = product * atol(&calcstr[j]);
+    }
+    if(product > greatest){
+      greatest = product;
+    }
+  }
+
+
+  printf("%lld\n", greatest);  // 23,514,624,000
 
   return 0;
 }
