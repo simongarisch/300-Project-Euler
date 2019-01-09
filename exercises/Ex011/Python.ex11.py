@@ -1,4 +1,4 @@
-
+from functools import reduce
 
 numstr = '''08 02 22 97 38 15 00 40 00 75 04 05 07 78 52 12 50 77 91 08
  49 49 99 40 17 81 18 57 60 87 17 40 98 43 69 48 04 56 62 00
@@ -22,12 +22,46 @@ numstr = '''08 02 22 97 38 15 00 40 00 75 04 05 07 78 52 12 50 77 91 08
  01 70 54 71 83 51 54 69 16 92 33 48 61 43 52 01 89 19 67 48'''
 
 # start by converting this to a list of lists
-values = numstr.split(" ")
-print(values)
-print(len(values))
+values = [int(num.replace("\n", "")) for num in numstr.split(" ")]
 grid = [values[i:i+20] for i in range(0, len(values), 20)]
-print(grid)
+#print(grid)
 
-left2right = None
-for i in numstr:
-    pass
+rows = len(grid)
+cols = len(grid[0])
+#print(rows, cols)  # (20, 20)
+
+def largest_product(num, sublist):
+    ''' returns the larger of num and the summed product of sublist '''
+    product = reduce((lambda x, y: x * y), sublist)
+    if product > num:
+        return product
+    else:
+        return num
+
+left2right = 0  # get the maximum prodict from left to right
+for row in grid:
+    for icol in range(cols-3):
+        sublist = row[icol:icol+4]
+        left2right = largest_product(left2right, sublist)
+
+top2bottom = 0  # get the maximum product from top to bottom
+for icol in range(cols):
+    for irow in range(rows-3):
+        sublist = [grid[irow+i][icol] for i in range(4)]
+        top2bottom = largest_product(top2bottom, sublist)
+
+lrdiag = 0  # get the maximum product for our left to right diagonal
+for icol in range(cols-3):
+    for irow in range(rows-3):
+        sublist = [grid[irow+i][icol+i] for i in range(4)]
+        lrdiag = largest_product(lrdiag, sublist)
+
+rldiag = 0  # get the maximum product for our right to left diagonal
+for icol in range(3, cols):
+    for irow in range(rows-3):
+        sublist = [grid[irow+i][icol-i] for i in range(4)]
+        rldiag = largest_product(rldiag, sublist)
+
+maxproduct = max(left2right, top2bottom, lrdiag, rldiag)
+#print(left2right, top2bottom, lrdiag, rldiag)
+print(maxproduct)  # 51267216
