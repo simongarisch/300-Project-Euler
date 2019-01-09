@@ -10,10 +10,17 @@ product = 0;
 
 a = 1:1000;
 b = a + 1;
-c = a + 1;
+c = b + 1;
 
-is_triplet = (a + b + c == 1000) & (a.^2 + b.^2 == c.^2);
-product = sum(is_triplet .* a .* b .* c);
+for i = a
+  for j = b
+    for k = c
+      if i + j + k == 1000 && i^2 + j^2 == k^2
+        product = i * j * k;
+        break;
+      end
+    end
+  end
+end
 
-sum(is_triplet)
 disp(product)  # 31,875,000
