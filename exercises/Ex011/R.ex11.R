@@ -36,7 +36,7 @@ for(irow in 1:rows){
   row <- grid[irow,]
   for(icol in 1:(cols-4)){
     product <- 1
-    for(i in 1:4){
+    for(i in 0:3){
       product <- product * row[icol+i]
     }
     if(product > left2right){
@@ -46,3 +46,44 @@ for(irow in 1:rows){
 }
 
 top2bottom <- 0
+for(icol in 1:cols){
+  col <- grid[,icol]
+  for(irow in 1:(rows-3)){
+    product <- 1
+    for(i in 0:3){
+      product <- product * col[irow+i]
+    }
+    if(product > top2bottom){
+      top2bottom <- product
+    }
+  }
+}
+
+lrdiag <- 0
+for(icol in 1:(cols-3)){
+  for(irow in 1:(rows-3)){
+    product <- 1
+    for(i in 0:3){
+      product <- product * grid[irow+i, icol+i]
+    }
+    if(product > lrdiag){
+      lrdiag <- product
+    }
+  }
+}
+
+rldiag <- 0
+for(icol in 4:(cols)){
+  for(irow in 1:(rows-3)){
+    product <- 1
+    for(i in 0:3){
+      product <- product * grid[irow+i,icol-i]
+    }
+    if(product > rldiag){
+      rldiag <- product
+    }
+  }
+}
+
+maxproduct <- max(left2right, top2bottom, lrdiag, rldiag)
+print(maxproduct)  # 70,600,674
