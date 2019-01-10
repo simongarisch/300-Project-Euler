@@ -64,4 +64,5 @@ for icol in range(3, cols):
 
 maxproduct = max(left2right, top2bottom, lrdiag, rldiag)
 #print(left2right, top2bottom, lrdiag, rldiag)
+# (48477312, 51267216, 40304286, 70600674)
 print(maxproduct)  # 70,600,674

@@ -28,4 +28,21 @@ values <- strsplit(numstr, " ")
 values <- as.numeric(values[[1]])
 rows <- cols <- length(values) ^ 0.5
 grid <- matrix(values, nrow = rows, ncol = cols)
-print(grid)
+# note that the first column of grid is the first row of numstr
+#print(grid)
+
+left2right <- 0
+for(irow in 1:rows){
+  row <- grid[irow,]
+  for(icol in 1:(cols-4)){
+    product <- 1
+    for(i in 1:4){
+      product <- product * row[icol+i]
+    }
+    if(product > left2right){
+      left2right <- product
+    }
+  }
+}
+
+top2bottom <- 0
