@@ -45,7 +45,12 @@ end
 
 top2bottom = 0
 for icol in 1:cols
-    for irow in 1:(rows-3)
-        pass
+    for irow in 1:(rows-4)
+        global top2bottom
+        slice = [grid[irow+i][icol] for i in 1:4]
+        top2bottom = largest_product(top2bottom, slice)
     end
+    break
 end
+
+println(top2bottom)
