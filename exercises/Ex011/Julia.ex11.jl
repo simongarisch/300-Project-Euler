@@ -45,12 +45,30 @@ end
 
 top2bottom = 0
 for icol in 1:cols
-    for irow in 1:(rows-4)
+    for irow in 1:(rows-3)
         global top2bottom
-        slice = [grid[irow+i][icol] for i in 1:4]
+        slice = [grid[irow+i][icol] for i in 0:3]
         top2bottom = largest_product(top2bottom, slice)
     end
-    break
 end
 
-println(top2bottom)
+lrdiag = 0
+for icol in 1:(cols-3)
+    for irow in 1:(rows-3)
+        global lrdiag
+        slice = [grid[irow+i][icol+i] for i in 0:3]
+        lrdiag = largest_product(lrdiag, slice)
+    end
+end
+
+rldiag = 0
+for icol in 4:(cols)
+    for irow in 1:(rows-3)
+        global rldiag
+        slice = [grid[irow+i][icol-i] for i in 0:3]
+        rldiag = largest_product(rldiag, slice)
+    end
+end
+
+maxproduct = max(left2right, top2bottom, lrdiag, rldiag)
+println(maxproduct)
