@@ -41,13 +41,87 @@ count = 1
 grid = {}
 for i = 1, rows do
   subtbl = {}
-  for j = i, cols do
+  for j = 1, cols do
     subtbl[#subtbl+1] = nums[count]
     count = count + 1
   end
   grid[#grid+1] = subtbl
 end
 
-function largest_product(num, slice)
-  
+
+function show_grid(grid)
+  for i = 1, #grid do
+    tbl = grid[i]
+    for j = 1, #tbl do
+      io.write(tbl[j])
+      io.write(", ")
+    end
+    print("")
+  end
 end
+
+
+function largest_product(num, slice)
+  -- returns the larger of num and the summed product of slice
+  product = 1
+  for i = 1, #slice do
+    product = product * slice[i]
+  end
+  if product > num then
+    return product
+  else
+    return num
+  end
+end
+
+
+left2right = 0
+for irow = 1, rows do
+ for icol = 1, (cols-3) do
+   slice = {}
+   for i = 0, 3 do
+     slice[#slice+1] = grid[irow][icol+i]
+   end
+   left2right = largest_product(left2right, slice)
+ end
+end
+--print(left2right)
+
+top2bottom = 0
+for icol = 1, cols do
+ for irow = 1, (rows-3) do
+   slice = {}
+   for i = 0, 3 do
+     slice[#slice+1] = grid[irow+i][icol]
+   end
+   top2bottom = largest_product(top2bottom, slice)
+ end
+end
+--print(top2bottom)
+
+lrdiag = 0
+for icol = 1, (cols-3) do
+ for irow = 1, (rows-3) do
+   slice = {}
+   for i = 0, 3 do
+     slice[#slice+1] = grid[irow+i][icol+i]
+   end
+   lrdiag = largest_product(lrdiag, slice)
+ end
+end
+--print(lrdiag)
+
+rldiag = 0
+for icol = 4, (cols) do
+ for irow = 1, (rows-3) do
+   slice = {}
+   for i = 0, 3 do
+     slice[#slice+1] = grid[irow+i][icol-i]
+   end
+   rldiag = largest_product(rldiag, slice)
+ end
+end
+--print(rldiag)
+
+maxproduct = math.max(left2right, top2bottom, lrdiag, rldiag)
+print(maxproduct)  -- 70,600,674 
