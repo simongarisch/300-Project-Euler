@@ -84,7 +84,9 @@ int main(){
         product = 1;
         for(int i=0; i<=3; i++){
           product = product * arr[irow*cols + icol + i*cols + i];
+          //printf("%d, ", arr[irow*cols + icol + i*cols + i]);
         }
+        //printf("\n");
         lrdiag = MAX(lrdiag, product);
       }
 
@@ -92,15 +94,25 @@ int main(){
       if(irow <(rows-3) && icol > 3){
         product = 1;
         for(int i=0; i<=3; i++){
-          product = product * arr[irow*cols + icol + i*cols + 3 - i];
+          product = product * arr[irow*cols + icol + i*cols - i];
+          //printf("%d, ", arr[irow*cols + icol + i*cols - i]);
         }
+        //printf("\n");
         rldiag = MAX(rldiag, product);
       }
 
     }
   }
 
-  printf("%ld, %ld, %ld, %ld\n", left2right, top2bottom, lrdiag, rldiag);
+  //printf("%ld, %ld, %ld, %ld\n", left2right, top2bottom, lrdiag, rldiag);
+  long products[] = {left2right, top2bottom, lrdiag, rldiag};
+  long maxproduct = 0;
+  for(int i=0; i<4; i++){
+    if(products[i] > maxproduct){
+      maxproduct = products[i];
+    }
+  }
+  printf("%ld\n", maxproduct);  // 70,600,674
 
   free(arr);
   return 0;
