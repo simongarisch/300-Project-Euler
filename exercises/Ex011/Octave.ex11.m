@@ -26,3 +26,47 @@ values = str2double(values);
 
 rows = cols = length(values) ^ 0.5;
 grid = reshape(values, rows, cols);
+
+
+function retval = largest_product(num, slice)
+  # returns the larger of num and the summed product of slice
+  product = prod(slice);
+  if product > num
+    retval = product;
+  else
+    retval = num;
+  end
+end
+
+
+left2right = 0;
+for irow = 1:rows
+  for icol = 1:(cols-3)
+    slice = grid(irow, icol:(icol+3));
+    left2right = largest_product(left2right, slice);
+  end
+end
+#left2right
+
+top2bottom = 0;
+for icol = 1:cols
+  for irow = 1:(rows-3)
+    slice = grid(irow:(irow+3), icol);
+    top2bottom = largest_product(top2bottom, slice);
+  end
+end
+#top2bottom
+
+lrdiag = rldiag = 0;
+for icol = 1:(cols-3)
+  for irow = 1:(rows-3)
+    slice = grid(irow:(irow+3), icol:(icol+3));
+    lrdiag = largest_product(lrdiag, diag(slice));
+    rldiag = largest_product(rldiag, diag(fliplr(slice)));
+  end
+end
+#lrdiag
+#rldiag
+
+maxproduct = max([left2right, top2bottom, lrdiag, rldiag]);
+disp(maxproduct) # 70,600,674
