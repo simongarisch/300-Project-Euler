@@ -18,10 +18,31 @@ What is the value of the first triangle number to have over five hundred divisor
 */
 
 #include <stdio.h>
+#include <math.h>
 
 #define TARGET_FACTORS 500
 
+
 int main(){
-  long triangle_number = 1
+  long counter = 1;
+  long triangle_number = 1;
+  long num_factors = 0;
+
+  while(num_factors < TARGET_FACTORS){
+    counter++;
+    triangle_number = triangle_number + counter;
+    num_factors = 2;  // divisible by itself and one
+    for(long i=2; i<=(pow(triangle_number, 0.5)); i++){
+      if(triangle_number % i == 0){
+        if(pow(i, 2) == triangle_number){
+          num_factors++;
+        }else{
+          num_factors = num_factors + 2;
+        }
+      }
+    }
+  }
+
+  printf("%ld\n", triangle_number);  // 76,576,500
   return 0;
 }
