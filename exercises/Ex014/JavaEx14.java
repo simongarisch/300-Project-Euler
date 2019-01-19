@@ -18,13 +18,30 @@ NOTE: Once the chain starts the terms are allowed to go above one million.
 public class JavaEx14 {
 
     public static void main(String[] args) {
-        int sum = 0;
-        for(int i=1; i<1000; i++){
-          if(i % 3 == 0 || i % 5 == 0){
-            sum += i;
+      int FINISH = 1000000;
+
+      long longest_chain = 0;
+      long starting = 0;
+      long terms, num;
+
+      for(long i=1; i<FINISH; i++){
+        terms = 1;
+        num = i;
+        while(num != 1){
+          if(num % 2 == 0){
+            num = num / 2;
+          }else{
+            num = 3 * num + 1;
           }
+          terms++;
         }
-        System.out.println(sum); // 233,168
+        if(terms > longest_chain){
+          longest_chain = terms;
+          starting = i;
+        }
+      }
+
+      System.out.println(starting);  // 837,799
     }
 
 }
