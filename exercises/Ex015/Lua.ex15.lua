@@ -1,14 +1,23 @@
 --[[
-If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9.
-The sum of these multiples is 23.
-Find the sum of all the multiples of 3 or 5 below 1000.
+Starting at the top left corner of a 2 x 2 grid, and only being able to move
+to the right and down, there are exactly 6 routes to the bottom right corner.
+How many such routes are there through a 20 x 20 grid?
 --]]
 
-sum = 0
-for i = 1, 999 do
-  if(i % 3 == 0 or i % 5 == 0) then
-    sum = sum + i
-  end
+function factorial(n)
+    if (n == 0) then
+        return 1
+    else
+        return n * factorial(n - 1)
+    end
 end
 
-print(sum) -- 233,168
+
+function binom (n, k)
+  return factorial(n) / (factorial(k) * factorial(n-k))
+end
+
+SIZE = 20
+choices = binom(2*SIZE, SIZE)
+
+print(choices)  -- 137,846,528,820
