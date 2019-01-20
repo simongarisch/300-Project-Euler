@@ -22,7 +22,7 @@ starting = 0;
 for i = 1:(FINISH-1)
     terms = 1;
     num = i;
-    while num != 1
+    while(num != 1)
         if num % 2 == 0
             num = num / 2;
         else
