@@ -1,15 +1,10 @@
 #=
-If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9.
-The sum of these multiples is 23.
-Find the sum of all the multiples of 3 or 5 below 1000.
+Starting at the top left corner of a 2 x 2 grid, and only being able to move
+to the right and down, there are exactly 6 routes to the bottom right corner.
+How many such routes are there through a 20 x 20 grid?
 =#
 
-sum = 0
-for i = 1:999
-    if i % 3 == 0 || i % 5 == 0
-        global sum
-        sum += i
-    end
-end
+SIZE = 20
+choices = binomial(2*SIZE, SIZE)
 
-println(sum) # 233,168
+println(choices)  # 137,846,528,820
