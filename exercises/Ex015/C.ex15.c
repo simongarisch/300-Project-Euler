@@ -2,6 +2,8 @@
 Starting at the top left corner of a 2 x 2 grid, and only being able to move
 to the right and down, there are exactly 6 routes to the bottom right corner.
 How many such routes are there through a 20 x 20 grid?
+
+gcc C.ex15.c -lgmp
 */
 
 #include <stdio.h>
@@ -9,32 +11,46 @@ How many such routes are there through a 20 x 20 grid?
 
 #define SIZE 20
 
-mpz_t* factorial(int n);
+void factorial(long int n, mpz_t* result);
+void init_bigint(mpz_t* b);
+
 
 int main(){
   long int size = SIZE;
-  gmp_printf("factorial(SIZE) is an mpz %Zd\n", factorial(size));
+
+  mpz_t factn, factk, result;
+  init_bigint(&factn);
+  init_bigint(&factk);
+  init_bigint(&result);
+
+  factorial(2*size, &factn);
+  factorial(size, &factk);
+  // factorial(n-k) = fact(k) since n=2*SIZE and k=SIZE
+  //gmp_printf("factn is %Zd\n", factn);
+  //gmp_printf("factk is %Zd\n", factk);
+
+  mpz_mul(result, factk, factk);
+  mpz_cdiv_q(result, factn, result);
+  gmp_printf("%Zd\n", result);  // 137,846,528,820
+
+  mpz_clear(factn); // free the space
+  mpz_clear(factk);
+  mpz_clear(result);
   return 0;
 }
 
 
-mpz_t* factorial(long int n){
-  mpz_t result;           // create a big int
-  mpz_init2(result, 100); // give it 100 bits of space
-  mpz_set_ui(result, 1);  // and initialize it to one
-
+void factorial(long int n, mpz_t* result){
+  // calculates the factorial of n and stores it in result
   while(n > 1){
     // mpz_mul_si (mpz_t rop, const mpz_t op1, long int op2)
-    mpz_mul_si(result, result, n)
+    mpz_mul_si(*result, *result, n);
     n--;
   }
 }
 
-/*
-BigInt* binom(BigInt* n, BigInt* k){
-  BigInt* factn = factorial(n);
-  BigInt* factk = factorial(k);
-  BigInt* factorialnk = factorial(n-k);
-  return factorial(n) / (factorial(k) * factorial(n-k));
+
+void init_bigint(mpz_t* b){
+  mpz_init2(*b, 100); // give it 100 bits of space
+  mpz_set_ui(*b, 1);  // and initialize it to one
 }
-*/
