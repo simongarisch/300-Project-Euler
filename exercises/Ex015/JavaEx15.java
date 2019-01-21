@@ -1,19 +1,23 @@
 /*
-If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9.
-The sum of these multiples is 23.
-Find the sum of all the multiples of 3 or 5 below 1000.
+Starting at the top left corner of a 2 x 2 grid, and only being able to move
+to the right and down, there are exactly 6 routes to the bottom right corner.
+How many such routes are there through a 20 x 20 grid?
 */
 
-public class JavaEx1 {
+import java.math.BigInteger;
+
+public class JavaEx15 {
 
     public static void main(String[] args) {
-        int sum = 0;
-        for(int i=1; i<1000; i++){
-          if(i % 3 == 0 || i % 5 == 0){
-            sum += i;
-          }
-        }
-        System.out.println(sum); // 233,168
+      int SIZE = 20;
+      BigInteger choices = new BigInteger("1");
+
+      for (int i = 1; i <= (SIZE); i++){
+          choices = choices.multiply(BigInteger.valueOf((2*SIZE) - (SIZE - i)));
+          choices = choices.divide(BigInteger.valueOf(i));
+      }
+
+      System.out.println(choices);  // 137,846,528,820
     }
 
 }
