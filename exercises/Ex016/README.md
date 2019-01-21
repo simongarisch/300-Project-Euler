@@ -1,14 +1,14 @@
-## Project Euler Exercise 1
+## Project Euler Exercise 16
 
-If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9.
-The sum of these multiples is 23.
-Find the sum of all the multiples of 3 or 5 below 1000.
+2^15= 32768 and the sum of its digits is 3 + 2 + 7 + 6 + 8 = 26.
+
+What is the sum of the digits of the number 2^1000?
 
 ```python
 sum = 0
-for i in range(1000):
-    if i % 3 == 0 or i % 5 == 0:
-        sum += i
+numstr = str(2 ** 1000)
+for char in numstr:
+    sum += int(char)
 
-print(sum) # 233,168
+print(sum)  # 1,366
 ```
