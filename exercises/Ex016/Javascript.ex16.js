@@ -1,14 +1,16 @@
 /*
-If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9.
-The sum of these multiples is 23.
-Find the sum of all the multiples of 3 or 5 below 1000.
+2^15= 32768 and the sum of its digits is 3 + 2 + 7 + 6 + 8 = 26.
+
+What is the sum of the digits of the number 2^1000?
 */
 
+var bigInt = require("big-integer");
+
 var sum = 0;
-for(var i=0; i<1000; i++){
-  if(i % 3== 0 || i % 5 == 0){
-    sum += i;
-  }
+var num = bigInt("2").pow(1000);
+var numstr = num.toString();
+for (var i=0; i<numstr.length; i++) {
+  sum += parseInt(numstr.charAt(i));
 }
 
-console.log(sum); // 233,168
+console.log(sum);  // 1,366
