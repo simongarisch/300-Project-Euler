@@ -5,38 +5,36 @@ How many such routes are there through a 20 x 20 grid?
 */
 
 #include <stdio.h>
-#include "BigInt/BigInt.h"
+#include <gmp.h>
 
 #define SIZE 20
-#define ONE BigInt_construct(1);
 
-BigInt* factorial(int n);
-BigInt* binom(BigInt* n, BigInt* k);
-
+mpz_t* factorial(int n);
 
 int main(){
-  BigInt* size = BigInt_construct(SIZE)
-  BigInt* choices = binom(BigInt_multiply_int(size, 2), size);
-  BigInt_print(choices);  // 137,846,528,820
-
-  BigInt_free(size);
-  BigInt_free(choices);
+  long int size = SIZE;
+  gmp_printf("factorial(SIZE) is an mpz %Zd\n", factorial(size));
   return 0;
 }
 
 
-BigInt* factorial(BigInt* n){
-  if(BigInt_to_int(n)==0){
-    return ONE;
-  }else{
-    return BigInt_multiply(n, factorial(BigInt_subtract(n, ONE)));
+mpz_t* factorial(long int n){
+  mpz_t result;           // create a big int
+  mpz_init2(result, 100); // give it 100 bits of space
+  mpz_set_ui(result, 1);  // and initialize it to one
+
+  while(n > 1){
+    // mpz_mul_si (mpz_t rop, const mpz_t op1, long int op2)
+    mpz_mul_si(result, result, n)
+    n--;
   }
 }
 
-
+/*
 BigInt* binom(BigInt* n, BigInt* k){
   BigInt* factn = factorial(n);
   BigInt* factk = factorial(k);
   BigInt* factorialnk = factorial(n-k);
   return factorial(n) / (factorial(k) * factorial(n-k));
 }
+*/
