@@ -1,19 +1,26 @@
 /*
-If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9.
-The sum of these multiples is 23.
-Find the sum of all the multiples of 3 or 5 below 1000.
+Starting at the top left corner of a 2 x 2 grid, and only being able to move
+to the right and down, there are exactly 6 routes to the bottom right corner.
+How many such routes are there through a 20 x 20 grid?
+
+csc.exe C#.ex15.cs -r:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Numerics.dll"
 */
 
 using System;
+using System.Numerics;
 
-class Ex1{
+class Ex15{
+
   static void Main(){
-    int sum = 0;
-    for(int i=1; i<1000; i++){
-      if(i % 3 == 0 || i % 5 == 0){
-        sum += i;
-      }
+    int SIZE = 20;
+    BigInteger choices = new BigInteger(1);
+
+    for (int i = 1; i <= (SIZE); i++){
+        choices *= (2*SIZE) - (SIZE - i);
+        choices /= i;
     }
-    Console.WriteLine(sum); // 233,168
+
+    Console.WriteLine(choices);  // 137,846,528,820
   }
+
 }
