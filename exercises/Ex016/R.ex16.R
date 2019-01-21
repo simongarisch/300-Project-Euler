@@ -1,13 +1,15 @@
 
-# If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9.
-# The sum of these multiples is 23.
-# Find the sum of all the multiples of 3 or 5 below 1000.
+# 2^15= 32768 and the sum of its digits is 3 + 2 + 7 + 6 + 8 = 26.
+# What is the sum of the digits of the number 2^1000?
 
 sum <- 0
-for(i in 1:999){
-  if((i %% 3 == 0) || (i %% 5 == 0)){
-    sum <- sum + i
-  }
+num <- 2 ^ 1000
+options(scipen = 999) # avoid scientific notation for this problem
+numstr <- as.character(num)
+numstr_split <- strsplit(numstr, "")[[1]]
+for(char in numstr_split){
+  print(as.numeric(char))
+  sum <- sum + as.numeric(char)
 }
 
-print(sum) # 233,168
+print(sum)
