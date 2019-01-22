@@ -7,7 +7,6 @@ csc.exe C#.ex16.cs -r:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Fra
 */
 
 using System;
-using System.Text;
 using System.Numerics;
 
 class Ex16{
