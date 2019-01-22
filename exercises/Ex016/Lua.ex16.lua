@@ -1,14 +1,27 @@
 --[[
-If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9.
-The sum of these multiples is 23.
-Find the sum of all the multiples of 3 or 5 below 1000.
+2^15= 32768 and the sum of its digits is 3 + 2 + 7 + 6 + 8 = 26.
+
+What is the sum of the digits of the number 2^1000?
 --]]
 
-sum = 0
-for i = 1, 999 do
-  if(i % 3 == 0 or i % 5 == 0) then
-    sum = sum + i
-  end
+--C:\Downloads\ZeroBraneStudio\bin\lua.exe
+--print(_VERSION)  -- Lua 5.1
+require "bc"
+
+function split(s, delimiter)
+    result = {};
+    for match in (s..delimiter):gmatch("(.-)"..delimiter) do
+        table.insert(result, match);
+    end
+    return result;
 end
 
-print(sum) -- 233,168
+sum = 0
+num = 2 ^ 1000
+print(num)
+numstr = string.format("%f", num)
+print(numstr)
+--for char in numstr:
+--    sum += int(char)
+
+print(sum)  -- 1,366
