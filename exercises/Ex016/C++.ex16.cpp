@@ -35,6 +35,7 @@ int main(){
     sum = sum + atoi(substr);
   }
 
+  mpz_clear(num);
   cout << sum << endl;  // 1,366
   return 0;
 }

@@ -34,6 +34,7 @@ int main(){
     sum = sum + atoi(substr);
   }
 
+  mpz_clear(num);
   printf("%d\n", sum);  // 1,366
   return 0;
 }
