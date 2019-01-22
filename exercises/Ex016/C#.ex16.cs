@@ -1,19 +1,26 @@
 /*
-If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9.
-The sum of these multiples is 23.
-Find the sum of all the multiples of 3 or 5 below 1000.
+2^15= 32768 and the sum of its digits is 3 + 2 + 7 + 6 + 8 = 26.
+
+What is the sum of the digits of the number 2^1000?
+
+csc.exe C#.ex16.cs -r:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Numerics.dll"
 */
 
 using System;
+using System.Text;
+using System.Numerics;
 
-class Ex1{
+class Ex16{
   static void Main(){
+    BigInteger num = BigInteger.Pow(2, 1000);
+    String numstr = num.ToString();
+    //Console.WriteLine(numstr);
+
     int sum = 0;
-    for(int i=1; i<1000; i++){
-      if(i % 3 == 0 || i % 5 == 0){
-        sum += i;
-      }
+    foreach (char c in numstr){
+      //Console.WriteLine(c);
+      sum += int.Parse(c.ToString());
     }
-    Console.WriteLine(sum); // 233,168
+    Console.WriteLine(sum);  // 1,366
   }
 }
