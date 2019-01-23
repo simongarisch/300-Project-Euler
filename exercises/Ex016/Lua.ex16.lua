@@ -15,14 +15,6 @@ luarocks install --tree lua_modules bigint
 --]]
 bigint = require("bigint")
 
-function split(s, delimiter)
-    result = {};
-    for match in (s..delimiter):gmatch("(.-)"..delimiter) do
-        table.insert(result, match);
-    end
-    return result;
-end
-
 sum = 0
 base = bigint.new("2")
 exp = bigint.new("1000")
