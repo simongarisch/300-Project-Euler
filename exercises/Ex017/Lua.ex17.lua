@@ -39,3 +39,59 @@ num2words = {[1]="One",
 --for k, v in pairs(num2words) do
 --  print(k, v)
 --end
+
+function get_number_text(num)
+  numstr = tostring(num)
+  txt = ""
+  if string.len(numstr) == 4 then  -- get the thousands
+    txt = txt .. num2words[tonumber(string.sub(numstr, 1, 1))]
+    txt = txt .. " Thousand "
+    numstr = string.sub(numstr, 2, string.len(numstr))
+    if numstr == "000" then
+      return txt
+    end
+  end
+
+  if string.len(numstr) == 3 then  -- the hundreds
+    txt = txt .. num2words[tonumber(string.sub(numstr, 1, 1))]
+    txt = txt .. " Hundred "
+    numstr = string.sub(numstr, 2, string.len(numstr))
+    if numstr == "00" then
+      return txt
+    end
+  end
+
+  if string.len(txt) > 0 then  -- throw in an 'And '
+    txt = txt .. "And "
+  end
+
+  if string.len(numstr) == 2 then
+    first_digit = tonumber(string.sub(numstr, 1, 1))
+    second_digit = tonumber(string.sub(numstr, 2, 2))
+    if first_digit > 1 then
+      txt = txt .. num2words[first_digit * 10] .. " "
+      numstr = string.sub(numstr, 2, string.len(numstr))
+    else
+      txt = txt .. num2words[tonumber(numstr)]
+      numstr = ""
+    end
+    if second_digit == 0 then
+      numstr = ""
+    end
+  end
+
+  if string.len(numstr) == 1 then
+    txt = txt .. num2words[tonumber(numstr)]
+  end
+  return txt
+end
+
+
+num_chars = 0
+for num = 1, 1000 do
+  txt = get_number_text(num)
+  --print(txt)
+  num_chars = num_chars + string.len(string.gsub(txt, "%s+", ""))
+end
+
+print(num_chars)  -- 21,124
