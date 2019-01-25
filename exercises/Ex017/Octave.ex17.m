@@ -11,6 +11,7 @@ The use of "and" when writing out numbers is in compliance with British usage.
 mappings =  {"1", "One";
              "2", "Two";
              "3", "Three";
+             "4", "Four";
              "5", "Five";
              "6", "Six";
              "7", "Seven";
@@ -36,7 +37,7 @@ mappings =  {"1", "One";
              "90", "Ninety"
 };
 
-num2words = struct();
+global num2words = struct();
 for i=1:rows(mappings)
   num2words = setfield(num2words, mappings{i,1}, mappings{i,2});
 end
@@ -46,24 +47,22 @@ end
 function retval = get_number_text(num)
   # returns the text representing a given integer (up to 1000)
   global num2words;
-  numstr = num2str(num)
-  txt = ""
+  numstr = num2str(num);
+  txt = "";
 
   if length(numstr) == 4  # get the thousands
-    x = "we are here"
-    txt = strcat(txt, getfield(num2words, numstr(1)))
-    x = "but not here..."
-    txt = strcat(txt, " Thousand ")
-    numstr = substr(numstr, 2, length(numstr)-1)
+    txt = strcat(txt, getfield(num2words, numstr(1)));
+    txt = strcat(txt, "Thousand");
+    numstr = substr(numstr, 2, length(numstr)-1);
     if strncmp(numstr, "000", 3)
-      retval = strtrim(txt)
+      retval = strtrim(txt);
       return
     end
   end
 
   if length(numstr) == 3  # the hundreds
     txt = strcat(txt, getfield(num2words, numstr(1)));
-    txt = strcat(txt, " Hundred ");
+    txt = strcat(txt, "Hundred");
     numstr = substr(numstr, 2, length(numstr)-1);
     if strncmp(numstr, "00", 2)
       retval = strtrim(txt);
@@ -72,7 +71,7 @@ function retval = get_number_text(num)
   end
 
   if length(txt) > 0
-    txt = strcat(txt, "And ");
+    txt = strcat(txt, "And");
   end
 
   if length(numstr) == 2
@@ -82,6 +81,7 @@ function retval = get_number_text(num)
       txt = strcat(txt, getfield(num2words, num2str(first_digit*10)));
       numstr = substr(numstr, 2, length(numstr)-1);
     else
+      numstr = num2str(str2num(numstr));  # '01' goes to '1'
       txt = strcat(txt, getfield(num2words, numstr));
       numstr = "";
     end
@@ -97,11 +97,11 @@ function retval = get_number_text(num)
 endfunction
 
 
-get_number_text(1000)
-#num_chars = 0;
-#for num = 1:1000
-#  txt = get_number_text(num)
-#  num_chars += length(txt);
-#end
+#get_number_text(1000)
+num_chars = 0;
+for num = 1:1000
+  txt = get_number_text(num);
+  num_chars += length(txt);
+end
 
-#disp(num_chars)  # 21,124
+disp(num_chars)  # 21,124
