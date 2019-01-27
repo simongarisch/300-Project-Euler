@@ -69,17 +69,30 @@ function get_number_text(num) {
   if(numstr.length == 2){
     first_digit = parseInt(numstr[0]);
     second_digit = parseInt(numstr[1]);
+    if(first_digit > 1){
+      txt += num2words[first_digit * 10];
+      numstr = numstr.substring(1, numstr.length);
+    }else{
+      txt += num2words[parseInt(numstr)];
+      numstr = "";
+    }
+    if(second_digit == 0){
+      numstr = "";
+    }
   }
 
-  return "xxx";
+  if(numstr.length == 1){
+    txt += num2words[parseInt(numstr)];
+  }
+
+  return txt;
 }
 
-console.log(get_number_text(1000));
-/*
+
+//console.log(get_number_text(1000));
 var num_chars = 0;
 for(var num=1; num<=1000; num++){
   var txt = get_number_text(num);
   num_chars += txt.length;
 }
-console.log(num_chars);
-*/
+console.log(num_chars);  // 21,124
