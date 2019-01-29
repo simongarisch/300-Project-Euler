@@ -17,13 +17,15 @@ struct Numbers{
    char name[10];
 };
 
-char* get_number_text(int num, struct Numbers* numbers, int lennumbers);
-char* wordlookup(char* c, struct Numbers* numbers, int lennumbers);
+char* get_number_text(char* txt, int num, const struct Numbers* numbers, int lennumbers);
+void wordlookup(char* result, char* c, const struct Numbers* numbers, int lennumbers);
+void get_first_char(char* dest, char* str);
+void get_second_char(char* dest, char* str);
 
 
 int main(){
 
-  struct Numbers numbers[27] = {
+  const struct Numbers numbers[27] = {
     {"1", "One"},
     {"2", "Two"},
     {"3", "Three"},
@@ -52,58 +54,108 @@ int main(){
     {"80", "Eighty"},
     {"90", "Ninety"}
   };
-  /*
-  printf("Number of elements: %d\n", sizeof(numbers)/sizeof(numbers[0]));
-  for(int i=0; i<sizeof(numbers)/sizeof(numbers[0]); i++){
-    printf("%s\n", numbers[i].str);
-    printf("%s\n", numbers[i].name);
-  }
-  */
 
+  //printf("Number of elements: %d\n", sizeof(numbers)/sizeof(numbers[0]));
   int lennumbers = sizeof(numbers)/sizeof(numbers[0]);
-  //printf("%s\n", wordlookup("1", numbers, lennumbers));
-  printf("%s\n", get_number_text(1000, numbers, lennumbers));
-  /*
+  //printf("%s\n", get_number_text(1000, numbers, lennumbers));
+
   long num_chars = 0;
+  char txt[30];
+  char* ptrtxt = txt;
   for(int num=1; num<=1000; num++){
-    char* txt = get_number_text(num, numbers, lennumbers);
-    num_chars = num_chars + strlen(txt);
+    strcpy(txt, "");
+    get_number_text(ptrtxt, num, numbers, lennumbers);
+    //printf("%d: %s\n", num, txt);
+    num_chars += strlen(txt);
   }
 
-  printf("%ld\n", num_chars);
-  */
+  printf("%ld\n", num_chars);  // 21,124
   return 0;
 }
 
 
-char* wordlookup(char* c, struct Numbers* numbers, int lennumbers){
+void wordlookup(char* result, char* c, const struct Numbers* numbers, int lennumbers){
   // lookup a particular character from our numbers array of structs
-  char* result = NULL;
   for(int i=0; i<lennumbers; i++){
     if(!strcmp(c, numbers[i].str)){
-      result = numbers[i].name;
+      strcpy(result, numbers[i].name);
       break;
     }
   }
-  return result;
 }
 
 
-char* get_number_text(int num, struct Numbers* numbers, int lennumbers){
-  char numstr[5];
-  sprintf(numstr, "%d", num);
-  char* txt = "";
+void get_first_char(char* dest, char* str){
+  strncpy(dest, str, 1);
+  dest[1] = '\0';
+}
 
-  printf("%s\n", numstr);
-  printf("%d\n", strlen(numstr));
-  if(strlen(numstr) == 4){  // get the thousands
-    txt = wordlookup((char *)&numstr[0], numbers, lennumbers);
-    printf("%s\n", txt);
+
+void get_second_char(char* dest, char* str){
+  strncpy(dest, str+1, 2);
+  dest[1] = '\0';
+}
+
+
+char* get_number_text(char* txt, int num, const struct Numbers* numbers, int lennumbers){
+  char numstr[5];
+  char substr[5];
+  char lookup_result[20];
+  char* ptrnumstr = numstr;
+  sprintf(numstr, "%d", num);
+
+  if(strlen(ptrnumstr) == 4){  // get the thousands
+    get_first_char(substr, ptrnumstr);
+    wordlookup(lookup_result, substr, numbers, lennumbers);
+    strcpy(txt, lookup_result);
     strcat(txt, "Thousand");
-    strncpy(numstr, numstr+1, 3);
-    if(!strcmp(numstr, "000")){
+    ptrnumstr++;  // now cut the first char from numstr
+    if(!strcmp(ptrnumstr, "000")){
       return txt;
     }
+  }
+
+  if(strlen(ptrnumstr) == 3){  // the hundreds
+    get_first_char(substr, ptrnumstr);
+    wordlookup(lookup_result, substr, numbers, lennumbers);
+    strcat(txt, lookup_result);
+    strcat(txt, "Hundred");
+    ptrnumstr++;
+    if(!strcmp(ptrnumstr, "00")){
+      return txt;
+    }
+  }
+
+  if(strlen(txt) > 0){
+    strcat(txt, "And");
+  }
+
+  if(strlen(ptrnumstr) == 2){
+    get_first_char(substr, ptrnumstr);
+    int first_digit = atoi(substr);
+    get_second_char(substr, ptrnumstr);
+    int second_digit = atoi(substr);
+
+    if(first_digit == 0){
+      ptrnumstr++;
+    }else if(first_digit > 1){
+      sprintf(substr, "%d", first_digit * 10);
+      wordlookup(lookup_result, substr, numbers, lennumbers);
+      strcat(txt, lookup_result);
+      ptrnumstr++;
+    }else{
+      wordlookup(lookup_result, ptrnumstr, numbers, lennumbers);
+      strcat(txt, lookup_result);
+      strcpy(ptrnumstr, "");
+    }
+    if(second_digit == 0){
+      strcpy(ptrnumstr, "");
+    }
+  }
+
+  if(strlen(ptrnumstr) == 1){
+    wordlookup(lookup_result, ptrnumstr, numbers, lennumbers);
+    strcat(txt, lookup_result);
   }
 
   return txt;
