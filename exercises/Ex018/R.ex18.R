@@ -38,7 +38,22 @@ df <- read.table(file_path, sep="\n")
 rows <- nrow(df)
 content <- list()
 for(irow in 1:rows){
-  content[[irow]] <- strsplit(as.character(df[irow,]), " ")
+  stringvalues <- strsplit(as.character(df[irow,]), " ")
+  content[[irow]] <- as.numeric(stringvalues[[1]])
 }
 #print(content)
 #print(content[[rows]][[1]][1])
+
+# move up the triangle to calculate maximums
+for(irow in seq(rows-1, 1, -1)){
+  row <- content[[irow]]
+  nextrow <- content[[irow+1]]
+  ncols <- length(row)
+  for(icol in 1:ncols){
+    godown <- row[[icol]] + nextrow[[icol]]
+    goright <- row[[icol]] + nextrow[[icol+1]]
+    content[[irow]][[icol]] = max(godown, goright)
+  }
+}
+
+print(content[[1]][[1]])  # 1,074
