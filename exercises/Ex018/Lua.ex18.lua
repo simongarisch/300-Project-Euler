@@ -31,4 +31,67 @@ However, Problem 67, is the same challenge with a triangle containing one-hundre
 it cannot be solved by brute force, and requires a clever method! ;o)
 --]]
 
-print(debug.getinfo(1,"S").source:match[[^@?(.*[\/])[^\/]-$]] .."?.lua;".. package.path)
+function split(inputstr, sep)
+  if sep == nil then
+    sep = "%s"
+  end
+  local tbl = {}
+  for str in string.gmatch(inputstr, "([^"..sep.."]+)") do
+    table.insert(tbl, str)
+  end
+  return tbl
+end
+
+
+function file_exists(file)
+  local f = io.open(file, "rb")
+  if f then f:close() end
+  return f ~= nil
+end
+
+
+function read_file(file)
+  if not file_exists(file) then return {} end
+  lines = {}
+  for line in io.lines(file) do
+    lines[#lines + 1] = line
+  end
+  return lines
+end
+
+exec_file_path = arg[0]  -- path of the current executing file
+tbl = split(exec_file_path, "\\")
+tbl[#tbl] = "triangle.txt"
+file_path = table.concat(tbl, "\\")
+--print(file_path)
+
+content = read_file(file_path)
+--for k,v in pairs(content) do print(k,v) end
+for k,v in pairs(content) do
+  tmp = {}
+  for splitk, splitv in pairs(split(v, " ")) do
+    table.insert(tmp, tonumber(splitv))
+  end
+  content[k] = tmp
+end
+--[[
+for key,tbl in pairs(content) do
+  for k,v in pairs(tbl) do
+    io.write(v .. " ")
+  end
+  print("")
+end
+--]]
+
+-- move up the triangle to calculate maximums
+for irow = (#content-1),1,-1 do
+  row = content[irow]
+  nextrow = content[irow+1]
+  for key,value in pairs(row) do
+    godown = value + nextrow[key]
+    goright = value + nextrow[key+1]
+    content[irow][key] = math.max(godown, goright)
+  end
+end
+
+print(content[1][1])  -- 1,074
