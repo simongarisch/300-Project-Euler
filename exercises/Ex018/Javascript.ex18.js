@@ -33,14 +33,38 @@ it cannot be solved by brute force, and requires a clever method! ;o)
 var path = require("path");
 var fs = require("fs");
 
-var dire_path = path.resolve(__dirname);
-var file_path = path.join(dire_path, "triangle.txt");
-console.log(file_path);
+var dire_path = __dirname;
+var file_path = path.join(dire_path, "Ex018", "triangle.txt");
+//console.log(file_path);
 
 try {
-  var data = fs.readFileSync(file_path, "utf8");
-  data = data.toString();
+  var content = fs.readFileSync(file_path, "utf8");
+  content = content.toString();
 } catch(e) {
     console.log("Error: ", e.stack);
 }
-console.log(data);
+//console.log(content);
+
+var triangle = content.split("\r\n");
+for(var irow=0; irow<triangle.length; irow++){
+  var row = triangle[irow];
+  row = row.split(" ");
+  row = row.map(function (x) {
+    return parseInt(x, 10);
+  });
+  triangle[irow] = row;
+}
+//console.log(triangle)
+
+// move up the triangle to calculate maximums
+for(var irow=(triangle.length-2); irow>=0; irow--){
+  var row = triangle[irow];
+  var nextrow = triangle[irow+1];
+  for(var index=0; index<row.length; index++){
+    var godown = row[index] + nextrow[index];
+    var goright = row[index] + nextrow[index+1];
+    triangle[irow][index] = Math.max(godown, goright);
+  }
+}
+
+console.log(triangle[0][0]);  // 1,074
