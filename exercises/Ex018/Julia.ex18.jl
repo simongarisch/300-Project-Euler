@@ -37,3 +37,28 @@ dire_path = @__DIR__
 file_path = joinpath(dire_path, "triangle.txt")
 content = readdlm(file_path, '\n')
 #println(content)
+
+nrows, _ = size(content)
+triangle = zeros(nrows, nrows)
+for irow in 1:nrows
+  row = string(content[irow, :][1])
+  row = split(row, " ")
+  row = map(x->parse(Int64,x), row)
+  nelements = size(row)[1]
+  triangle[irow, 1:nelements] = row
+end
+#println(triangle)
+
+# move up the triangle to calculate maximums
+for irow in (nrows-1):-1:1
+    for (index, value) in enumerate(triangle[irow,:])
+        if index > irow
+            break
+        end
+        godown = value + triangle[irow+1, index]
+        goright = value + triangle[irow+1, index+1]
+        triangle[irow, index] = max(godown, goright)
+    end
+end
+
+println(triangle[1, 1])  # 1,074
