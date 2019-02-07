@@ -35,6 +35,8 @@ it cannot be solved by brute force, and requires a clever method! ;o)
 #include <string.h>
 
 #define MAXCHAR 1000
+#define max(a, b) (((a) > (b)) ? (a) : (b))
+
 
 int file_exists(char *file_path);
 void read_file(char *file_path, char *contents);
@@ -70,7 +72,6 @@ int main(){
     while(token = strtok_r(rest, " ", &rest)){
       col++;
       //printf("%d\n", atoi(token));
-      printf("%d row, %d col\n", row, col);
       *(arr + row*ncol + col) = atoi(token);
     }
   }
@@ -85,8 +86,17 @@ int main(){
   }
   */
   // move up the triangle to calculate maximums
-  
+  int value, godown, goright;
+  for(int row=(nrow-2); row>=0; row--){
+    for(int col=0; col<=row; col++){
+      value = *(arr + row*ncol + col);
+      godown = value + *(arr + (row+1)*ncol + col);
+      goright = value + *(arr + (row+1)*ncol + col+1);
+      *(arr + row*ncol + col) = max(godown, goright);
+    }
+  }
 
+  printf("%d\n", *arr);  // 1,074
   free(arr);
   return 0;
 }
