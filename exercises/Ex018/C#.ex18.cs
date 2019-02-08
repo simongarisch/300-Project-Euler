@@ -46,7 +46,7 @@ class Ex18{
       //Console.WriteLine(lines[irow]);
       string[] numbers = lines[irow].Split(' ');
       for(int icol=0; icol<numbers.Length; icol++){
-        triangle[irow, icol] = int.Parse(numbers[icol]);;
+        triangle[irow, icol] = int.Parse(numbers[icol]);
       }
     }
 
