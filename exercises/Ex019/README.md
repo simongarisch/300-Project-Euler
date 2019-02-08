@@ -1,14 +1,29 @@
-## Project Euler Exercise 1
+## Project Euler Exercise 19
 
-If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9.
-The sum of these multiples is 23.
-Find the sum of all the multiples of 3 or 5 below 1000.
+You are given the following information, but you may prefer to do some research for yourself.
+
+1 Jan 1900 was a Monday.
+Thirty days has September,
+April, June and November.
+All the rest have thirty-one,
+Saving February alone,
+Which has twenty-eight, rain or shine.
+And on leap years, twenty-nine.
+A leap year occurs on any year evenly divisible by 4, but not on a century unless it is divisible by 400.
+How many Sundays fell on the first of the month during the twentieth century (1 Jan 1901 to 31 Dec 2000)?
 
 ```python
-sum = 0
-for i in range(1000):
-    if i % 3 == 0 or i % 5 == 0:
-        sum += i
+from datetime import date, timedelta
 
-print(sum) # 233,168
+count_sundays = 0
+start_date = date(1901, 1, 1)
+end_date = date(2000, 12, 31)
+
+while start_date <= end_date:
+    if start_date.day == 1:
+        if start_date.strftime("%A") == "Sunday":
+            count_sundays += 1
+    start_date += timedelta(days=1)
+
+print(count_sundays)  # 171
 ```
