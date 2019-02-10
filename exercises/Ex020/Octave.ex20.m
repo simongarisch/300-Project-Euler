@@ -19,5 +19,5 @@ for i = 1:length(numstr)
   sum += str2num(substr(numstr, i, 1));
 end
 
-# check the value here
+#save myfile.mat numstr
 disp(sum)

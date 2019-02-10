@@ -1,19 +1,31 @@
 /*
-If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9.
-The sum of these multiples is 23.
-Find the sum of all the multiples of 3 or 5 below 1000.
+n! means n * (n - 1) * ... * 3 * 2 * 1
+
+For example, 10! = 10 * 9 * ... * 3 * 2 * 1 = 3628800,
+and the sum of the digits in the number 10! is 3 + 6 + 2 + 8 + 8 + 0 + 0 = 27.
+
+Find the sum of the digits in the number 100!
+csc.exe C#.ex20.cs -r:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Numerics.dll"
 */
 
-public class JavaEx1 {
+
+import java.math.*;
+
+public class JavaEx20 {
 
     public static void main(String[] args) {
-        int sum = 0;
-        for(int i=1; i<1000; i++){
-          if(i % 3 == 0 || i % 5 == 0){
-            sum += i;
-          }
-        }
-        System.out.println(sum); // 233,168
+      BigInteger num = new BigInteger("1");
+      for(int i=1; i<=100; i++){
+        num = num.multiply(BigInteger.valueOf(i));
+      }
+      String numstr = num.toString();
+      //System.out.println(numstr);
+
+      int sum = 0;
+      for (int i = 0; i < numstr.length(); i++){
+        sum += Character.getNumericValue(numstr.charAt(i));
+      }
+      System.out.println(sum);  // 648
     }
 
 }
