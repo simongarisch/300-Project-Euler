@@ -1,14 +1,23 @@
 %{
-If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9.
-The sum of these multiples is 23.
-Find the sum of all the multiples of 3 or 5 below 1000.
+n! means n * (n - 1) * ... * 3 * 2 * 1
+
+For example, 10! = 10 * 9 * ... * 3 * 2 * 1 = 3628800,
+and the sum of the digits in the number 10! is 3 + 6 + 2 + 8 + 8 + 0 + 0 = 27.
+
+Find the sum of the digits in the number 100!
 %}
 
 sum = 0;
-for i = 1:999
-  if(mod(i,3) == 0 || mod(i,5) == 0)
-    sum += i;
-  end
+num = 1;
+for i=1:100
+  num *= i;
 end
 
-disp(sum) # 233,168
+numstr = num2str(num);
+
+for i = 1:length(numstr)
+  sum += str2num(substr(numstr, i, 1));
+end
+
+# check the value here
+disp(sum)

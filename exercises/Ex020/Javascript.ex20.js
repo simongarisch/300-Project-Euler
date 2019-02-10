@@ -1,14 +1,24 @@
 /*
-If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9.
-The sum of these multiples is 23.
-Find the sum of all the multiples of 3 or 5 below 1000.
+n! means n * (n - 1) * ... * 3 * 2 * 1
+
+For example, 10! = 10 * 9 * ... * 3 * 2 * 1 = 3628800,
+and the sum of the digits in the number 10! is 3 + 6 + 2 + 8 + 8 + 0 + 0 = 27.
+
+Find the sum of the digits in the number 100!
 */
 
+// npm install big-integer
+var bigInt = require("big-integer");
+
 var sum = 0;
-for(var i=0; i<1000; i++){
-  if(i % 3== 0 || i % 5 == 0){
-    sum += i;
-  }
+var num = bigInt("1");
+for(var i=1; i<=100; i++){
+  num = num.times(i);
 }
 
-console.log(sum); // 233,168
+var numstr = num.toString();
+for (var i=0; i<numstr.length; i++) {
+  sum += parseInt(numstr.charAt(i));
+}
+
+console.log(sum);  // 648

@@ -1,15 +1,23 @@
 #=
-If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9.
-The sum of these multiples is 23.
-Find the sum of all the multiples of 3 or 5 below 1000.
+n! means n * (n - 1) * ... * 3 * 2 * 1
+
+For example, 10! = 10 * 9 * ... * 3 * 2 * 1 = 3628800,
+and the sum of the digits in the number 10! is 3 + 6 + 2 + 8 + 8 + 0 + 0 = 27.
+
+Find the sum of the digits in the number 100!
 =#
 
 sum = 0
-for i = 1:999
-    if i % 3 == 0 || i % 5 == 0
-        global sum
-        sum += i
-    end
+num = BigInt(1)
+for i in 1:100
+    global num
+    num *= i
 end
 
-println(sum) # 233,168
+numstr = string(num)
+for char in split(numstr, "")
+    global sum
+    sum += parse(Int64, char)
+end
+
+println(sum)  # 648

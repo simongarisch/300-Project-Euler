@@ -10,8 +10,10 @@
 # https://cran.r-project.org/web/packages/gmp/index.html
 library(gmp)
 
-factresult <- as.bigz(factorial(100))
-print(factresult)
+factresult <- as.bigz(1)
+for(i in 1:100){
+  factresult <- factresult * i
+}
 factresult_str <- as.character(factresult)
 
 sumchars <- 0
@@ -20,4 +22,4 @@ for (numstr in strsplit(factresult_str, "")[[1]]) {
 }
 
 # need to check gmp num
-print(sumchars)
+print(sumchars)  # 648
