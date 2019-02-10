@@ -14,7 +14,7 @@ How many Sundays fell on the first of the month during the twentieth century (1 
 
 using System;
 
-class Ex1{
+class Ex19{
   static void Main(){
     int count_sundays = 0;
     DateTime start_date = new DateTime(1901, 1, 1);
