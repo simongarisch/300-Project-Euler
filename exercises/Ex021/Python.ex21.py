@@ -30,7 +30,7 @@ def is_amicable(x):
 #print(is_amicable(220))  # True
 
 sum = 0
-for x in range(1, int(1e4+1)):
+for x in range(1, int(1e4)):
     if is_amicable(x):
         sum += x
 
