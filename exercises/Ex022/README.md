@@ -1,4 +1,4 @@
-## Project Euler Exercise 21
+## Project Euler Exercise 22
 
 Using names.txt (right click and 'Save Link/Target As...'),
 a 46K text file containing over five-thousand first names,
