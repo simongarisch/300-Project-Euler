@@ -37,9 +37,19 @@ def get_name_score(name):
         name_score += scores_mapping[char]
     return name_score
 
+all_scores = []
 total_score = 0
 for index, name in enumerate(names):
     name_score = get_name_score(name)
     total_score += (index + 1) * name_score
+    all_scores.append([index, name, name_score, total_score])
+
+'''
+output_path = os.path.join(dire_path, "output.txt")
+with open(output_path, "w") as fi:
+    for item in all_scores:
+        row = ",".join([str(i) for i in item]) + "\n"
+        fi.write(row)
+'''
 
 print(total_score)  # 871,198,282
