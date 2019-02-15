@@ -16,8 +16,6 @@ import java.util.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
 import java.io.*;
-import java.text.CharacterIterator;
-import java.text.StringCharacterIterator;
 
 
 public class JavaEx22 {
@@ -52,17 +50,23 @@ public class JavaEx22 {
       scores_mapping.put(String.valueOf(alphabet[i]), i+1);
     }
     //System.out.println(scores_mapping.values().toString());
-    System.out.println(get_name_score("COLIN"));
-
+    //System.out.println(get_name_score("COLIN"));  // 53
+    long total_score = 0;
+    String name;
+    int name_score;
+    for(int i=0; i<names.length; i++){
+      name = names[i];
+      name_score = get_name_score(name);
+      total_score += (i + 1) * name_score;
+    }
+    System.out.println(total_score);  // 871,198,282
   }
 
 
   static int get_name_score(String name){
     int name_score = 0;
-    CharacterIterator it = new StringCharacterIterator(name);
-    while(it.current() != CharacterIterator.DONE){
-      System.out.println(it.current());
-      name_score += scores_mapping.get(it.current());
+    for(int i=0; i<name.length(); i++){
+      name_score += scores_mapping.get(String.valueOf(name.charAt(i)));
     }
     return name_score;
   }
