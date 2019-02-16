@@ -35,7 +35,8 @@ abundant_numbers = []
 for x in range(1, LIMIT+1):
     if get_sum_proper_divisors(x) > x:
         abundant_numbers.append(x)
-#print(abundant_numbers)
+#print(abundant_numbers[-3:])  # [12, 18, 20, 24, ... 28116, 28120, 28122]
+#print(len(abundant_numbers))  # 6,965
 
 # get all combinations with replacement for two of these abundent numbers
 combinations = itertools.combinations_with_replacement(abundant_numbers, 2)
