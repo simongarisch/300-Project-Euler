@@ -35,7 +35,7 @@ abundant_numbers = []
 for x in range(1, LIMIT+1):
     if get_sum_proper_divisors(x) > x:
         abundant_numbers.append(x)
-#print(abundant_numbers[-3:])  # [12, 18, 20, 24, ... 28116, 28120, 28122]
+#print(abundant_numbers)  # [12, 18, 20, 24, ... 28116, 28120, 28122]
 #print(len(abundant_numbers))  # 6,965
 
 # get all combinations with replacement for two of these abundent numbers
@@ -45,11 +45,11 @@ combinations = sorted(list(set([sum(i) for i in combinations])))
 
 # We have a list of the abundant numbers we need.
 # Find all numbers that cannot be expressed as the sum of two of these.
-sum = 0
+sumc = 0
 for x in range(1, LIMIT+1):
     if x in combinations:
         continue
     else:
-        sum += x
+        sumc += x
 
-print(sum)  # 4,179,871
+print(sumc)  # 4,179,871
