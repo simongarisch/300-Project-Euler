@@ -25,22 +25,30 @@ function sum_divisors = get_sum_proper_divisors(x)
   if x == 1
     return;
   end
-  divisors = [];
-  for i = 1:floor(x/2)
-    if mod(x, i) == 0
-      divisors = [divisors ; i];
-    end
-  end
-  #disp(divisors)
+  divisors = 1:floor(x/2);
+  divisors = (mod(x, divisors) == 0) .* divisors;
   sum_divisors = sum(divisors);
 end
 #get_sum_proper_divisors(12)  # 16
 
 
-abundant_numbers = [];
-for x = 1:LIMIT
-  if get_sum_proper_divisors(x) > x
-    abundant_numbers = [abundant_numbers ; x];
-  end
+x = 1:LIMIT;
+sums = arrayfun(@(x) get_sum_proper_divisors(x), x);
+cond = (sums > x) .* x;
+abundant_numbers = cond(cond ~= 0);
+#length(abundant_numbers)  # 6965
+
+
+function combs = sum_unique_combinations(nums)
+  # get all of the unique combination sums (of 2 elements) with replacement
+  #[p,q] = meshgrid(nums, nums);
+  pairs = bsxfun(@plus, nums.', nums);
+  combs = unique(pairs);
 end
-length(abundant_numbers)
+
+
+combinations = sum_unique_combinations(abundant_numbers);
+#length(combinations)  # 53871
+x = 1:LIMIT;
+matches = ismember(x, combinations);
+disp(sum(x .* matches))  # 
