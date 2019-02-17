@@ -41,7 +41,6 @@ abundant_numbers = cond(cond ~= 0);
 
 function combs = sum_unique_combinations(nums)
   # get all of the unique combination sums (of 2 elements) with replacement
-  #[p,q] = meshgrid(nums, nums);
   pairs = bsxfun(@plus, nums.', nums);
   combs = unique(pairs);
 end
@@ -50,5 +49,5 @@ end
 combinations = sum_unique_combinations(abundant_numbers);
 #length(combinations)  # 53871
 x = 1:LIMIT;
-matches = ismember(x, combinations);
-disp(sum(x .* matches))  # 
+commons = intersect(x, combinations);
+disp(sum(x) - sum(commons))  # 4,179,871
