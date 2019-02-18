@@ -1,13 +1,16 @@
 
-# If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9.
-# The sum of these multiples is 23.
-# Find the sum of all the multiples of 3 or 5 below 1000.
+# A permutation is an ordered arrangement of objects.
+# For example, 3124 is one possible permutation of the digits 1, 2, 3 and 4.
+# If all of the permutations are listed numerically or alphabetically,
+# we call it lexicographic order.
+# The lexicographic permutations of 0, 1 and 2 are:
+#
+# 012   021   102   120   201   210
+#
+# What is the millionth lexicographic permutation of the digits
+# 0, 1, 2, 3, 4, 5, 6, 7, 8 and 9?
+library(gtools)
 
-sum <- 0
-for(i in 1:999){
-  if((i %% 3 == 0) || (i %% 5 == 0)){
-    sum <- sum + i
-  }
-}
-
-print(sum) # 233,168
+numstr = as.character(0:9)
+combs = permutations(length(numstr), length(numstr), numstr, repeats=FALSE)
+print(as.numeric(paste(combs[1000000,], collapse="")))  # 2,783,915,460
