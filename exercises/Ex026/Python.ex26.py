@@ -52,16 +52,20 @@ for i in range(2, 1000):
                 idx1 = result.index(wholes)
                 idx2 = len(result)
                 pattern_length = idx2 - idx1 - 1
+                if pattern_length == 0:
+                    tcount = len([v for v in list(remainders_found.values()) if v is True])
+                    if tcount == 1:
+                        pattern_length = 1
                 if pattern_length > longest_pattern:
                     longest_pattern = pattern_length
                     longest_divisor = i
                 pattern_found = True
 
         remainders_found[n] = True
-        if pattern_found and len(result) > 10:
+        if pattern_found and len(result) > 15:
             break
 
-    #decimal = "%0.10f" % float("0." + "".join([str(x) for x in result]))
+    #decimal = "%0.15f" % float("0." + "".join([str(x) for x in result]))
     #print(str(i) + "\t" + str(decimal) + "\t" + str(pattern_length))
 
 print(longest_divisor)  # 983
