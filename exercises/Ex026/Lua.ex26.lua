@@ -48,7 +48,7 @@ for i = 2,999 do
     if n == 0 then break end
 
     -- check if we have seen this remainder before
-    if remainders_found[n] ~= true then
+    if remainders_found[n] then
       idx1 = 0;
       for x = 1,#result do
         idx1 = idx1 + 1
@@ -57,8 +57,6 @@ for i = 2,999 do
         end
       end
       pattern_length = #result - idx1
-      print("HERE " .. tostring(pattern_length) .. " " .. tostring(#result) .. tostring(idx1))
-      print("#result " .. tostring(#result))
       if pattern_length > longest_pattern then
         longest_pattern = pattern_length
         longest_divisor = i
@@ -72,13 +70,6 @@ for i = 2,999 do
     end
   end
 
-  output = "i=" .. tostring(i)
-  resultstr = "0."
-  for x = 1,#result do
-    resultstr = resultstr .. tostring(result[x])
-  end
-  output = output .. " " .. resultstr .. " " .. tostring(pattern_length)
-  print(output)
 end
 
-print(longest_divisor)
+print(longest_divisor)  -- 983
