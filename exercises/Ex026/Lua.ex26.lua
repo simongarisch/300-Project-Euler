@@ -35,11 +35,11 @@ for i = 2,999 do
 
   -- the maximum number of potential remainders we can have is (i-1)
   remainders_found = {}
-  for x=1,(i-1) do remainders_found[x] = false end
+  for x = 1,(i-1) do remainders_found[x] = false end
   pattern_length = 0
   pattern_found = false
 
-  while n != 0 do
+  while n ~= 0 do
     n = n * 10      -- go to the next significant figure
     wholes = n / i  -- get the number of times n is evenly divisible by i
     n = n % i       -- continue with division for the remainder
@@ -48,13 +48,37 @@ for i = 2,999 do
     if n == 0 then break end
 
     -- check if we have seen this remainder before
-    if remainders_found[n] then
-      if pattern_found == false then
-
+    if remainders_found[n] ~= true then
+      idx1 = 0;
+      for x = 1,#result do
+        idx1 = idx1 + 1
+        if result[x] == wholes then
+          break
+        end
       end
+      pattern_length = #result - idx1
+      print("HERE " .. tostring(pattern_length) .. " " .. tostring(#result) .. tostring(idx1))
+      print("#result " .. tostring(#result))
+      if pattern_length > longest_pattern then
+        longest_pattern = pattern_length
+        longest_divisor = i
+      end
+      pattern_found = true
     end
 
+    remainders_found[n] = true
+    if pattern_found == true then
+      break
+    end
   end
+
+  output = "i=" .. tostring(i)
+  resultstr = "0."
+  for x = 1,#result do
+    resultstr = resultstr .. tostring(result[x])
+  end
+  output = output .. " " .. resultstr .. " " .. tostring(pattern_length)
+  print(output)
 end
 
-print() --
+print(longest_divisor)
