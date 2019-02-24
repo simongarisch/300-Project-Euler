@@ -10,4 +10,4 @@ for(i in 1:999){
   }
 }
 
-print(sum) # 233,168
+print(sum)
