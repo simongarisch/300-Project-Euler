@@ -18,7 +18,7 @@ function is_prime(x){
 
 function quadratic_formula(n, a, b){
   // returns the result of n^2 + a*n + b
-  return Math.pow(n) + a*n + b;
+  return Math.pow(n, 2) + a*n + b;
 }
 
 
@@ -43,4 +43,4 @@ for(var a=-999; a<=999; a++){
   }
 }
 
-console.log(product);
+console.log(product);  // -59,231
