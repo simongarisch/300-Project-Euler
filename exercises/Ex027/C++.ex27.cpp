@@ -1,18 +1,59 @@
-/*
-If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9.
-The sum of these multiples is 23.
-Find the sum of all the multiples of 3 or 5 below 1000.
-*/
-
 #include <iostream>
 
+using namespace std;
+
+
+bool is_prime(long x);
+long quadratic_formula(long n, long a, long b);
+
+
 int main(){
-  int sum = 0;
-  for(int i=1; i<1000; i++){
-    if(i % 3 == 0 || i % 5 == 0){
-      sum = sum + i;
+  long maxprimes = 0;
+  long product = 0;
+  long n, qfresult;
+  bool isprime;
+
+  for(long a=-999; a<=999; a++){
+    for(long b=-1000; b<=1000; b++){
+      n = 0;
+      isprime = true;
+      while(isprime){
+        qfresult = quadratic_formula(n, a, b);
+        isprime = is_prime(qfresult);
+        if(isprime){
+          n++;
+          if(n > maxprimes){
+            maxprimes = n;
+            product = a * b;
+          }
+        }
+      }
     }
   }
-  std::cout << sum << std::endl; // 233,168
+
+  cout << product << endl;  // -59,231
   return 0;
+}
+
+
+bool is_prime(long x){
+  // returns TRUE if x is prime, FALSE otherwise
+  if(x <= 1){
+    return false;
+  }
+  if(x == 2){
+    return true;
+  }
+  for(long i=3; i<x; i++){
+    if(x % i == 0){
+      return false;
+    }
+  }
+  return true;
+}
+
+
+long quadratic_formula(long n, long a, long b){
+  // returns the result of n^2 + a*n + b
+  return n*n + a*n + b;
 }
