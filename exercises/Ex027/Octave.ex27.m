@@ -1,4 +1,6 @@
-
+# twiddles thumbs...
+# Octave does not love loops one bit
+# Need to vectorize this...
 
 function qfresult = quadratic_formula(n, a, b)
   # returns the result of n^2 + a*n + b
