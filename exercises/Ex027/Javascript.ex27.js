@@ -1,14 +1,46 @@
-/*
-If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9.
-The sum of these multiples is 23.
-Find the sum of all the multiples of 3 or 5 below 1000.
-*/
 
-var sum = 0;
-for(var i=0; i<1000; i++){
-  if(i % 3== 0 || i % 5 == 0){
-    sum += i;
+function is_prime(x){
+  // returns true is x is prime, false otherwise
+  if(x <= 1){
+    return false;
+  }
+  if(x == 2){
+    return true;
+  }
+  for(var i=3; i<x; i++){
+    if(x % i == 0){
+      return false;
+    }
+  }
+  return true;
+}
+
+
+function quadratic_formula(n, a, b){
+  // returns the result of n^2 + a*n + b
+  return Math.pow(n) + a*n + b;
+}
+
+
+var maxprimes = 0;
+var product = 0;
+
+for(var a=-999; a<=999; a++){
+  for(var b=-1000; b<=1000; b++){
+    var n = 0;
+    var isprime = true;
+    while(isprime){
+      var qfresult = quadratic_formula(n, a, b);
+      isprime = is_prime(qfresult);
+      if(isprime){
+        n++;
+        if(n > maxprimes){
+          maxprimes = n;
+          product = a * b;
+        }
+      }
+    }
   }
 }
 
-console.log(sum); // 233,168
+console.log(product);
