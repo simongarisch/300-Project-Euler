@@ -20,7 +20,8 @@ NOTES:
   This is equal to (x * 2) - 1
 - At each layer we have n numbers: 1, 8, 16, ... <br/>
   We can express this as: (rows in previous layer) * 4 + 4 edges <br/>
-  e.g.  x=2: 1 * 4 + 4 = 8   =  [(x-1) * 2 - 1] * 4 + 4 <br/>
+  e.g.  <br/>
+        x=2: 1 * 4 + 4 = 8   =  [(x-1) * 2 - 1] * 4 + 4 <br/>
         x=3: 3 * 4 + 4 = 16  =  [(x-1) * 2 - 1] * 4 + 4
 - At each layer the the diagonal numbers go up in steps of layer rows - 1 <br/>
   = (x * 2) - 2 <br/>
