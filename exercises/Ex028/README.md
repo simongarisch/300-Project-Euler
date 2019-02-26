@@ -2,11 +2,11 @@
 
 Starting with the number 1 and moving to the right in a clockwise direction a 5 by 5 spiral is formed as follows:
 
-21_  22  23  24  25_
-20   7_  8   9_  10
-19   6   1_  2   11
-18   5_  4   3_  12
-17_  16  15  14  13_
+21_  22  23  24  25_ <br/>
+20   7_  8   9_  10  <br/>
+19   6   1_  2   11  <br/>
+18   5_  4   3_  12  <br/>
+17_  16  15  14  13_  <br/>
 
 It can be verified that the sum of the numbers on the diagonals is 101.
 
@@ -14,15 +14,15 @@ What is the sum of the numbers on the diagonals in a 1001 by 1001 spiral formed 
 
 NOTES:
 - Suppose that we are working with layer x.
-- The number of rows for each layer = 1, 3, 5, ... (goes up in twos)
+- The number of rows for each layer = 1, 3, 5, ... (goes up in twos) <br/>
   This is equal to (x * 2) - 1
-- At each layer we have n numbers: 1, 8, 16, ...
-  We can express this as: (rows in previous layer) * 4 + 4 edges
-  e.g.  x=2: 1 * 4 + 4 = 8   =  [(x-1) * 2 - 1] * 4 + 4
+- At each layer we have n numbers: 1, 8, 16, ... <br/>
+  We can express this as: (rows in previous layer) * 4 + 4 edges <br/>
+  e.g.  x=2: 1 * 4 + 4 = 8   =  [(x-1) * 2 - 1] * 4 + 4 <br/>
         x=3: 3 * 4 + 4 = 16  =  [(x-1) * 2 - 1] * 4 + 4
-- At each layer the the diagonal numbers go up in steps of layer rows - 1
-  = (x * 2) - 2
-  On layer 2 they go up in steps of (2 * 2) - 2 = 2
+- At each layer the the diagonal numbers go up in steps of layer rows - 1 <br/>
+  = (x * 2) - 2 <br/>
+  On layer 2 they go up in steps of (2 * 2) - 2 = 2 <br/>
   On layer 3 they go up in steps of (3 * 2) - 2 = 4
 
 ```python
