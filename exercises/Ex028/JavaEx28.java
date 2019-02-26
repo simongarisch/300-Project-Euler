@@ -1,19 +1,32 @@
-/*
-If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9.
-The sum of these multiples is 23.
-Find the sum of all the multiples of 3 or 5 below 1000.
-*/
 
-public class JavaEx1 {
+public class JavaEx28{
 
     public static void main(String[] args) {
-        int sum = 0;
-        for(int i=1; i<1000; i++){
-          if(i % 3 == 0 || i % 5 == 0){
-            sum += i;
-          }
-        }
-        System.out.println(sum); // 233,168
+      System.out.println(get_diagsum(1001));  // 669,171,001
+    }
+
+    static long get_diagsum(long rows){
+      // get the diagonal sum for a given number of layers
+      long layers = (rows + 1) / 2;
+      long diagsum = 1;
+      long layerend_value = 1;
+      long layer = 1;
+      long numbers_in_layer;
+      long diag_steps, top_right, top_left, bot_left, bot_right;
+
+      while(layer <= layers){
+        numbers_in_layer = ((layer-1) * 2 - 1) * 4 + 4;
+        layerend_value += numbers_in_layer;  // 1, 9, 25, ...
+        diag_steps = (layer * 2) - 2;        // 0, 2, 4, ...
+        top_right = layerend_value;                   // 1, 9, 25, ...
+        top_left = layerend_value - diag_steps;       // 1, 7, 21, ...
+        bot_left = layerend_value - diag_steps * 2;   // 1, 5, 17, ...
+        bot_right = layerend_value - diag_steps * 3;  // 1, 3, 13
+        diagsum += (top_right + top_left + bot_left + bot_right);
+        layer += 1;
+      }
+      // remove the 1 at the middle of the spiral which we have added 4 times
+      return diagsum - 4;
     }
 
 }
