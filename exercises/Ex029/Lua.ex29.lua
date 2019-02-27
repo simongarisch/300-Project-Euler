@@ -41,6 +41,7 @@ for a=2,100 do
     result = bigint.exponentiate(bia, bib)
     resultstr = bigint.unserialize(result, "string")
     terms[resultstr] = true
+    --print(a, b)
   end
 end
 
