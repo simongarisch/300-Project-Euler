@@ -26,8 +26,10 @@ results = {};
 counter = 1;
 for a = rangea
   for b = rangeb
-    num = vpi(num2str(a)) ^ b;
-    results(counter) = num2str(num);
+    base = vpi(a);
+    expo = vpi(b);
+    result = base ^ expo;
+    results(counter) = num2str(result);
     counter += 1;
   end
 end
