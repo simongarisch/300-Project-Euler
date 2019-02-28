@@ -19,17 +19,31 @@ addpath(genpath(vpi_path));
 #num = num2str(vpi(num2str(100)) ^ 100)
 #length(num)  # coming in as 72, should be 201... we are losing precision
 
+
 rangea = 2:100;
 rangeb = 2:100;
 
 results = {};
 counter = 1;
+significant_figures = 0;
+
 for a = rangea
   for b = rangeb
     base = vpi(a);
     expo = vpi(b);
-    result = base ^ expo;
-    results(counter) = num2str(result);
+    result = base;
+    for i = 2:b
+      result *= base;
+      resultstr = num2str(result);
+      lenresultstr = length(resultstr);
+      maxlen = 70;
+      if lenresultstr > maxlen
+        overs = lenresultstr - maxlen;
+        result = result / 10 ^ overs;
+        significant_figures += overs;
+      end
+    end
+    results(counter) = strcat(num2str(result), repmat("0" , [1,significant_figures]));
     counter += 1;
   end
 end
