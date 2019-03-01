@@ -22,9 +22,9 @@ for comb in itertools.product(search_range, repeat=POWER):
     combs.append(comb_str)
 
 
-def digit_powers_equal(numstr, POWER):
+def digit_powers_equal(numstr, power):
     # returns true if the sum of numstr digits to some power equal our numstr
-    pow_sum = str(sum([int(x)**POWER for x in numstr]))
+    pow_sum = str(sum([int(x)**power for x in numstr]))
     return pow_sum == numstr
 #print(digit_powers_equal("1634", POWER))  # True
 
