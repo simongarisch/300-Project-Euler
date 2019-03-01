@@ -36,7 +36,7 @@ public class JavaEx29{
 
 
       Set<String> set = new HashSet<String>(terms);
-      System.out.println(set.size());  // 9,183,
+      System.out.println(set.size());  // 9,183
     }
 
 }
