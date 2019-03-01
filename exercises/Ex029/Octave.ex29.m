@@ -33,4 +33,4 @@ for a = rangea
 end
 
 results = unique(results);
-disp(length(results))
+disp(length(results))  # 9,183
