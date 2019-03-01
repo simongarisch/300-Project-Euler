@@ -53,7 +53,7 @@ int main(){
     if(strcmp(results[i-1],results[i]) != 0){
       numunique++;
     }
-    //printf("%s\n", results[i]);
+    printf("%s\n", results[i]);
   }
 
   for (long i=0; i<numloops; i++){
