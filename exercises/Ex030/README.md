@@ -1,11 +1,11 @@
 ## Project Euler Exercise 30
 
-Surprisingly there are only three numbers that can be written as the sum of fourth powers of their digits:
+Surprisingly there are only three numbers that can be written as the sum of fourth powers of their digits: <br/>
 
-1634 = 1^4 + 6^4 + 3^4 + 4^4
-8208 = 8^4 + 2^4 + 0^4 + 8^4
-9474 = 9^4 + 4^4 + 7^4 + 4^4
-As 1 = 1^4 is not a sum it is not included.
+1634 = 1^4 + 6^4 + 3^4 + 4^4 <br/>
+8208 = 8^4 + 2^4 + 0^4 + 8^4 <br/>
+9474 = 9^4 + 4^4 + 7^4 + 4^4 <br/>
+As 1 = 1^4 is not a sum it is not included. <br/>
 
 The sum of these numbers is 1634 + 8208 + 9474 = 19316.
 
