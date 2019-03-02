@@ -10,29 +10,21 @@ The sum of these numbers is 1634 + 8208 + 9474 = 19316.
 
 Find the sum of all the numbers that can be written as the sum of fifth powers of their digits.
 '''
-import itertools
 
-POWER = 4
-
-search_range = list(range(10))
-combs = []
-for comb in itertools.product(search_range, repeat=POWER):
-    comb_str = "".join([str(x) for x in comb])
-    comb_num = int(comb_str)
-    combs.append(comb_str)
-
+POWER = 5
+ubound = POWER * 9 ** POWER
 
 def digit_powers_equal(numstr, power):
-    # returns true if the sum of numstr digits to some power equal our numstr
     pow_sum = str(sum([int(x)**power for x in numstr]))
     return pow_sum == numstr
 #print(digit_powers_equal("1634", POWER))  # True
 
-
 total = 0
-for comb in combs:
-    if digit_powers_equal(comb, POWER):
-        #print(comb)
-        total += int(comb)
+num = 2
+while num <= ubound:
+    if digit_powers_equal(str(num), POWER):
+        #print(num)
+        total += num
+    num += 1
 
-print(total)  #
+print(total)  # 443,839
