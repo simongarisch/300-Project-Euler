@@ -45,7 +45,7 @@ int digit_powers_equal(long num, int power){
   long sum_digit_powers = 0;
   long increment;
   int digit;
-  for (int i = 0; i<strlen(numstr); i++){
+  for (int i=0; i<strlen(numstr); i++){
     digit = numstr[i] - '0';
     sum_digit_powers = sum_digit_powers + pow(digit, power);
   }
