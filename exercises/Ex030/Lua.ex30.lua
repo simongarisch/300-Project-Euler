@@ -10,8 +10,8 @@ The sum of these numbers is 1634 + 8208 + 9474 = 19316.
 
 Find the sum of all the numbers that can be written as the sum of fifth powers of their digits.
 --]]
-POWER = 5;
-ubound = POWER * 9 ^ POWER;
+POWER = 5
+ubound = POWER * 9 ^ POWER
 
 function digit_powers_equal(num, power)
   sum_digit_powers = 0
