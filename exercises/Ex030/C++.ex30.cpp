@@ -1,18 +1,56 @@
 /*
-If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9.
-The sum of these multiples is 23.
-Find the sum of all the multiples of 3 or 5 below 1000.
+Surprisingly there are only three numbers that can be written as the sum of fourth powers of their digits:
+
+1634 = 1^4 + 6^4 + 3^4 + 4^4
+8208 = 8^4 + 2^4 + 0^4 + 8^4
+9474 = 9^4 + 4^4 + 7^4 + 4^4
+As 1 = 1^4 is not a sum it is not included.
+
+The sum of these numbers is 1634 + 8208 + 9474 = 19316.
+
+Find the sum of all the numbers that can be written as the sum of fifth powers of their digits.
 */
 
 #include <iostream>
+#include <cmath>
+#include <cstring>
+
+#define POWER 5
+#define MAXCHAR 50
+
+using namespace std;
+
+
+int digit_powers_equal(long num, int power);
+
 
 int main(){
-  int sum = 0;
-  for(int i=1; i<1000; i++){
-    if(i % 3 == 0 || i % 5 == 0){
-      sum = sum + i;
+
+  long ubound = POWER * pow(9, POWER);
+  long total = 0;
+  long num = 2;
+
+  while(num <= ubound){
+    if(digit_powers_equal(num, POWER)){
+      total = total + num;
     }
+    num = num + 1;
   }
-  std::cout << sum << std::endl; // 233,168
+  cout << total << endl;  // 443,839
   return 0;
+}
+
+
+int digit_powers_equal(long num, int power){
+  char numstr[MAXCHAR];
+  sprintf(numstr,"%ld", num);
+
+  long sum_digit_powers = 0;
+  long increment;
+  int digit;
+  for (int i = 0; i<strlen(numstr); i++){
+    digit = numstr[i] - '0';
+    sum_digit_powers = sum_digit_powers + pow(digit, power);
+  }
+  return num == sum_digit_powers;
 }
