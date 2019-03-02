@@ -17,7 +17,7 @@ ubound = POWER * 9 ** POWER
 def digit_powers_equal(numstr, power):
     pow_sum = str(sum([int(x)**power for x in numstr]))
     return pow_sum == numstr
-#print(digit_powers_equal("1634", POWER))  # True
+#print(digit_powers_equal("1634", 4))  # True
 
 total = 0
 num = 2
