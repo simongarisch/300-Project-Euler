@@ -8,26 +8,24 @@ It is possible to make 2 pound in the following way:
 How many different ways can 2 pound be made using any number of coins?
 
 NOTES:
-We could just use one 200p coin or 200 1p coins
-200p don't search for more than 1 coin
-100p don't search for more than 2 coins
-50p don't search for more than 4 coins ...
+Search between 0-1 two pound coins, 1-2 one pound coins... up to 200 1p coins.
+We can look at the cumulative total of value as we add more coins,
+subject to a 2 pound value cap.
 '''
-import itertools
+TARGET_VALUE = 200
 
-coins_list = [1, 2, 5, 10, 20, 50, 100]
-max_coins = [200 / i for i in coins_list]
-#print(dict(zip(coins_list, max_coins)))
-count_sum_200 = 0  # keep track of the coin combinations that sum to 200p
+count_sum_target = 0  # keep track of the coin combinations that sum to 200p
 
-# this below is far too slow, so don't use brute force in this way
-for ncoins in range(1, 201):
-    print(ncoins)
-    combinations = itertools.combinations_with_replacement(coins_list, ncoins)
-    for combination in combinations:
-        coin_sum = sum(combination)
-        if coin_sum == 200:
-            #print(ncoins, combination, coin_sum)
-            count_sum_200 += 1
+for v200 in range(0, TARGET_VALUE+1, 200):
+    for v100 in range(v200, TARGET_VALUE+1, 100):
+        for v50 in range(v100, TARGET_VALUE+1, 50):
+            for v20 in range(v50, TARGET_VALUE+1, 20):
+                for v10 in range(v20, TARGET_VALUE+1, 10):
+                    for v5 in range(v10, TARGET_VALUE+1, 5):
+                        for v2 in range(v5, TARGET_VALUE+1, 2):
+                            for v1 in range(v2, TARGET_VALUE+1):
+                                if v1 == TARGET_VALUE:
+                                    count_sum_target += 1
 
-print(count_sum_200)  #
+
+print(count_sum_target)  # 73,682
