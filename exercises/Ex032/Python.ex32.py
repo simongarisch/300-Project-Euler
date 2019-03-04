@@ -24,7 +24,7 @@ def is_pandigital(multiplicand, multiplier, product):
 
 products = set()
 for multiplicand in range(10000):
-    for multiplier in range(1000):
+    for multiplier in range(100):
         product = multiplicand * multiplier
         if is_pandigital(multiplicand, multiplier, product):
             products.add(product)

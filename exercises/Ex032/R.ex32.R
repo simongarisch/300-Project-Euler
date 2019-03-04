@@ -1,13 +1,44 @@
 
-# If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9.
-# The sum of these multiples is 23.
-# Find the sum of all the multiples of 3 or 5 below 1000.
+# We shall say that an n-digit number is pandigital if it makes use of all the digits 1 to n exactly once;
+# for example, the 5-digit number, 15234, is 1 through 5 pandigital.
+#
+# The product 7254 is unusual, as the identity, 39 x 186 = 7254, containing multiplicand, multiplier, and product is 1 through 9 pandigital.
+#
+# Find the sum of all products whose multiplicand/multiplier/product identity can be written as a 1 through 9 pandigital.
+#
+# HINT: Some products can be obtained in more than one way so be sure to only include it once in your sum.
 
-sum <- 0
-for(i in 1:999){
-  if((i %% 3 == 0) || (i %% 5 == 0)){
-    sum <- sum + i
+is_pandigital <- function(multiplicand, multiplier, product){
+  # returns true is 1 through 9 pandigital, false otherwise
+  multiplicand <- as.character(multiplicand)
+  multiplier <- as.character(multiplier)
+  product <- as.character(product)
+  numbers <- strsplit(paste0(multiplicand, multiplier, product), NULL)[[1]]
+  if(length(numbers) != 9){
+    return(FALSE)
+  }
+  numbers <- sort(as.numeric(numbers))
+  numbers <- paste0(as.character(numbers), collapse="")
+  if(numbers == "123456789"){
+    return(TRUE)
+  }else{
+    return(FALSE)
   }
 }
 
-print(sum) # 233,168
+#print(is_pandigital(39, 186, 7254))  # TRUE
+products <- c()
+for(multiplicand in 1:10000){
+  for(multiplier in 1:100){
+    product <- multiplicand * multiplier
+    if(is_pandigital(multiplicand, multiplier, product)){
+      if(product %in% products){
+        next
+      }else{
+        products <- c(products, product)
+      }
+    }
+  }
+}
+
+print(sum(products))  # 45,228
