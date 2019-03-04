@@ -14,7 +14,7 @@ subject to a 2 pound value cap.
 '''
 TARGET_VALUE = 200
 
-count_sum_target = 0  # keep track of the coin combinations that sum to 200p
+count_sum_target = 0
 
 for v200 in range(0, TARGET_VALUE+1, 200):
     for v100 in range(v200, TARGET_VALUE+1, 100):
