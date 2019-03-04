@@ -8,7 +8,7 @@ It is possible to make 2 pound in the following way:
 How many different ways can 2 pound be made using any number of coins?
 
 NOTES:
-Search between 0-1 two pound coins, 1-2 one pound coins... up to 200 1p coins.
+Search between 0-1 two pound coins, 0-2 one pound coins... up to 200 1p coins.
 We can look at the cumulative total of value as we add more coins,
 subject to a 2 pound value cap.
 '''
