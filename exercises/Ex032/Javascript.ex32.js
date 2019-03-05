@@ -1,14 +1,38 @@
 /*
-If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9.
-The sum of these multiples is 23.
-Find the sum of all the multiples of 3 or 5 below 1000.
+We shall say that an n-digit number is pandigital if it makes use of all the digits 1 to n exactly once;
+for example, the 5-digit number, 15234, is 1 through 5 pandigital.
+
+The product 7254 is unusual, as the identity, 39 x 186 = 7254, containing multiplicand, multiplier, and product is 1 through 9 pandigital.
+
+Find the sum of all products whose multiplicand/multiplier/product identity can be written as a 1 through 9 pandigital.
+
+HINT: Some products can be obtained in more than one way so be sure to only include it once in your sum.
 */
 
-var sum = 0;
-for(var i=0; i<1000; i++){
-  if(i % 3== 0 || i % 5 == 0){
-    sum += i;
+function is_pandigital(multiplicand, multiplier, product){
+  var numbers = multiplicand.toString() + multiplier.toString() + product.toString();
+  numbers = numbers.split("").sort().join("");
+  if(numbers == "123456789"){
+    return true;
+  }else{
+    return false;
+  }
+}
+//console.log(is_pandigital(39, 186, 7254));  // true
+
+var products = new Set();
+var product;
+for(var multiplicand=0; multiplicand<=10000; multiplicand++){
+  for(var multiplier=0; multiplier<=100; multiplier++){
+    product = multiplicand * multiplier;
+    if(is_pandigital(multiplicand, multiplier, product)){
+      products.add(product);
+    }
   }
 }
 
-console.log(sum); // 233,168
+var productsum = Array.from(products).reduce(function (a, b) {
+    return a + b;
+})
+
+console.log(productsum);  // 45,228
