@@ -10,6 +10,7 @@ HINT: Some products can be obtained in more than one way so be sure to only incl
 */
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 #define TRUE 1
@@ -29,7 +30,7 @@ int main(){
 
   long n = MAX_MULTIPLICAND * MAX_MULTIPLER;
   long product;
-  products = (long*)calloc(n, sizeof(long));
+  long *products = (long*)calloc(n, sizeof(long));
   int productscount = 0;
 
   for(long multiplicand=0; multiplicand<=MAX_MULTIPLICAND; multiplicand++){
@@ -43,10 +44,17 @@ int main(){
   }
 
   // sort our products
-  
+  qsort(products, n, sizeof(long), cmpfunc);
 
-  long productsum = 0;
-  //printf("%d\n", sum);  //
+  long productsum = products[0];
+  for(long i=1; i<n; i++){
+    if(products[i] != products[i-1]){
+      productsum = productsum + products[i];
+    }
+  }
+
+  free(products);
+  printf("%ld\n", productsum);  // 45,228
   return 0;
 }
 
