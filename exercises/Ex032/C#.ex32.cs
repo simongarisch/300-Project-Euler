@@ -21,7 +21,7 @@ class Ex32{
 
 
   static void Main(){
-    Console.WriteLine(is_pandigital(39, 186, 7254));  // true
+    //Console.WriteLine(is_pandigital(39, 186, 7254));  // true
 
     long product;
     HashSet<long> products = new HashSet<long>();
