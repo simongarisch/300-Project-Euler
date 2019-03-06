@@ -1,12 +1,17 @@
 '''
-If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9.
-The sum of these multiples is 23.
-Find the sum of all the multiples of 3 or 5 below 1000.
+The fraction 49/98 is a curious fraction, as an inexperienced mathematician
+in attempting to simplify it may incorrectly believe that 49/98 = 4/8, which is correct, is obtained by cancelling the 9s.
+
+We shall consider fractions like, 30/50 = 3/5, to be trivial examples.
+
+There are exactly four non-trivial examples of this type of fraction,
+less than one in value, and containing two digits in the numerator and denominator.
+
+If the product of these four fractions is given in its lowest common terms, find the value of the denominator.
 '''
 
-sum = 0
-for i in range(1000):
-    if i % 3 == 0 or i % 5 == 0:
-        sum += i
-
-print(sum) # 233,168
+examples = []
+for denominator in range(10,100):
+    # less than one in value, so numerator < denominator
+    for numerator in range(10,denominator):
+        result = numerator / denominator
