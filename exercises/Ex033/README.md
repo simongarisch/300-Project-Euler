@@ -24,7 +24,7 @@ for denominator in range(10,100):
         for c in numstr:
             if c in denstr:
                 #print(numstr, denstr)
-                # only replace on character in each
+                # only replace one character in each
                 short_num = numstr.replace(c, "", 1)
                 short_den = denstr.replace(c, "", 1)
                 if short_den == "0":
