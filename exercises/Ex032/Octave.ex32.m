@@ -11,6 +11,10 @@ HINT: Some products can be obtained in more than one way so be sure to only incl
 
 function retval = is_pandigital(multiplicand, multiplier, product)
   numbers = strcat(num2str(multiplicand), num2str(multiplier), num2str(product));
+  if length(numbers) != 9
+    retval = false;
+    return;
+  end
   numbers = str2num(sort(numbers));
   if numbers == 123456789
     retval = true;
@@ -21,7 +25,7 @@ end
 #is_pandigital(39, 186, 7254)  # true
 
 products = [];
-for multiplicand = 1:1000
+for multiplicand = 1:2000
   for multiplier = 1:100
     product = multiplicand * multiplier;
     if is_pandigital(multiplicand, multiplier, product)
@@ -30,4 +34,4 @@ for multiplicand = 1:1000
   end
 end
 
-disp(sum(unique(products)))
+disp(sum(unique(products)))  # 45,228
