@@ -15,5 +15,16 @@ for denominator in 10:99
     # less than one in value, so numerator < denominator
     for numerator in 10:(denominator-1)
         # remove non-trivial examples such as 30/50 = 3/5
+        if (numerator % 10) == 0 & (denominator % 10) == 0
+            continue
+        end
+        result = numerator / denominator
+        denstr = string(denominator)
+        numstr = string(numerator)
+        for c in numstr do
+            if occursin(c, denstr)
+                short_num = numstr.replace(c, "", 1)
+            end
+        end
     end
 end
