@@ -15,7 +15,7 @@ for denominator in range(10,100):
     # less than one in value, so numerator < denominator
     for numerator in range(10,denominator):
         # remove non-trivial examples such as 30/50 = 3/5
-        if (numerator % 10) == 0 and (denominator % 10 == 0):
+        if (numerator % 10 == 0) and (denominator % 10 == 0):
             continue
         result = numerator / float(denominator)
         denstr = str(denominator)
