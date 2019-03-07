@@ -44,18 +44,13 @@ for pair in examples:
     productden *= pair[1]
 #print(productnum, productden)  # (387296, 38729600)
 
-no_common_divisors = False
-while not no_common_divisors:
-    minimum_product = min(productnum, productden)
-    for divisor in range(2, minimum_product+1):
-        if productnum % divisor == 0:
-            if productden % divisor == 0:
-                productnum /= divisor
-                productden /= divisor
-                break
-        if divisor == minimum_product:
-            no_common_divisors = True
-    if productnum == 1:
-        no_common_divisors = True
+# find the largest common divisor
+minimum_product = min(productnum, productden)
+for divisor in range(minimum_product, 1, -1):
+    if productnum % divisor == 0:
+        if productden % divisor == 0:
+            productnum /= divisor
+            productden /= divisor
+            break
 
 print(productden)  # 100
