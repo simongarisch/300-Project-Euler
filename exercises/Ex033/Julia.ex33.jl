@@ -10,7 +10,8 @@ less than one in value, and containing two digits in the numerator and denominat
 If the product of these four fractions is given in its lowest common terms, find the value of the denominator.
 =#
 
-examples = []
+numerators = []
+denominators = []
 for denominator in 10:99
     # less than one in value, so numerator < denominator
     for numerator in 10:(denominator-1)
@@ -21,10 +22,38 @@ for denominator in 10:99
         result = numerator / denominator
         denstr = string(denominator)
         numstr = string(numerator)
-        for c in numstr do
+        for c in numstr
             if occursin(c, denstr)
-                short_num = numstr.replace(c, "", 1)
+                short_num = replace(numstr, c => "", count=1)
+                short_den = replace(denstr, c => "", count=1)
+                if short_den == "0"
+                    # dodge the zero division error
+                    continue
+                end
+                new_result = parse(Float64, short_num) / parse(Float64, short_den)
+                if new_result == result
+                    push!(numerators, numerator)
+                    push!(denominators, denominator)
+                    break
+                end
             end
         end
     end
 end
+
+# we have the four examples
+#println(numerators)    # Any[16, 26, 19, 49]
+#println(denominators)  # Any[64, 65, 95, 98]
+productnum = prod(numerators)
+productden = prod(denominators)
+minimum_product = min(productnum, productden)
+for divisor in minimum_product:-1:2
+    global productnum, productden
+    if productnum % divisor == 0
+        if productden % divisor == 0
+            productnum /= divisor
+            productden /= divisor
+        end
+    end
+end
+println(productden)  # 100
