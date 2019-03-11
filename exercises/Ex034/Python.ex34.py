@@ -1,12 +1,29 @@
 '''
-If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9.
-The sum of these multiples is 23.
-Find the sum of all the multiples of 3 or 5 below 1000.
+145 is a curious number, as 1! + 4! + 5! = 1 + 24 + 120 = 145.
+
+Find the sum of all numbers which are equal to the sum of the factorial of their digits.
+
+Note: as 1! = 1 and 2! = 2 are not sums they are not included.
 '''
+import math
 
-sum = 0
-for i in range(1000):
-    if i % 3 == 0 or i % 5 == 0:
-        sum += i
+def is_curious(x):
+    # returns True if x is equal to the sum its digit factorials, False otherwise
+    sumfact = 0
+    for digit in str(x):
+        sumfact += math.factorial(int(digit))
+    #print(x, sumfact)
+    if x == sumfact:
+        return True
+    else:
+        return False
 
-print(sum) # 233,168
+#print(is_curious(145))  # True
+
+MAXINT = int(1e7)
+curious_numbers = []
+for x in range(MAXINT):
+    if is_curious(x):
+        curious_numbers.append(x)
+
+print(sum(curious_numbers))
