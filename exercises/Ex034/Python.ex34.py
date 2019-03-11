@@ -20,10 +20,17 @@ def is_curious(x):
 
 #print(is_curious(145))  # True
 
-MAXINT = int(1e7)
+def get_max_digits():
+    digit = 1
+    while math.factorial(9) * digit > (digit - 1) ** 10:
+        digit += 1
+    return digit
+
+digits = get_max_digits()
 curious_numbers = []
-for x in range(MAXINT):
+#  as 1! = 1 and 2! = 2 are not sums they are not included
+for x in range(3, digits * 10 ** digits):
     if is_curious(x):
         curious_numbers.append(x)
 
-print(sum(curious_numbers))
+print(sum(curious_numbers))  # 40,730
