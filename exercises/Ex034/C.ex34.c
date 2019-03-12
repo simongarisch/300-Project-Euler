@@ -17,6 +17,8 @@ Note: as 1! = 1 and 2! = 2 are not sums they are not included.
 
 long factorial(int n);
 int is_curious(long x);
+int get_max_digits();
+
 
 int main(){
   //printf("%d\n", is_curious(145));  // 1
@@ -24,7 +26,7 @@ int main(){
   long resultcounter = 0;
   long availableslots = 1;
   long *curious_numbers = (long *)malloc(availableslots * sizeof(long));
-  for(long x=3; x<pow(10, digits), x++){
+  for(long x=3; x<pow(10, digits); x++){
     if(is_curious(x)){
       resultcounter++;
       if(resultcounter > availableslots){
@@ -34,7 +36,11 @@ int main(){
     }
   }
 
-  long arrsum = 0; 
+  long arrsum = 0;
+  for(long i=0; i<resultcounter; i++){
+    arrsum = arrsum + curious_numbers[i];
+  }
+  printf("%ld\n", arrsum);  // 40,730
 
   free(curious_numbers);
   return 0;
