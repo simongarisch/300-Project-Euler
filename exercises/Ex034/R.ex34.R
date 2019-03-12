@@ -30,7 +30,7 @@ get_max_digits <- function(){
 digits <- get_max_digits()
 curious_numbers <- c()
 #  as 1! = 1 and 2! = 2 are not sums they are not included
-for(x in 3:(1 * 10 ^ digits)){
+for(x in 3:(10 ^ digits)){
   if(is_curious(x)){
     curious_numbers <- c(curious_numbers, x);
   }

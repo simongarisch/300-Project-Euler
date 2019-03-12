@@ -1,15 +1,36 @@
 #=
-If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9.
-The sum of these multiples is 23.
-Find the sum of all the multiples of 3 or 5 below 1000.
+145 is a curious number, as 1! + 4! + 5! = 1 + 24 + 120 = 145.
+
+Find the sum of all numbers which are equal to the sum of the factorial of their digits.
+
+Note: as 1! = 1 and 2! = 2 are not sums they are not included.
 =#
 
-sum = 0
-for i = 1:999
-    if i % 3 == 0 || i % 5 == 0
-        global sum
-        sum += i
+function is_curious(x::Int)::Bool
+    # # returns True if x is equal to the sum its digit factorials, False otherwise
+    sumfact = 0
+    for digit in split(string(x), "")
+        sumfact += factorial(parse(Int, digit))
+    end
+    if x == sumfact
+        return true
+    else
+        return false
     end
 end
+#println(is_curious(145))  # true
 
-println(sum) # 233,168
+
+function get_max_digits()::Int
+    digit = 1
+    while factorial(9) * digit > (digit - 1) ^ 10
+        digit += 1
+    end
+    return digit
+end
+
+
+digits = get_max_digits()
+curious_numbers = []
+#  as 1! = 1 and 2! = 2 are not sums they are not included
+for x in 3:(10 ** digits)
