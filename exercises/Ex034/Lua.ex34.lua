@@ -1,14 +1,58 @@
 --[[
-If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9.
-The sum of these multiples is 23.
-Find the sum of all the multiples of 3 or 5 below 1000.
+145 is a curious number, as 1! + 4! + 5! = 1 + 24 + 120 = 145.
+
+Find the sum of all numbers which are equal to the sum of the factorial of their digits.
+
+Note: as 1! = 1 and 2! = 2 are not sums they are not included.
 --]]
 
-sum = 0
-for i = 1, 999 do
-  if(i % 3 == 0 or i % 5 == 0) then
-    sum = sum + i
+function factorial(n)
+  if (n == 0) then
+    return 1
+  else
+    return n * factorial(n - 1)
   end
 end
 
-print(sum) -- 233,168
+
+function is_curious(x)
+  -- returns True if x is equal to the sum its digit factorials, False otherwise
+  local sumfact = 0
+  local xstr = tostring(x)
+  for i=1,string.len(xstr) do
+    c = string.sub(xstr, i, i)
+    sumfact = sumfact + factorial(tonumber(c))
+  end
+  if x == sumfact then
+    return true
+  else
+    return false
+  end
+end
+--print(is_curious(145))  -- true
+
+
+function get_max_digits()
+  local digit = 1
+  while factorial(9) * digit > (digit - 1) ^ 10 do
+    digit = digit + 1
+  end
+  return digit
+end
+
+
+digits = get_max_digits()
+curious_numbers = {}
+-- as 1! = 1 and 2! = 2 are not sums they are not included
+for x = 3, (10 ^ digits) do
+  if is_curious(x) then
+    curious_numbers[#curious_numbers+1] = x
+  end
+end
+
+tblsum = 0
+for k,v in pairs(curious_numbers) do
+  tblsum = tblsum + v
+end
+
+print(tblsum)  -- 40,730
