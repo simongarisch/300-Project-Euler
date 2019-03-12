@@ -33,4 +33,10 @@ end
 digits = get_max_digits()
 curious_numbers = []
 #  as 1! = 1 and 2! = 2 are not sums they are not included
-for x in 3:(10 ** digits)
+for x in 3:(10 ^ digits)
+    if is_curious(x)
+        push!(curious_numbers, x)
+    end
+end
+
+println(sum(curious_numbers))  # 40,730
