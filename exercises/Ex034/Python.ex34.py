@@ -29,7 +29,7 @@ def get_max_digits():
 digits = get_max_digits()
 curious_numbers = []
 #  as 1! = 1 and 2! = 2 are not sums they are not included
-for x in range(3, digits * 10 ** digits):
+for x in range(3, 1 * 10 ** digits):
     if is_curious(x):
         curious_numbers.append(x)
 

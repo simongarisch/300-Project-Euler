@@ -1,13 +1,33 @@
 
-# If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9.
-# The sum of these multiples is 23.
-# Find the sum of all the multiples of 3 or 5 below 1000.
+# 145 is a curious number, as 1! + 4! + 5! = 1 + 24 + 120 = 145.
+#
+# Find the sum of all numbers which are equal to the sum of the factorial of their digits.
+#
+# Note: as 1! = 1 and 2! = 2 are not sums they are not included.
 
-sum <- 0
-for(i in 1:999){
-  if((i %% 3 == 0) || (i %% 5 == 0)){
-    sum <- sum + i
+is_curious <- function(x){
+  # returns True if x is equal to the sum its digit factorials, False otherwise
+  sumfact <- 0
+  for(digit in strsplit(as.character(x), "")[[1]]){
+    sumfact <- sumfact + factorial(as.numeric(digit))
+  }
+  if(x == sumfact){
+    return(TRUE)
+  }else{
+    return(FALSE)
   }
 }
+#print(is_curious(145))  # TRUE
 
-print(sum) # 233,168
+get_max_digits <- function(){
+  digit <- 1
+  while(factorial(9) * digit > (digit - 1) ^ 10){
+    digit <- digit + 1
+  }
+  return(digit)
+}
+
+digits <- get_max_digits()
+curious_numbers <- c()
+#  as 1! = 1 and 2! = 2 are not sums they are not included
+for(x = 3; x <= 1 * 10 ^ digits)
