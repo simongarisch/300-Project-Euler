@@ -1,13 +1,21 @@
 
-# If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9.
-# The sum of these multiples is 23.
-# Find the sum of all the multiples of 3 or 5 below 1000.
+# The number, 197, is called a circular prime because all rotations of the digits: 197, 971, and 719, are themselves prime.
+#
+# There are thirteen such primes below 100: 2, 3, 5, 7, 11, 13, 17, 31, 37, 71, 73, 79, and 97.
+#
+# How many circular primes are there below one million?
 
-sum <- 0
-for(i in 1:999){
-  if((i %% 3 == 0) || (i %% 5 == 0)){
-    sum <- sum + i
+digit_rotations <- function(x){
+  # returns a vector of results from rotating the digits in x
+  xstr <- as.character(x)
+  xlen <- nchar(xstr)
+  rotations <- c()
+  for(i in 1:xlen){
+    left <- substr(xstr, 0, i-1)
+    right <- substr(xstr, i, xlen)
+    rotation <- as.numeric(paste0(right, left))
+    rotations <- c(rotations, rotation)
   }
+  return(rotations)
 }
-
-print(sum) # 233,168
+print(digit_rotations(197))  # [1] 197 971 719
