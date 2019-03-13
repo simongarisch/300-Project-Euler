@@ -65,7 +65,6 @@ for(x in 1:(1e6-1)){
       counter <- counter + 1
     }
   }
-  print(x)
 }
 
 print(counter)
