@@ -5,21 +5,19 @@ There are thirteen such primes below 100: 2, 3, 5, 7, 11, 13, 17, 31, 37, 71, 73
 
 How many circular primes are there below one million?
 '''
-import itertools
 import sympy
 
 def digit_rotations(x):
     # returns a list of results from rotating the digits in x
-    digits = list(str(x))
+    xstr = str(x)
     rotations = []
-    for i in range(len(digits)):
-        numstr = digits[i]
-        for j in range(len(digits)):
-            if i != j:
-                numstr += digits[j]
-        rotations.append(int(numstr))
+    for i in range(len(xstr)):
+        left = xstr[:i]
+        right = xstr[i:]
+        rotation = int(right + left)
+        rotations.append(rotation)
     return rotations
-print(digit_rotations(197))  # [197, 917, 719]
+#print(digit_rotations(197))  # [197, 971, 719]
 
 
 def all_primes(numlist):
@@ -34,8 +32,12 @@ def is_circular_prime(x):
     # returns True if x is a circular prime, false otherwise
     rotations = digit_rotations(x)
     return all_primes(rotations)
-print(is_circular_prime(197))  #
+#print(is_circular_prime(197))  # True
 
+counter = 0
+for x in range(1, int(1e6)):
+    if sympy.isprime(x):
+        if(is_circular_prime(x)):
+            counter += 1
 
-for i in range(1, int(1e6)):
-    pass
+print(counter)  # 55
