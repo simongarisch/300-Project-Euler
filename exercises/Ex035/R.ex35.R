@@ -5,6 +5,22 @@
 #
 # How many circular primes are there below one million?
 
+is_prime <- function(x){
+  if(x < 2){
+    return(FALSE)
+  }
+  if(x == 2){
+    return(TRUE)
+  }
+  for(i in 3:x-1){
+    if(x %% i == 0){
+      return(FALSE)
+    }
+  }
+  return(TRUE)
+}
+
+
 digit_rotations <- function(x){
   # returns a vector of results from rotating the digits in x
   xstr <- as.character(x)
@@ -18,4 +34,38 @@ digit_rotations <- function(x){
   }
   return(rotations)
 }
-print(digit_rotations(197))  # [1] 197 971 719
+#print(digit_rotations(197))  # 197 971 719
+
+
+all_primes <- function(numvec){
+  # returns true if all of the numbers in numvec are prime, false otherwise
+  for(i in 1:length(numvec)){
+    number <- numvec[i]
+    if(!is_prime(number)){
+      return(FALSE)
+    }else{
+      return(TRUE)
+    }
+  }
+}
+
+
+is_circular_prime <- function(x){
+  # returns true if x is a circular prime, false otherwise
+  rotations <- digit_rotations(x)
+  return(all_primes(rotations))
+}
+#print(is_circular_prime(197))  # TRUE
+
+
+counter <- 0
+for(x in 1:(1e6-1)){
+  if(is_prime(x)){
+    if(is_circular_prime(x)){
+      counter <- counter + 1
+    }
+  }
+  print(x)
+}
+
+print(counter)
