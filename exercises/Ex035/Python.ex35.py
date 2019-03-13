@@ -21,7 +21,7 @@ def digit_rotations(x):
 
 
 def all_primes(numlist):
-    # returns true if all of the numbers in numlist are prime, false otherwise
+    # returns Frue if all of the numbers in numlist are prime, False otherwise
     for x in numlist:
         if not sympy.isprime(x):
             return False
@@ -29,7 +29,7 @@ def all_primes(numlist):
 
 
 def is_circular_prime(x):
-    # returns True if x is a circular prime, false otherwise
+    # returns True if x is a circular prime, False otherwise
     rotations = digit_rotations(x)
     return all_primes(rotations)
 #print(is_circular_prime(197))  # True
