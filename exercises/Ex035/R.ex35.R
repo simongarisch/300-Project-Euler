@@ -12,7 +12,7 @@ is_prime <- function(x){
   if(x == 2){
     return(TRUE)
   }
-  for(i in 3:x-1){
+  for(i in 2:as.integer(x ^ 0.5 + 1)){
     if(x %% i == 0){
       return(FALSE)
     }
@@ -43,10 +43,9 @@ all_primes <- function(numvec){
     number <- numvec[i]
     if(!is_prime(number)){
       return(FALSE)
-    }else{
-      return(TRUE)
     }
   }
+  return(TRUE)
 }
 
 
@@ -67,4 +66,4 @@ for(x in 1:(1e6-1)){
   }
 }
 
-print(counter)
+print(counter)  # 55

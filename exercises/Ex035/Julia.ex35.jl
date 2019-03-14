@@ -14,7 +14,7 @@ function is_prime(x::Int)::Bool
     if x == 2
         return true
     end
-    for i::Int in 2:(x-1)
+    for i::Int in 2:(floor(x ^ 0.5) + 1)
         if x % i == 0
             return false
         end
