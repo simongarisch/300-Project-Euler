@@ -5,7 +5,9 @@ There are thirteen such primes below 100: 2, 3, 5, 7, 11, 13, 17, 31, 37, 71, 73
 
 How many circular primes are there below one million?
 
-For debugging: https://cets.seas.upenn.edu/answers/gcc.html
+For debugging: http://teaching.csse.uwa.edu.au/units/CITS2230/resources/gdb-intro.html
+gcc -ggdb C.ex35.c
+gdb a
 */
 
 #include <stdio.h>
@@ -45,15 +47,15 @@ int main(){
   long counter = 0;
   for(long x=1; x<1e6; x++){
     if(is_prime(x)){
-      printf("%d is prime\n", x);
+      //printf("%ld is prime\n", x);
       if(is_circular_prime(x)){
-        printf("---%d is circular prime\n", x);
+        //printf("---%ld is circular prime\n", x);
         counter++;
       }
     }
   }
 
-  printf("%ld\n", counter);
+  printf("%ld\n", counter);  // 55
   return 0;
 }
 
@@ -81,22 +83,16 @@ struct Rotations digit_rotations(long x){
   sprintf(xstr, "%ld", x);
   int xlen = strlen(xstr);
 
-  long slots = 1;
   struct Rotations rota;
-  rota.counter = 0;
-  rota.rotationsarr = (long *)malloc(slots * sizeof(long));
+  rota.counter = xlen;
+  rota.rotationsarr = (long *)malloc(rota.counter * sizeof(long));
   char left[MAXCHAR], right[MAXCHAR], rotation[MAXCHAR];
   for(int i=1; i<=xlen; i++){
     slice_str(xstr, left, 0, i-1);
     slice_str(xstr, right, i, xlen);
     strcpy(rotation, right);
     strcat(rotation, left);
-
-    rota.counter++;
-    if(rota.counter > slots){
-      rota.rotationsarr = (long *)realloc(rota.rotationsarr, rota.counter);
-    }
-    rota.rotationsarr[rota.counter-1] = atol(rotation);
+    rota.rotationsarr[i-1] = atol(rotation);
   }
   return rota;
 }
