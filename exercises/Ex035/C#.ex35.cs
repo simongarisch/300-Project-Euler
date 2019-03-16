@@ -65,7 +65,7 @@ class Ex35{
 
 
   static bool allprimes(List<long> rotations){
-    // returns true if all of the numbers in numlist are prime, false otherwise
+    // returns true if all of the numbers in rotations are prime, false otherwise
     foreach(long rotation in rotations){
       if(!isprime(rotation)){
         return false;
