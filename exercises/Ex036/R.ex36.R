@@ -5,7 +5,7 @@
 #
 # (Please note that the palindromic number, in either base, may not include leading zeros.)
 library("stringi")
- library("binaryLogic")
+library("binaryLogic")
 
 #print(paste(as.binary(585), collapse = ""))  # "1001001001"
 
