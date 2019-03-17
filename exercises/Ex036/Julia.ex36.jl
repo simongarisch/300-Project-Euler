@@ -1,15 +1,32 @@
 #=
-If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9.
-The sum of these multiples is 23.
-Find the sum of all the multiples of 3 or 5 below 1000.
+The decimal number, 585 = 1001001001 (binary), is palindromic in both bases.
+
+Find the sum of all numbers, less than one million, which are palindromic in base 10 and base 2.
+
+(Please note that the palindromic number, in either base, may not include leading zeros.)
 =#
 
-sum = 0
-for i = 1:999
-    if i % 3 == 0 || i % 5 == 0
-        global sum
-        sum += i
+#println(string(585, base=2))  # 1001001001
+
+function is_both_bases_palindromic(x::Int)::Bool
+    # returns true if x is palindromic in base 10 and base 2, false otherwise.
+    xstr10::String = string(x)
+    xstr2::String = string(x, base=2)
+    if xstr10 == reverse(xstr10)
+        if xstr2 == reverse(xstr2)
+            return true
+        end
+    end
+    return false
+end
+#println(is_both_bases_palindromic(585))  # true
+
+totsum = 0
+for x in 1:convert(Int, 1e6-1)
+    if is_both_bases_palindromic(x)
+        global totsum
+        totsum += x
     end
 end
 
-println(sum) # 233,168
+println(totsum)  # 872,187
