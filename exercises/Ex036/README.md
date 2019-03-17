@@ -1,4 +1,4 @@
-## Project Euler Exercise 35
+## Project Euler Exercise 36
 
 The decimal number, 585 = 1001001001 (binary), is palindromic in both bases.
 
