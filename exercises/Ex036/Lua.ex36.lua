@@ -1,14 +1,42 @@
 --[[
-If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9.
-The sum of these multiples is 23.
-Find the sum of all the multiples of 3 or 5 below 1000.
+The decimal number, 585 = 1001001001 (binary), is palindromic in both bases.
+
+Find the sum of all numbers, less than one million, which are palindromic in base 10 and base 2.
+
+(Please note that the palindromic number, in either base, may not include leading zeros.)
 --]]
 
-sum = 0
-for i = 1, 999 do
-  if(i % 3 == 0 or i % 5 == 0) then
-    sum = sum + i
+function tobin(x)
+  local t = {}
+  while x > 0 do
+    rem = x % 2
+    t[#t+1] = rem
+    x = (x - rem) / 2
+  end
+  return table.concat(t)
+end
+--print(tobin(585)) -- 1001001001
+
+
+function is_both_bases_palindromic(x)
+  -- returns true if x is palindromic in base 10 and base 2, false otherwise.
+  local xstr10 = tostring(x)
+  local xstr2 = tobin(x)
+  if xstr10 == string.reverse(xstr10) then
+    if xstr2 == string.reverse(xstr2) then
+      return true
+    end
+  end
+  return false
+end
+--print(is_both_bases_palindromic(585))  -- true
+
+
+totsum = 0
+for x = 1,1e6 do
+  if is_both_bases_palindromic(x) then
+    totsum = totsum + x
   end
 end
 
-print(sum) -- 233,168
+print(totsum)  -- 872,187
