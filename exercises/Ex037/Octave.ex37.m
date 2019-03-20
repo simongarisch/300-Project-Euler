@@ -1,14 +1,48 @@
 %{
-If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9.
-The sum of these multiples is 23.
-Find the sum of all the multiples of 3 or 5 below 1000.
+The number 3797 has an interesting property. Being prime itself, it is possible to continuously remove digits from left to right, and remain prime at each stage: 3797, 797, 97, and 7. Similarly we can work from right to left: 3797, 379, 37, and 3.
+
+Find the sum of the only eleven primes that are both truncatable from left to right and right to left.
+
+NOTE: 2, 3, 5, and 7 are not considered to be truncatable primes.
 %}
 
-sum = 0;
-for i = 1:999
-  if(mod(i,3) == 0 || mod(i,5) == 0)
-    sum += i;
-  end
-end
+STOP = 11;
 
-disp(sum) # 233,168
+function truncatable = istruncatable(n)
+  # returns true for primes that are both truncatable
+  # from left to right and right to left.
+  nstr = num2str(n);
+  nlen = length(nstr);
+  for i = 1:nlen
+    left = substr(nstr, 1, i-1);
+    right = substr(nstr, i, nlen-i+1);
+    if length(left) != 0
+      if !isprime(str2num(left))
+        truncatable = false;
+        return;
+      endif
+    endif
+    if !isprime(str2num(right))
+      truncatable = false;
+      return;
+    endif
+  endfor
+  truncatable = true;
+endfunction
+#istruncatable(3797)  # 1
+
+
+found = 0;
+totsum = 0;
+n = 8;
+while found < STOP
+  if isprime(n)
+    if istruncatable(n)
+      found += 1;
+      totsum += 1;
+    endif
+  endif
+  n += 1;
+endwhile
+
+disp(totsum)  # 748,317
