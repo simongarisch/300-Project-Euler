@@ -27,8 +27,17 @@ int main(){
   long totsum = 0;
   long n = 8;
 
-  
+  while(found < STOP){
+    if(isprime(n)){
+      if(istruncatable(n)){
+        found++;
+        totsum = totsum + n;
+      }
+    }
+    n++;
+  }
 
+  printf("%ld\n", totsum);  // 748,317
   return 0;
 }
 
