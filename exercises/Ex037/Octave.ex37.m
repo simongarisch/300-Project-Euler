@@ -39,7 +39,7 @@ while found < STOP
   if isprime(n)
     if istruncatable(n)
       found += 1;
-      totsum += 1;
+      totsum += n;
     endif
   endif
   n += 1;
