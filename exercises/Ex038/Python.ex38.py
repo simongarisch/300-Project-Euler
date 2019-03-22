@@ -12,21 +12,40 @@ giving the pandigital, 918273645, which is the concatenated product of 9 and (1,
 
 What is the largest 1 to 9 pandigital 9-digit number that can be formed as the
 concatenated product of an integer with (1,2, ... , n) where n > 1?
-
-NOTES:
-n > 1, so n must be at least 2.
-Consider products after they are sorted in descending order.
-if n == 2 then the largest possible products could be 98765, 4321
-if n == 3 then the largest possible products could be 987, 645, 321
-Search in the range 1 -> (9/n + 1 first digits of 987654321)
-when hunting for pandigital numbers with a given level of n.
 '''
 
-DIGITS = "987654321"
+def pandigital(x, n):
+    # returns pandigital value if ispandigital
+    # 0 otherwise
+    results = []
+    for i in range(1, n+1):
+        results.append(str(x * i))
+    pnum = int("".join(results))
+    concat = "".join(sorted(str(pnum)))
+    if concat == "123456789":
+        return pnum
+    else:
+        return 0
+#print(pandigital(192, 3))  # 192384576
 
-for n in range(2, 10):
-    numlen = int(9/n+1)
-    stopat = int(DIGITS[:numlen])
-    #print(n, stopat)
-    for i in range(stopat):
-        pass
+
+def maxpandigitaln(x):
+    # check if x is pandigital for any value of n
+    # where n > 1
+    # because we are doing a concat, n < 10
+    pan = 0
+    for n in range(2, 11):
+        pan = max(pan, pandigital(x, n))
+    return pan
+#print(maxpandigitaln(192))  # 192384576
+
+
+# if n = 2 then x can be no greater than 98765
+# start from there and work our way down
+x = 98765
+maxpan = 0
+while x > 0:
+    maxpan = max(maxpan, maxpandigitaln(x))
+    x -= 1
+
+print(maxpan)  # 932,718,654
