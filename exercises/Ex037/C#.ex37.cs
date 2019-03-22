@@ -6,14 +6,69 @@ Find the sum of all the multiples of 3 or 5 below 1000.
 
 using System;
 
-class Ex1{
+class Ex37{
+
+  static int STOP = 11;
+
   static void Main(){
-    int sum = 0;
-    for(int i=1; i<1000; i++){
-      if(i % 3 == 0 || i % 5 == 0){
-        sum += i;
+    int found = 0;
+    long totsum = 0;
+    long n = 8;
+
+    while(found < STOP){
+      if(isprime(n)){
+        if(istruncatable(n)){
+          found++;
+          totsum += n;
+        }
+      }
+      n++;
+    }
+
+    Console.WriteLine(totsum);  // 748,317
+  }
+
+
+  static bool isprime(long n){
+    // will return true if n is prime, false otherwise
+    if(n < 2){
+      return false;
+    }
+    if(n == 2){
+      return true;
+    }
+    for(long i=2; i<=Math.Pow(n,0.5); i++){
+      if(n % i == 0){
+        return false;
       }
     }
-    Console.WriteLine(sum); // 233,168
+    return true;
   }
+
+
+  static bool istruncatable(long n){
+    // returns true for primes that are both truncatable
+    // from left to right and right to left.
+    string nstr = n.ToString();
+    int nlen = nstr.Length;
+    string left, right;
+
+    for(int i=1; i<=nlen; i++){
+      left = nstr.Substring(0, i);
+      right = nstr.Substring(i, nlen-i);
+
+      if(left.Length > 0){
+        if(!isprime(long.Parse(left))){
+          return false;
+        }
+      }
+      if(right.Length > 0){
+        if(!isprime(long.Parse(right))){
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+
 }
