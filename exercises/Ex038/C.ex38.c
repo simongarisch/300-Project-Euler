@@ -18,15 +18,34 @@ concatenated product of an integer with (1,2, ... , n) where n > 1?
 #include <stdlib.h>
 #include <string.h>
 
-#define TRUE 1
-#define FALSE 0
 #define MAXCHAR 20
+#define MAX(a,b) (((a)>(b))?(a):(b))
 
+int charcmp(const void * a, const void * b);
 unsigned long long int pandigital(int x, int n);
+unsigned long long int maxpandigitaln(int x);
+
 
 int main(){
-  pandigital(192, 3);  // 192384576
+  //printf("%llu\n", pandigital(192, 3));  // 192384576
+  int x = 98765;
+  unsigned long long int maxpan = 0;
+
+  while(x > 0){
+    maxpan = MAX(maxpan, maxpandigitaln(x));
+    x--;
+  }
+
+  printf("%llu\n", maxpan);  // 932,718,654
   return 0;
+}
+
+
+int charcmp(const void * a, const void * b){
+  int aint, bint;
+  aint = *(char*)a - '0';
+  bint = *(char*)b - '0';
+  return aint - bint;
 }
 
 
@@ -45,5 +64,24 @@ unsigned long long int pandigital(int x, int n){
   //printf("%s\n", results);
   char **pend;
   unsigned long long int pnum = strtoull(results, pend, 10);
-  return pnum;
+
+  qsort(results, strlen(results), sizeof(char), charcmp);
+  //printf("%s\n", results);
+  if(strcmp(results, "123456789") == 0){
+    return pnum;
+  }else{
+    return 0;
+  }
+}
+
+
+unsigned long long int maxpandigitaln(int x){
+  // check if x is pandigital for any value of n
+  // where n > 1
+  // because we are doing a concat, n < 10
+  unsigned long long int maxpan = 0;
+  for(int n=2; n<=10; n++){
+    maxpan = MAX(maxpan, pandigital(x, n));
+  }
+  return maxpan;
 }
