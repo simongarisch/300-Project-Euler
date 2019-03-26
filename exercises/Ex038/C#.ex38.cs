@@ -19,7 +19,7 @@ using System;
 class Ex38{
 
   static void Main(){
-    //Console.WriteLine((pandigital(192, 3)));  // 192384576
+    //Console.WriteLine(pandigital(192, 3));  // 192384576
     int x = 98765;
     long maxpan = 0;
     while(x > 0){
