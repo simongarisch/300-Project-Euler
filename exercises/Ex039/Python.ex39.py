@@ -12,7 +12,7 @@ from collections import defaultdict
 # An integer triangle or integral triangle is a triangle all of whose
 # sides have lengths that are integers.
 # Right angled triangles must satisfy a^2 + b^2 == c^2
-# Looks like they are also looking where a < b < c
+# Looks like they are also want a < b < c
 perimeters = defaultdict(lambda: 0)
 # if p = 1000, then each side must be < 1000
 for a in range(1, 1000):
