@@ -1,14 +1,35 @@
 --[[
-If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9.
-The sum of these multiples is 23.
-Find the sum of all the multiples of 3 or 5 below 1000.
+If p is the perimeter of a right angle triangle with integral length sides, {a,b,c},
+there are exactly three solutions for p = 120.
+
+{20,48,52}, {24,45,51}, {30,40,50}
+
+For which value of p <= 1000, is the number of solutions maximised?
 --]]
 
-sum = 0
-for i = 1, 999 do
-  if(i % 3 == 0 or i % 5 == 0) then
-    sum = sum + i
+tblperi = {}
+for a = 1,1000 do
+  for b = (a+1), (1000-a) do
+    for c = (b+1), (1000-a-b) do
+      if a^2 + b^2 == c^2 then
+        perimeter = tostring(a + b + c)
+        if tblperi[perimeter] == nil then
+          tblperi[perimeter] = 1
+        else
+          tblperi[perimeter] = tblperi[perimeter] + 1
+        end
+      end
+    end
   end
 end
 
-print(sum) -- 233,168
+maxp = 0
+maxn = 0
+for k,v in pairs(tblperi) do
+  if v > maxn then
+    maxn = v
+    maxp = k
+  end
+end
+
+print(maxp)  -- 840
