@@ -1,18 +1,43 @@
 /*
-If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9.
-The sum of these multiples is 23.
-Find the sum of all the multiples of 3 or 5 below 1000.
+If p is the perimeter of a right angle triangle with integral length sides, {a,b,c},
+there are exactly three solutions for p = 120.
+
+{20,48,52}, {24,45,51}, {30,40,50}
+
+For which value of p <= 1000, is the number of solutions maximised?
 */
 
 #include <iostream>
+#include <cstdlib>
+#include <cmath>
+
+using namespace std;
+
 
 int main(){
-  int sum = 0;
-  for(int i=1; i<1000; i++){
-    if(i % 3 == 0 || i % 5 == 0){
-      sum = sum + i;
+  long *perimeters = (long *)calloc(1001, sizeof(long));
+  long perimeter;
+  for(int a=1; a<=1000; a++){
+    for(int b=(a+1); b<=(1000-a); b++){
+      for(int c=(b+1); c<=(1000-a-b); c++){
+        if(pow(a,2) + pow(b,2) == pow(c,2)){
+          perimeter = a + b + c;
+          perimeters[perimeter] = perimeters[perimeter] + 1;
+        }
+      }
     }
   }
-  std::cout << sum << std::endl; // 233,168
+
+  long v, maxp=0, maxn=0;
+  for(int i=1; i<=1000; i++){
+    v = perimeters[i];
+    if(v > maxn){
+      maxn = v;
+      maxp = i;
+    }
+  }
+
+  cout << maxp << endl;  // 840
+  free(perimeters);
   return 0;
 }
