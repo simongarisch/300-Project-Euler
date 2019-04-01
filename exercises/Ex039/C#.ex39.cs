@@ -14,7 +14,7 @@ using System.Linq;
 class Ex39{
 
   static void Main(){
-    var perimeters = Enumerable.Repeat<long>(1, 1001).ToArray();
+    var perimeters = Enumerable.Repeat<long>(0, 1001).ToArray();
     long perimeter;
     for(int a=1; a<=1000; a++){
       for(int b=(a+1); b<=(1000-a); b++){
