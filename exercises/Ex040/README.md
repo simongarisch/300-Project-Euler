@@ -1,14 +1,33 @@
-## Project Euler Exercise 1
+## Project Euler Exercise 40
 
-If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9.
-The sum of these multiples is 23.
-Find the sum of all the multiples of 3 or 5 below 1000.
+An irrational decimal fraction is created by concatenating the positive integers:
+
+0.12345678910 1 112131415161718192021...
+
+It can be seen that the 12th digit of the fractional part is 1.
+
+If dn represents the nth digit of the fractional part, find the value of the following expression.
+d1 * d10 * d100 * d1000 * d10000 * d100000 * d1000000
 
 ```python
-sum = 0
-for i in range(1000):
-    if i % 3 == 0 or i % 5 == 0:
-        sum += i
+num = 0
+digit_counter = 0
+mult = 1
+result = 1
 
-print(sum) # 233,168
+while mult <= 1e6:
+    found = False
+    while not found:
+        num += 1
+        numstr = str(num)
+        for ch in numstr:
+            digit = int(ch)
+            digit_counter += 1
+            if mult == digit_counter:
+                result *= digit
+                found = True
+                #print("digit_counter:", digit_counter, ", digit: ", digit)
+    mult *= 10
+
+print(result)  # 210
 ```
