@@ -1,15 +1,35 @@
 #=
-If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9.
-The sum of these multiples is 23.
-Find the sum of all the multiples of 3 or 5 below 1000.
+An irrational decimal fraction is created by concatenating the positive integers:
+
+0.12345678910 1 112131415161718192021...
+
+It can be seen that the 12th digit of the fractional part is 1.
+
+If dn represents the nth digit of the fractional part, find the value of the following expression.
+d1 * d10 * d100 * d1000 * d10000 * d100000 * d1000000
 =#
 
-sum = 0
-for i = 1:999
-    if i % 3 == 0 || i % 5 == 0
-        global sum
-        sum += i
+num = 0
+digit_counter = 0
+mult = 1
+result = 1
+
+while mult <= 1e6
+    found = false
+    global num, digit_counter, mult, result
+    while !found
+        num += 1
+        numstr = string(num)
+        for ch in split(numstr, "")
+            digit = parse(Int,ch)
+            digit_counter += 1
+            if mult == digit_counter
+                result *= digit
+                found = true
+            end
+        end
     end
+    mult *= 10
 end
 
-println(sum) # 233,168
+println(result)  # 210
