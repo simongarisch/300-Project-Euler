@@ -40,7 +40,6 @@ class Ex40{
       mult *= 10;
     }
 
-
     Console.WriteLine(result);  // 210
   }
 
