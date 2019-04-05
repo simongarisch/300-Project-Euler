@@ -1,19 +1,47 @@
 /*
-If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9.
-The sum of these multiples is 23.
-Find the sum of all the multiples of 3 or 5 below 1000.
+An irrational decimal fraction is created by concatenating the positive integers:
+
+0.12345678910 1 112131415161718192021...
+
+It can be seen that the 12th digit of the fractional part is 1.
+
+If dn represents the nth digit of the fractional part, find the value of the following expression.
+d1 * d10 * d100 * d1000 * d10000 * d100000 * d1000000
 */
 
 using System;
 
-class Ex1{
+class Ex40{
+
   static void Main(){
-    int sum = 0;
-    for(int i=1; i<1000; i++){
-      if(i % 3 == 0 || i % 5 == 0){
-        sum += i;
+    long num = 0;
+    long digit_counter = 0;
+    long mult = 1;
+    long result = 1;
+
+    bool found;
+    int digit;
+    string numstr;
+
+    while(mult <= 1e6){
+      found = false;
+      while(!found){
+        num++;
+        numstr = num.ToString();
+        for(int i=0; i<numstr.Length; i++){
+          digit = numstr[i] - '0';
+          digit_counter++;
+          if(mult == digit_counter){
+            result = result * digit;
+            found = true;
+          }
+        }
       }
+      mult *= 10;
     }
-    Console.WriteLine(sum); // 233,168
+
+
+    Console.WriteLine(result);  // 210
   }
+
 }
