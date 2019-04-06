@@ -4,29 +4,23 @@ digits 1 to n exactly once. For example, 2143 is a 4-digit pandigital and is als
 
 What is the largest n-digit pandigital prime that exists?
 '''
+import itertools
 import sympy
 
 DIGITS = "123456789"
-DIGLEN = len(DIGITS)
 
-def ispandigital(n):
-    # returns true if n is pandigital, false otherwise
-    nstr = "".join(sorted(str(n)))
-    nlen = len(nstr)
-    if nstr == DIGITS[:nlen]:
-        return True
-    else:
-        return False
-#print(ispandigital(2143))  # True
+n = len(DIGITS)
+largest = 0
 
+while n >= 1 and largest==0:
+    digits = DIGITS[:n]
+    perms = sorted(list(itertools.permutations(digits, n)), reverse=True)
+    #print("%s: We have %d permutations for n=%d" % (digits, len(perms), n))
+    for perm in perms:
+        val = int("".join(perm))
+        if sympy.isprime(val):
+            largest = val
+            break
+    n -= 1
 
-maxp = 0
-primes = list(sympy.primerange(2, int(1e10)))
-print("We have %d primes" % len(primes))
-'''
-for prime in sympy.primerange(1, int(1e10)):
-    if ispandigital(prime):
-        maxp = prime
-
-print(maxp)  #
-'''
+print(largest)  # 7,652,413

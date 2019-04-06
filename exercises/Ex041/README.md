@@ -1,14 +1,29 @@
-## Project Euler Exercise 1
+## Project Euler Exercise 41
 
-If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9.
-The sum of these multiples is 23.
-Find the sum of all the multiples of 3 or 5 below 1000.
+We shall say that an n-digit number is pandigital if it makes use of all the
+digits 1 to n exactly once. For example, 2143 is a 4-digit pandigital and is also prime.
+
+What is the largest n-digit pandigital prime that exists?
 
 ```python
-sum = 0
-for i in range(1000):
-    if i % 3 == 0 or i % 5 == 0:
-        sum += i
+import itertools
+import sympy
 
-print(sum) # 233,168
+DIGITS = "123456789"
+
+n = len(DIGITS)
+largest = 0
+
+while n >= 1 and largest==0:
+    digits = DIGITS[:n]
+    perms = sorted(list(itertools.permutations(digits, n)), reverse=True)
+    #print("%s: We have %d permutations for n=%d" % (digits, len(perms), n))
+    for perm in perms:
+        val = int("".join(perm))
+        if sympy.isprime(val):
+            largest = val
+            break
+    n -= 1
+
+print(largest)  # 7,652,413
 ```
