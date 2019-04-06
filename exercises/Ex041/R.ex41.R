@@ -1,13 +1,13 @@
 
-# If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9.
-# The sum of these multiples is 23.
-# Find the sum of all the multiples of 3 or 5 below 1000.
+# We shall say that an n-digit number is pandigital if it makes use of all the
+# digits 1 to n exactly once. For example, 2143 is a 4-digit pandigital and is also prime.
+#
+# What is the largest n-digit pandigital prime that exists?
+library(matlab)
+library(gtools)
 
-sum <- 0
-for(i in 1:999){
-  if((i %% 3 == 0) || (i %% 5 == 0)){
-    sum <- sum + i
-  }
-}
+DIGITS <- "123456789"
 
-print(sum) # 233,168
+print(matlab::isprime(7))
+v = base::strsplit(DIGITS, "")[[1]]
+print(gtools::permutations(n=3,r=3,v=v,repeats.allowed=F))
