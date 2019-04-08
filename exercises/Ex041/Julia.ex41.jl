@@ -1,15 +1,45 @@
 #=
-If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9.
-The sum of these multiples is 23.
-Find the sum of all the multiples of 3 or 5 below 1000.
-=#
+We shall say that an n-digit number is pandigital if it makes use of all the
+digits 1 to n exactly once. For example, 2143 is a 4-digit pandigital and is also prime.
 
-sum = 0
-for i = 1:999
-    if i % 3 == 0 || i % 5 == 0
-        global sum
-        sum += i
+What is the largest n-digit pandigital prime that exists?
+=#
+using Combinatorics
+
+DIGITS = "123456789"
+
+n = length(DIGITS)
+largest = 0
+
+
+function isprime(n::Int)::Bool
+    # will return true if n is prime, false otherwise
+    if n < 2
+        return false
     end
+    if n == 2
+        return true
+    end
+    for i::Int in 2:(floor(n ^ 0.5) + 1)
+        if n % i == 0
+            return false
+        end
+    end
+    return true
 end
 
-println(sum) # 233,168
+
+while n >= 1 && largest==0
+    digits = DIGITS[1:n]
+    perms = reverse([i for i in Combinatorics.permutations(digits)])
+    for perm in perms
+        val = parse(Int, join(perm))
+        if isprime(val)
+            global largest = val
+            break
+        end
+    end
+    global n -= 1
+end
+
+print(largest)  # 7,652,413
