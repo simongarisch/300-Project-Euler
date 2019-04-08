@@ -9,10 +9,6 @@ library(stringi)
 
 DIGITS <- "123456789"
 
-#print(matlab::isprime(7))
-#v = base::strsplit(DIGITS, "")[[1]]
-#print(gtools::permutations(n=3,r=3,v=v,repeats.allowed=F))
-
 n <- nchar(DIGITS)
 largest <- 0
 
