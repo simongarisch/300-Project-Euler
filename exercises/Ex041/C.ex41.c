@@ -1,18 +1,36 @@
 /*
-If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9.
-The sum of these multiples is 23.
-Find the sum of all the multiples of 3 or 5 below 1000.
+We shall say that an n-digit number is pandigital if it makes use of all the
+digits 1 to n exactly once. For example, 2143 is a 4-digit pandigital and is also prime.
+
+What is the largest n-digit pandigital prime that exists?
 */
 
 #include <stdio.h>
 
+int isprime(long n);
+
+#define DIGITS "123456789"
+#define TRUE 1
+#define FALSE 0
+
 int main(){
-  int sum = 0;
-  for(int i=1; i<1000; i++){
-    if(i % 3 == 0 || i % 5 == 0){
-      sum = sum + i;
+
+  return 0;
+}
+
+
+int isprime(long n){
+  // will return true if x is prime, false otherwise
+  if(n < 2){
+    return FALSE;
+  }
+  if(n == 2){
+    return TRUE;
+  }
+  for(long i=2; i<=pow(n, 0.5); i++){
+    if(n % i == 0){
+      return FALSE;
     }
   }
-  printf("%d\n", sum); // 233,168
-  return 0;
+  return TRUE;
 }
