@@ -20,7 +20,7 @@ int main(){
 
 
 int isprime(long n){
-  // will return true if x is prime, false otherwise
+  // will return true if n is prime, false otherwise
   if(n < 2){
     return FALSE;
   }
