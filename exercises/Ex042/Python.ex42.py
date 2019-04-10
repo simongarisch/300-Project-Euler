@@ -23,7 +23,7 @@ with open(file_path, "r") as fi:
     content = fi.read()
 #print(content)
 
-# generage some triangle numbers
+# generate some triangle numbers
 cumsum = 0
 tnums = []
 for i in range(1,100):
