@@ -1,18 +1,147 @@
 /*
-If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9.
-The sum of these multiples is 23.
-Find the sum of all the multiples of 3 or 5 below 1000.
+The nth term of the sequence of triangle numbers is given by,
+tn = 0.5n(n+1); so the first ten triangle numbers are:
+
+1, 3, 6, 10, 15, 21, 28, 36, 45, 55, ...
+
+By converting each letter in a word to a number corresponding to its
+alphabetical position and adding these values we form a word value.
+For example, the word value for SKY is 19 + 11 + 25 = 55 = t10.
+If the word value is a triangle number then we shall call the word a triangle word.
+
+Using words.txt (right click and 'Save Link/Target As...'),
+a 16K text file containing nearly two-thousand common English words,
+how many are triangle words?
 */
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define TRUE 1
+#define FALSE 0
+#define MAXCHAR 50000
+#define MAXTNUMS 100
+
+int file_exists(char *file_path);
+void read_file(char *file_path, char *contents);
+long get_word_score(char *word);
+int is_triangle_word(char *word, long *tnums);
+
+
+int compare_function(const void *x, const void *y){
+  return(strcmp(*((char**)x),*((char**)y)));
+}
+
 
 int main(){
-  int sum = 0;
-  for(int i=1; i<1000; i++){
-    if(i % 3 == 0 || i % 5 == 0){
-      sum = sum + i;
+  char *file_name = "words.txt";
+  char contents[MAXCHAR];
+  char contentscopy[MAXCHAR];
+  read_file(file_name, contents);
+  //printf("%s\n", contents);
+
+  // find how many words we want to store
+  strcpy(contentscopy, contents);
+  long wordscount = 0;
+  char *pch = strtok(contentscopy, ",");
+  while (pch != NULL){
+    wordscount++;
+    pch = strtok (NULL, ",");
+  }
+
+  // and collect these
+  char **words = (char **)malloc(wordscount * sizeof(char *));
+  strcpy(contentscopy, contents);
+  wordscount = 0;
+  pch = strtok(contentscopy, ",");
+  while (pch != NULL){
+    words[wordscount] = (char *)malloc(sizeof(pch) + 1);
+    strcpy(words[wordscount], pch);
+    wordscount++;
+    pch = strtok (NULL, ",");
+  }
+
+  // sort these words
+  qsort(words, wordscount, sizeof(char *), compare_function);
+
+  // we have all of the words we need.
+  // generate some triangle numbers
+  long cumsum = 0;
+  long tnums[MAXTNUMS];
+  for(int i=1; i<=MAXTNUMS; i++){
+    cumsum = cumsum + i;
+    tnums[i-1] = cumsum;
+  }
+
+  //char *testword = "SKY";
+  //printf("%ld\n", get_word_score(testword));           // 55
+  //printf("%d\n", is_triangle_word(testword, tnums));  // 1
+
+  long total_words = 0;
+  char *word;
+  for(long i=0; i<wordscount; i++){
+    word = words[i];
+    if(is_triangle_word(word, tnums)){
+      total_words++;
     }
   }
-  printf("%d\n", sum); // 233,168
+
+  printf("%d\n", total_words);  // 162
   return 0;
+}
+
+
+int is_triangle_word(char *word, long *tnums){
+  long score = get_word_score(word);
+  for(int i=0; i<MAXTNUMS; i++){
+    if(tnums[i] == score){
+      return TRUE;
+    }
+  }
+  return FALSE;
+}
+
+
+long get_word_score(char *word){
+  char *alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  long word_score = 0;
+  for(int i=0; i<strlen(word); i++){
+    for(int j=0; j<strlen(alphabet); j++){
+      if(word[i] == alphabet[j]){
+        word_score += (j + 1);
+        break;
+      }
+    }
+  }
+  return word_score;
+}
+
+
+int file_exists(char *file_path){
+  FILE *file;
+  if ((file = fopen(file_path, "r"))){
+    fclose(file);
+    return 1;
+  }
+  return 0;
+}
+
+
+void read_file(char *file_path, char *contents){
+  //printf("%d: file exists\n", file_exists(file_path));
+  FILE *fp;
+  char str[MAXCHAR];
+  strcpy(contents, "");  // initialize as blank
+
+  fp = fopen(file_path, "r");
+  if (fp == NULL){
+    printf("Could not open file %s", file_path);
+    return;
+  }
+
+  while (fgets(str, MAXCHAR, fp) != NULL){
+    strcat(contents, str);
+  }
+  fclose(fp);
 }
