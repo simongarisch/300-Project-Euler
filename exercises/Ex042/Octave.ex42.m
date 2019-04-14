@@ -34,9 +34,8 @@ content = strrep(content, '"', "");
 content = strrep(content, ' ', "");
 words = sort(strsplit(content, ","));
 
-tnums = cumsum(cumsum(ones(1,100)));
 
-alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+global alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 scores = 1:length(alphabet);
 global scores_mapping = struct();
 for i = scores
@@ -51,19 +50,16 @@ function word_score = get_word_score(word)
   word_score = 0;
   for i =1:length(word)
     char = substr(word, i, 1);
-    try
+    if ismember(char, fieldnames(scores_mapping))
       word_score += scores_mapping.(char);
-    catch
-      #printf ("Unable to find char: %s\n", char)
-    end
+    endif
   endfor
 endfunction
 
 
 function triangle_word = is_triangle_word(word)
-  global tnums;
   score = get_word_score(word);
-  triangle_word = sum(tnums == score);
+  triangle_word = ismember(score, cumsum(cumsum(ones(1,100))));
 endfunction
 
 
@@ -75,4 +71,4 @@ for i = 1:length(words)
   endif
 endfor
 
-disp(total_words)
+disp(total_words)  # 162
