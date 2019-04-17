@@ -1,19 +1,107 @@
 /*
-If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9.
-The sum of these multiples is 23.
-Find the sum of all the multiples of 3 or 5 below 1000.
-*/
+The number, 1406357289, is a 0 to 9 pandigital number because it is made up of each of the digits 0 to 9 in some order, but it also has a rather interesting sub-string divisibility property.
 
-public class JavaEx1 {
+Let d1 be the 1st digit, d2 be the 2nd digit, and so on. In this way, we note the following:
+
+d2d3d4=406 is divisible by 2
+d3d4d5=063 is divisible by 3
+d4d5d6=635 is divisible by 5
+d5d6d7=357 is divisible by 7
+d6d7d8=572 is divisible by 11
+d7d8d9=728 is divisible by 13
+d8d9d10=289 is divisible by 17
+Find the sum of all 0 to 9 pandigital numbers with this property.
+*/
+import java.util.*;
+
+
+public class JavaEx43{
+
+    private static String DIGITS = "0123456789";
+    private static List<String> perms = new ArrayList<String>();
+
 
     public static void main(String[] args) {
-        int sum = 0;
-        for(int i=1; i<1000; i++){
-          if(i % 3 == 0 || i % 5 == 0){
-            sum += i;
-          }
+      //System.out.println(has_property(1406357289));  // true
+      long sumpan = 0;
+      long perm;
+
+      perms.clear();
+      permgen(DIGITS, DIGITS.length());
+      for(int i=0; i<perms.size(); i++){
+        perm = Long.parseLong(perms.get(i));
+        if(has_property(perm)){
+          sumpan += perm;
         }
-        System.out.println(sum); // 233,168
+      }
+
+      System.out.println(sumpan);  // 16,695,334,890
+    }
+
+
+    static long construct_slice(String str, int p1, int p2, int p3){
+      char[] chars = str.toCharArray();
+      char[] arr = new char[3];
+      arr[0] = chars[p1];
+      arr[1] = chars[p2];
+      arr[2] = chars[p3];
+      return Long.parseLong(new String(arr));
+    }
+
+
+    static boolean has_property(long n){
+      String str = Long.toString(n);
+      if(str.length() != 10){
+        return false;
+      }
+
+      if(construct_slice(str, 1, 2, 3) % 2 != 0){
+        return false;
+      }
+      if(construct_slice(str, 2, 3, 4) % 3 != 0){
+        return false;
+      }
+      if(construct_slice(str, 3, 4, 5) % 5 != 0){
+        return false;
+      }
+      if(construct_slice(str, 4, 5, 6) % 7 != 0){
+        return false;
+      }
+      if(construct_slice(str, 5, 6, 7) % 11 != 0){
+        return false;
+      }
+      if(construct_slice(str, 6, 7, 8) % 13 != 0){
+        return false;
+      }
+      if(construct_slice(str, 7, 8, 9) % 17 != 0){
+        return false;
+      }
+      return true;
+    }
+
+
+    static void permgen(String numstr, int n){
+        if (n == 0){
+          perms.add(numstr);
+          //System.out.println(numstr);
+        }else{
+            for(int i=0; i<n; i++){
+              numstr = swap(numstr, i, n-1);
+              permgen(numstr, n-1);
+              numstr = swap(numstr, i, n-1);
+            }
+        }
+    }
+
+
+    static String swap(String numstr, int i, int j){
+      char temp;
+      char[] chars = numstr.toCharArray();
+      temp = chars[i];
+      chars[i] = chars[j];
+      chars[j] = temp;
+      String s = new String(chars);
+      return s;
     }
 
 }
