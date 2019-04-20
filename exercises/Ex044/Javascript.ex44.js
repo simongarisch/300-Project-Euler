@@ -16,20 +16,22 @@ function pentagonal_number(n){
 }
 
 
+var n = 0;
 var pentas = [];
 for(var i=1; i<=10; i++){
   pentas.push(pentagonal_number(i));
+  n++;
 }
 //console.log(pentas);  // [ 1, 5, 12, 22, 35, 51, 70, 92, 117, 145 ]
 
 var D = 0;
-var n = pentas.length;
 while(D == 0){
   n++;
   var penta = pentagonal_number(n);
-  for(var p in pentas){
-    if((penta - p) in pentas){
-      if((penta - 2*p) in pentas){
+  for(var i=0; i<pentas.length; i++){
+    var p = pentas[i];
+    if(pentas.includes(penta - p)){
+      if(pentas.includes(penta - 2*p)){
         D = penta - 2*p;
         break;
       }
@@ -38,4 +40,4 @@ while(D == 0){
   pentas.push(penta);
 }
 
-console.log(D);
+console.log(D);  // 5,482,660
