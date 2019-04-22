@@ -3,17 +3,39 @@ If we list all the natural numbers below 10 that are multiples of 3 or 5, we get
 The sum of these multiples is 23.
 Find the sum of all the multiples of 3 or 5 below 1000.
 */
-
 using System;
+using System.Collections.Generic;
 
-class Ex1{
+
+class Ex44{
+
   static void Main(){
-    int sum = 0;
-    for(int i=1; i<1000; i++){
-      if(i % 3 == 0 || i % 5 == 0){
-        sum += i;
+    long D = 0;
+    long n = 0;
+    long p, penta;
+    List<long> pentas = new List<long>();
+
+    while(D == 0){
+      n++;
+      penta = pentagonal_number(n);
+      for(int i=0; i<pentas.Count; i++){
+        p = pentas[i];
+        if(pentas.Contains(penta-p)){
+          if(pentas.Contains(penta-2*p)){
+            D = penta - 2*p;
+            break;
+          }
+        }
       }
+      pentas.Add(penta);
     }
-    Console.WriteLine(sum); // 233,168
+
+    Console.WriteLine(D);  // 5,482,660
   }
+
+
+  static long pentagonal_number(long n){
+    return n*(3*n-1)/2;
+  }
+
 }
