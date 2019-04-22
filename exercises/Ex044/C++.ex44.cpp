@@ -53,7 +53,7 @@ long pentagonal_number(long n){
 }
 
 
-int array_contains(long *arr, long val, long arraylen){
+bool array_contains(long *arr, long val, long arraylen){
   for(long i=0; i<arraylen; i++){
     if(arr[i] == val){
       return true;
