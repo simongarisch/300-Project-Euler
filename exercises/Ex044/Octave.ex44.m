@@ -15,46 +15,13 @@ function retval = pentagonal_number(n)
   retval = n.*(3.*n-1)/2;  
 end
 
-%{
-# rev up that snail...
-all_pentas = pentagonal_number(1:10000);
-D = 0;
-n = 0;
-while D == 0
-  n += 1;
-  for x = 1:n
-    penta = all_pentas(n);
-    pentas = all_pentas(1:n);
-    
-    condition1 = ((penta - p) == pentas);
-    condition2 = ((pentas- 2*p) == pentas);
-    condition = condition1 * condition2';
-    if condition
-      D = penta - 2*p;
-      break;
-    endif
-  endfor
-endwhile
+pentas = pentagonal_number(1:1e4);
+[X, Y] = meshgrid(pentas, pentas);
 
-disp(D)
-%}
-
-pentas = pentagonal_number(1:10);
-D = 0;
-n = length(pentas);
-while D == 0
-  n += 1;
-  penta = pentagonal_number(n);
-  pentas = [pentas, penta];
-  for p = pentas
-    condition1 = ((penta - p) == pentas);
-    condition2 = ((penta- 2*p) == pentas);
-    condition = condition1 * condition2';
-    if condition
-      D = penta - 2*p;
-      break;
-    endif
-  endfor
-endwhile
-
-disp(D)
+sub = X - Y;
+add = X + Y;
+chk1 = ismember(sub, pentas);
+chk2 = ismember(add, pentas);
+cond = and(chk1, chk2);  # are both conditions met
+pos = find(cond);        # collect the positions that are not zero
+disp(sub(pos))  # 5,482,660
