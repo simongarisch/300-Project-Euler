@@ -5,12 +5,12 @@ two smaller positive integers.
 It was proposed by Christian Goldbach that every odd composite number
 can be written as the sum of a prime and twice a square.
 
-9 = 7 + 2 * 1^2
-15 = 7 + 2 * 2^2
-21 = 3 + 2 * 3^2
-25 = 7 + 2 * 3^2
-27 = 19 + 2 * 2^2
-33 = 31 + 2 * 1^2
+9 = 7 + 2 * 1^2 <br>
+15 = 7 + 2 * 2^2 <br>
+21 = 3 + 2 * 3^2 <br>
+25 = 7 + 2 * 3^2 <br>
+27 = 19 + 2 * 2^2 <br>
+33 = 31 + 2 * 1^2 <br>
 
 It turns out that the conjecture was false.
 
