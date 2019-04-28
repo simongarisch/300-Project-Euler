@@ -29,7 +29,6 @@ odds = prod[prod%2!=0]
 compos = np.unique(odds)
 
 # collect the primes and squares
-# collect the primes
 primes = list(sympy.primerange(0, MAXN))
 squares = np.square(np.arange(MAXN))
 
