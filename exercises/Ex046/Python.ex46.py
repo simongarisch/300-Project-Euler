@@ -19,15 +19,30 @@ the sum of a prime and twice a square?
 import sympy
 import numpy as np
 
-MAXN = int(1e2) + 10
+MAXN = int(1e4)
 
-primes = list(sympy.primerange(0, MAXN))
-
-rng = np.arange(2, int(MAXN ** 0.5))
+# collect odd composite numbers
+rng = np.arange(2, MAXN)
 x, y = np.meshgrid(rng, rng)
 prod = np.multiply(x, y)
 odds = prod[prod%2!=0]
-odds = np.unique(odds)
+compos = np.unique(odds)
 
-print(primes)
-print(odds)
+# collect the primes and squares
+# collect the primes
+primes = list(sympy.primerange(0, MAXN))
+squares = np.square(np.arange(MAXN))
+
+# find the smallest composite number
+# that cannot be written as the sum of a prime and twice a square
+x, y = np.meshgrid(primes, 2*squares)
+search_arr = np.add(x, y).flatten()
+
+smallest = 0
+for n in compos.tolist():
+    equalsn = search_arr[search_arr == n]
+    if not np.any(equalsn):
+        smallest = n
+        break
+
+print(smallest)  # 5,777
