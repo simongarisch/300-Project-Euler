@@ -1,15 +1,18 @@
 #=
-If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9.
-The sum of these multiples is 23.
-Find the sum of all the multiples of 3 or 5 below 1000.
+A composite number is a positive integer that can be formed by multiplying
+two smaller positive integers.
+It was proposed by Christian Goldbach that every odd composite number
+can be written as the sum of a prime and twice a square.
+
+9 = 7 + 2 * 1^2
+15 = 7 + 2 * 2^2
+21 = 3 + 2 * 3^2
+25 = 7 + 2 * 3^2
+27 = 19 + 2 * 2^2
+33 = 31 + 2 * 1^2
+
+It turns out that the conjecture was false.
+
+What is the smallest odd composite that cannot be written as
+the sum of a prime and twice a square?
 =#
-
-sum = 0
-for i = 1:999
-    if i % 3 == 0 || i % 5 == 0
-        global sum
-        sum += i
-    end
-end
-
-println(sum) # 233,168

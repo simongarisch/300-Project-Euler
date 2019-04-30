@@ -46,7 +46,7 @@ compos <- values[lapply(values, "%%", 2) != 0]
 # collect the primes and squares
 rng <- 1:MAXN
 primes <- rng[sapply(rng, isprime)]
-squares <- sapply(rng, function(x) x^2)
+squares <- sapply(1:as.integer(sqrt(MAXN)), function(x) x^2)
 
 # find the smallest composite number
 # that cannot be written as the sum of a prime and twice a square
@@ -63,4 +63,4 @@ for(n in compos){
   }
 }
 
-print(smallest)
+print(smallest)  # 5,777
