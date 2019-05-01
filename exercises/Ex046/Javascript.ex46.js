@@ -15,9 +15,6 @@ It turns out that the conjecture was false.
 
 What is the smallest odd composite that cannot be written as
 the sum of a prime and twice a square?
-
-https://stackoverflow.com/questions/38558989/node-js-heap-out-of-memory
-node --max-old-space-size=8192 Javascript.ex46.js
 */
 
 var MAXN = 1e4;
