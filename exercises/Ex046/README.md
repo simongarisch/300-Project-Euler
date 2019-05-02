@@ -32,7 +32,7 @@ compos = np.unique(odds)
 
 # collect the primes and squares
 primes = list(sympy.primerange(0, MAXN))
-squares = np.square(np.arange(MAXN))
+squares = np.square(np.arange(int(MAXN**0.5)))
 
 # find the smallest composite number
 # that cannot be written as the sum of a prime and twice a square
