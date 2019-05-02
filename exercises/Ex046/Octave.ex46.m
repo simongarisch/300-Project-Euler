@@ -1,14 +1,43 @@
 %{
-If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9.
-The sum of these multiples is 23.
-Find the sum of all the multiples of 3 or 5 below 1000.
+A composite number is a positive integer that can be formed by multiplying
+two smaller positive integers.
+It was proposed by Christian Goldbach that every odd composite number
+can be written as the sum of a prime and twice a square.
+
+9 = 7 + 2 * 1^2
+15 = 7 + 2 * 2^2
+21 = 3 + 2 * 3^2
+25 = 7 + 2 * 3^2
+27 = 19 + 2 * 2^2
+33 = 31 + 2 * 1^2
+
+It turns out that the conjecture was false.
+
+What is the smallest odd composite that cannot be written as
+the sum of a prime and twice a square?
 %}
 
-sum = 0;
-for i = 1:999
-  if(mod(i,3) == 0 || mod(i,5) == 0)
-    sum += i;
-  end
-end
+MAXN = 1e4;
 
-disp(sum) # 233,168
+# collect the composite numbers
+rng = 2:MAXN;
+[x, y] = meshgrid(rng, rng);
+prod = unique(x .* y);
+compos = prod(find(mod(prod,2)==1));
+
+# collect the primes and squares
+rng = 1:MAXN;
+primes = rng(find(isprime(rng)));
+small_rng = 1:(floor(MAXN^0.5));
+squares = small_rng .* small_rng;
+
+# find the smallest composite number
+# that cannot be written as the sum of a prime and twice a square
+[x, y] = meshgrid(primes, 2*squares);
+search_vec = unique(x + y);
+
+members = ismember(compos, search_vec);
+not_members = find(members == 0);
+smallest = compos(not_members(1));
+
+disp(smallest)  # 5,777
