@@ -78,14 +78,14 @@ int main(){
   // and squares
   long num_squares = (long)pow(MAXN, 0.5);
   long *squares = (long*)calloc(num_squares, sizeof(long));
-  for(long i=1; i<=MAXN; i++){
+  for(long i=1; i<=num_squares; i++){
     squares[i-1] = pow(MAXN, 2);
   }
 
-  //free(compos);
-  //free(unique_compos);
-  //free(primes);
-  //free(squares);
+  free(compos);
+  free(unique_compos);
+  free(primes);
+  free(squares);
   return 0;
 }
 
