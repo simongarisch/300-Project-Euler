@@ -44,19 +44,10 @@ int main(){
       }
     }
   }
-  for(long i=0; i<=compos_index; i++){
-    printf("%ld\n", compos[i]);
-  }
-  puts("=====");
 
   // resize so that we exclude zero values, then sort
-  long *sorted_compos;
-  sorted_compos = (long*)realloc(compos, compos_index+1);
-  //qsort(compos, compos_index+1, sizeof(long), compare_function);
-  for(long i=0; i<=compos_index; i++){
-    printf("%ld\n", sorted_compos[i]);
-  }
-  puts("=====");
+  compos = (long*)realloc(compos, (compos_index+1)*sizeof(long));
+  qsort(compos, compos_index+1, sizeof(long), compare_function);
 
   // only use unique compos
   long *unique_compos = (long*)calloc(compos_index+1, sizeof(long));
@@ -68,10 +59,10 @@ int main(){
       unique_compos[unique_index] = compos[i];
     }
   }
-  unique_compos = (long*)realloc(unique_compos, unique_index+1);
-  //for(long i=0; i<=unique_index; i++){
-  //  printf("%ld\n", unique_compos[i]);
-  //}
+  unique_compos = (long*)realloc(unique_compos, (unique_index+1)*sizeof(long));
+  for(long i=0; i<=unique_index; i++){
+    printf("%ld\n", unique_compos[i]);
+  }
 
   // collect the primes
   long *primes = (long*)calloc(MAXN, sizeof(long));
@@ -82,7 +73,7 @@ int main(){
       primes[primes_index] = i;
     }
   }
-  primes = (long*)realloc(primes, primes_index+1);
+  primes = (long*)realloc(primes, (primes_index+1)*sizeof(long));
 
   // and squares
   long num_squares = (long)pow(MAXN, 0.5);
@@ -91,10 +82,10 @@ int main(){
     squares[i-1] = pow(MAXN, 2);
   }
 
-  free(compos);
-  free(sorted_compos);
-  free(primes);
-  free(squares);
+  //free(compos);
+  //free(unique_compos);
+  //free(primes);
+  //free(squares);
   return 0;
 }
 
