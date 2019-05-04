@@ -23,7 +23,7 @@ the sum of a prime and twice a square?
 
 #define TRUE 1
 #define FALSE 0
-#define MAXN 10
+#define MAXN 1e4
 
 int isprime(long n);
 int compare_function(const void *x, const void *y);
@@ -60,9 +60,9 @@ int main(){
     }
   }
   unique_compos = (long*)realloc(unique_compos, (unique_index+1)*sizeof(long));
-  for(long i=0; i<=unique_index; i++){
-    printf("%ld\n", unique_compos[i]);
-  }
+  //for(long i=0; i<=unique_index; i++){
+  //  printf("%ld\n", unique_compos[i]);
+  //}
 
   // collect the primes
   long *primes = (long*)calloc(MAXN, sizeof(long));
@@ -79,8 +79,32 @@ int main(){
   long num_squares = (long)pow(MAXN, 0.5);
   long *squares = (long*)calloc(num_squares, sizeof(long));
   for(long i=1; i<=num_squares; i++){
-    squares[i-1] = pow(MAXN, 2);
+    squares[i-1] = pow(i, 2);
   }
+
+  long compo, prime, square;
+  long smallest = 0;
+  int found;
+  for(long ui=0; ui<=unique_index; ui++){
+    compo = unique_compos[ui];
+    found = FALSE;
+    for(long pi=0; pi<=primes_index; pi++){
+      prime = primes[pi];
+      for(long si=0; si<num_squares; si++){
+        square = squares[si];
+        if(compo == (prime + 2* square)){
+          found = TRUE;
+          break;
+        }
+      }
+    }
+    if(!found){
+      smallest = compo;
+      break;
+    }
+  }
+
+  printf("%ld\n", smallest);  // 5,777
 
   free(compos);
   free(unique_compos);
