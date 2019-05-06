@@ -19,9 +19,8 @@ import operator
 import sympy
 
 
-FACTORS = 4
-MAXPRIME = int(1e3)
-SUBSET_STEPS = 1000
+FACTORS = 3
+MAXPRIME = int(1e2)
 
 primes = list(sympy.primerange(0, MAXPRIME))
 combinations = list(itertools.combinations(primes, FACTORS))
@@ -29,7 +28,12 @@ combinations = list(itertools.combinations(primes, FACTORS))
 CombinationsMult = namedtuple("CombinationsMult", "mult primes")
 sorted_combs = []
 for comb in combinations:
-    sorted_combs.append(CombinationsMult(reduce(operator.mul, comb, 1), comb))
+    # straight multiplication of each prime
+    mult = CombinationsMult(reduce(operator.mul, comb, 1), comb)
+    sorted_combs.append(mult)
+    for prime in comb:
+        # in the cases where we have a prime ^2
+        sorted_combs.append(CombinationsMult(mult * prime, comb))
 
 sorted_combs = sorted(sorted_combs, key=operator.attrgetter("mult"))
 #print(sorted_combs)
@@ -37,64 +41,22 @@ sorted_combs = sorted(sorted_combs, key=operator.attrgetter("mult"))
 # CombinationsMult(mult=10, primes=(2, 5)),
 # CombinationsMult(mult=14, primes=(2, 7)), ...
 
+integers = []
+for item in sorted_combs:
+    integers.append(item.mult)  # get all of the factors
+print(integers)
 
-def is_factor(n, *args):
-    # returns true if n is a factor of args, false otherwise
-    # we'll also have to go through a number of power combinations
-    mult = 1
-
-    for arg in args:
-        mult *= arg
-    if mult == n:
-        return True
-
-    for arg in args:
-        if mult * arg == n:
-            return True
-
-    return False
-#print(is_factor(15, 3, 5))       # True
-#print(is_factor(644, 2, 7, 23))  # True
-
-
-def subset_combinations(mult_list, n):
-    # takes a list of CombinationsMult objects and returns
-    # only those were the mult attribute is <= n
-    # mult list should be a sorted list by the mult attribute
-    subset = []
-    for item in mult_list:
-        if item.mult <= n:
-            subset.append(item)
-        else:
-            break
-    return subset
-
-
-n = 0
-sequence = 0
-# start with those combinations objects where mult <= SUBSET_STEPS
-combs = subset_combinations(sorted_combs, n + SUBSET_STEPS)
-
-while True:
-    n += 1
-    if n % SUBSET_STEPS == 0:
-        combs = subset_combinations(sorted_combs, n + SUBSET_STEPS)
-        print(n)
-
-    has_prime_factors = False
-    for combination in combs:
-        if is_factor(n, *combination.primes):
-            #print("%d tagged" % n)
-            has_prime_factors = True
-            break
-
-    if has_prime_factors:
+sequence = 1
+prev_int = 0
+for index, i in enumerate(integers):
+    if i == prev_int + 1:
         sequence += 1
+        #print(index, i, sequence)
     else:
-        sequence = 0
-
+        sequence = 1
     if sequence == FACTORS:
         break
+    prev_int = i
 
-first = n - FACTORS + 1
+first = integers[index - FACTORS + 1]
 print(first)  #
