@@ -13,42 +13,32 @@ The first three consecutive numbers to have three distinct prime factors are:
 Find the first four consecutive integers to have four distinct prime factors each. What is the first of these numbers?
 '''
 import itertools
-from collections import namedtuple
 from functools import reduce
 import operator
 import sympy
+import numpy as np
 
-
-FACTORS = 3
-MAXPRIME = int(1e2)
+FACTORS = 4
+MAXPRIME = int(1e3)
 
 primes = list(sympy.primerange(0, MAXPRIME))
 combinations = list(itertools.combinations(primes, FACTORS))
+print("combinations collected...")
 
-CombinationsMult = namedtuple("CombinationsMult", "mult primes")
 sorted_combs = []
-for comb in combinations:
-    # straight multiplication of each prime
-    mult = CombinationsMult(reduce(operator.mul, comb, 1), comb)
-    sorted_combs.append(mult)
-    for prime in comb:
-        # in the cases where we have a prime ^2
-        sorted_combs.append(CombinationsMult(mult * prime, comb))
+combarr = np.array(combinations)
+prod = np.prod(combarr, 1)
+sorted_combs.extend(prod.tolist())  # get all the products
+# multiply by each prime a second time
+powers = (np.transpose(combarr) * prod).flatten().tolist()
+sorted_combs.extend(powers)
 
-sorted_combs = sorted(sorted_combs, key=operator.attrgetter("mult"))
-#print(sorted_combs)
-#[CombinationsMult(mult=6, primes=(2, 3)),
-# CombinationsMult(mult=10, primes=(2, 5)),
-# CombinationsMult(mult=14, primes=(2, 7)), ...
-
-integers = []
-for item in sorted_combs:
-    integers.append(item.mult)  # get all of the factors
-print(integers)
+sorted_combs = sorted(list(set(sorted_combs)))
+print("sorted prime factors...")
 
 sequence = 1
 prev_int = 0
-for index, i in enumerate(integers):
+for index, i in enumerate(sorted_combs):
     if i == prev_int + 1:
         sequence += 1
         #print(index, i, sequence)
@@ -58,5 +48,5 @@ for index, i in enumerate(integers):
         break
     prev_int = i
 
-first = integers[index - FACTORS + 1]
+first = sorted_combs[index - FACTORS + 1]
 print(first)  #
