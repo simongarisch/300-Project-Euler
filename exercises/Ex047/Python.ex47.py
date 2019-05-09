@@ -16,12 +16,11 @@ import itertools
 import sympy
 import numpy as np
 
-TARGET_FACTORS = 3
-MAXPRIME = int(2e2)
+TARGET_FACTORS = 4
+MAXPRIME = int(1e3)
+
 
 primes = list(sympy.primerange(0, MAXPRIME))
-#combinations = list(itertools.combinations(primes, FACTORS))
-#print("combinations collected...")
 
 def mult_factors(factors_list):
     # return the results we get from multiplying prime factors
@@ -35,7 +34,7 @@ def mult_factors(factors_list):
     return results
 
 
-sequence = 1
+sequence = 0
 n = 0
 while True:
     n += 1
@@ -49,38 +48,16 @@ while True:
             break
 
     if factors == TARGET_FACTORS:
-        if n in mult_factors(factors_list):
+        multiples = mult_factors(factors_list)
+        if n in multiples:
             sequence += 1
         else:
-            sequence = 1
+            sequence = 0
     else:
-        sequence = 1
+        sequence = 0
 
     if sequence == TARGET_FACTORS:
         break
 
-print(n - TARGET_FACTORS)
-
-'''
-sorted_combs = []
-combarr = np.array(combinations)
-prod = np.prod(combarr, 1)
-# multiply by each prime a second time
-powers = (np.transpose(combarr) * prod).flatten()
-sorted_combs = np.sort(np.unique(np.append(prod, powers))).tolist()
-print("sorted prime factors...")
-
-sequence = 1
-prev_int = 0
-for index, i in enumerate(sorted_combs):
-    if i == prev_int + 1:
-        sequence += 1
-        #print(index, i, sequence)
-    else:
-        sequence = 1
-    if sequence == FACTORS:
-        break
-    prev_int = i
-
-first = sorted_combs[index - FACTORS + 1]
-'''
+first = n - TARGET_FACTORS + 1
+print(first)  # 134,043
