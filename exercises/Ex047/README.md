@@ -15,9 +15,7 @@ Find the first four consecutive integers to have four distinct prime factors eac
 What is the first of these numbers?
 
 ```python
-import itertools
 import sympy
-import numpy as np
 
 TARGET_FACTORS = 4
 MAXPRIME = int(1e3)

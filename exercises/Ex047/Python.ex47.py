@@ -13,9 +13,7 @@ The first three consecutive numbers to have three distinct prime factors are:
 Find the first four consecutive integers to have four distinct prime factors each.
 What is the first of these numbers?
 '''
-import itertools
 import sympy
-import numpy as np
 
 TARGET_FACTORS = 4
 MAXPRIME = int(1e3)
