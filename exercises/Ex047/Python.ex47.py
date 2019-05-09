@@ -13,27 +13,61 @@ The first three consecutive numbers to have three distinct prime factors are:
 Find the first four consecutive integers to have four distinct prime factors each. What is the first of these numbers?
 '''
 import itertools
-from functools import reduce
-import operator
 import sympy
 import numpy as np
 
-FACTORS = 4
-MAXPRIME = int(1e3)
+TARGET_FACTORS = 3
+MAXPRIME = int(2e2)
 
 primes = list(sympy.primerange(0, MAXPRIME))
-combinations = list(itertools.combinations(primes, FACTORS))
-print("combinations collected...")
+#combinations = list(itertools.combinations(primes, FACTORS))
+#print("combinations collected...")
 
+def mult_factors(factors_list):
+    # return the results we get from multiplying prime factors
+    result = 1
+    for prime in factors_list:  # straight multiplication
+        result *= prime
+    results = [result]
+
+    for prime in factors_list:  # where we have a ^2
+        results.append(result * prime)
+    return results
+
+
+sequence = 1
+n = 0
+while True:
+    n += 1
+    factors = 0
+    factors_list = []
+    for prime in primes:
+        if n % prime == 0:
+            factors += 1
+            factors_list.append(prime)
+        if prime > n:
+            break
+
+    if factors == TARGET_FACTORS:
+        if n in mult_factors(factors_list):
+            sequence += 1
+        else:
+            sequence = 1
+    else:
+        sequence = 1
+
+    if sequence == TARGET_FACTORS:
+        break
+
+print(n - TARGET_FACTORS)
+
+'''
 sorted_combs = []
 combarr = np.array(combinations)
 prod = np.prod(combarr, 1)
-sorted_combs.extend(prod.tolist())  # get all the products
 # multiply by each prime a second time
-powers = (np.transpose(combarr) * prod).flatten().tolist()
-sorted_combs.extend(powers)
-
-sorted_combs = sorted(list(set(sorted_combs)))
+powers = (np.transpose(combarr) * prod).flatten()
+sorted_combs = np.sort(np.unique(np.append(prod, powers))).tolist()
 print("sorted prime factors...")
 
 sequence = 1
@@ -49,4 +83,4 @@ for index, i in enumerate(sorted_combs):
     prev_int = i
 
 first = sorted_combs[index - FACTORS + 1]
-print(first)  #
+'''
