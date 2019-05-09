@@ -1,14 +1,67 @@
-## Project Euler Exercise 1
+## Project Euler Exercise 47
 
-If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9.
-The sum of these multiples is 23.
-Find the sum of all the multiples of 3 or 5 below 1000.
+The first two consecutive numbers to have two distinct prime factors are:
+
+14 = 2 * 7
+15 = 3 * 5
+
+The first three consecutive numbers to have three distinct prime factors are:
+
+644 = 2^2 * 7 * 23
+645 = 3 * 5 * 43
+646 = 2 * 17 * 19.
+
+Find the first four consecutive integers to have four distinct prime factors each.
+What is the first of these numbers?
 
 ```python
-sum = 0
-for i in range(1000):
-    if i % 3 == 0 or i % 5 == 0:
-        sum += i
+import itertools
+import sympy
+import numpy as np
 
-print(sum) # 233,168
+TARGET_FACTORS = 4
+MAXPRIME = int(1e3)
+
+
+primes = list(sympy.primerange(0, MAXPRIME))
+
+def mult_factors(factors_list):
+    # return the results we get from multiplying prime factors
+    result = 1
+    for prime in factors_list:  # straight multiplication
+        result *= prime
+    results = [result]
+
+    for prime in factors_list:  # where we have a ^2
+        results.append(result * prime)
+    return results
+
+
+sequence = 0
+n = 0
+while True:
+    n += 1
+    factors = 0
+    factors_list = []
+    for prime in primes:
+        if n % prime == 0:
+            factors += 1
+            factors_list.append(prime)
+        if prime > n:
+            break
+
+    if factors == TARGET_FACTORS:
+        multiples = mult_factors(factors_list)
+        if n in multiples:
+            sequence += 1
+        else:
+            sequence = 0
+    else:
+        sequence = 0
+
+    if sequence == TARGET_FACTORS:
+        break
+
+first = n - TARGET_FACTORS + 1
+print(first)  # 134,043
 ```
