@@ -19,8 +19,6 @@ MAXPRIME = 1e3;
 
 primes = (1:MAXPRIME)(find(isprime(1:MAXPRIME)));
 
-#prod(x) * [1, x]
-
 sequence = 0;
 n = 0;
 
