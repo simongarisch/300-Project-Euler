@@ -35,10 +35,10 @@ int main(){
       numprimes++;
     }
   }
-  //primes = (long*)realloc(primes, (numprimes)*sizeof(long));
-  for(int i=0; i<numprimes; i++){
-    printf("%ld\n", primes[i]);
-  }
+  primes = (long*)realloc(primes, (numprimes)*sizeof(long));
+  //for(int i=0; i<numprimes; i++){
+  //  printf("%ld\n", primes[i]);
+  //}
 
   long factors, prime, sequence = 0;
   long n = 0;
@@ -53,7 +53,7 @@ int main(){
 
     for(long i=0; i<numprimes; i++){
       prime = primes[i];
-      printf("%ld, %d, %ld\n", n, i, prime);
+      //printf("%ld, %d, %ld\n", n, i, prime);
       if(n % prime == 0){
         factors_array[factors] = prime;
         factors++;
@@ -62,7 +62,6 @@ int main(){
         break;
       }
     }
-    /*
 
     if(factors == TARGET_FACTORS){
       multiples = (long*)calloc(factors+1, sizeof(long));
@@ -91,7 +90,7 @@ int main(){
     }else{
       sequence = 0;
     }
-    */
+
     free(factors_array);
     if(sequence == TARGET_FACTORS){
       break;
@@ -100,7 +99,7 @@ int main(){
 
   free(primes);
   long first = n - TARGET_FACTORS + 1;
-  printf("%ld\n", first);
+  printf("%ld\n", first);  // 134,043
   return 0;
 }
 
