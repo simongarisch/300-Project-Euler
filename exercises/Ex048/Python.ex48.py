@@ -1,12 +1,16 @@
 '''
-If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9.
-The sum of these multiples is 23.
-Find the sum of all the multiples of 3 or 5 below 1000.
+The series, 1^1 + 2^2 + 3^3 + ... + 10^10 = 10405071317.
+
+Find the last ten digits of the series, 1^1 + 2^2 + 3^3 + ... + 1000^1000.
 '''
 
-sum = 0
-for i in range(1000):
-    if i % 3 == 0 or i % 5 == 0:
-        sum += i
+START = 1
+STOP = 1000
 
-print(sum) # 233,168
+current_value = series_sum = START
+while current_value < STOP:
+    current_value += 1
+    series_sum += current_value ** current_value
+
+last_ten_digits = str(series_sum)[-10:]
+print(last_ten_digits)  # 9,110,846,700
