@@ -1,14 +1,23 @@
 /*
-If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9.
-The sum of these multiples is 23.
-Find the sum of all the multiples of 3 or 5 below 1000.
+The series, 1^1 + 2^2 + 3^3 + ... + 10^10 = 10405071317.
+
+Find the last ten digits of the series, 1^1 + 2^2 + 3^3 + ... + 1000^1000.
 */
 
-var sum = 0;
-for(var i=0; i<1000; i++){
-  if(i % 3== 0 || i % 5 == 0){
-    sum += i;
-  }
+let bigInt = require("big-integer");
+
+let START = 1;
+let STOP = 1000;
+
+let currentValue = START;
+let seriesSum =  START;
+
+while(currentValue < STOP){
+  currentValue++;
+  // get the last 12 integers from each increment
+  let increment = parseInt(bigInt(currentValue).pow(currentValue).toString().slice(-12));
+  seriesSum += increment;
 }
 
-console.log(sum); // 233,168
+let lastDigits = parseInt(seriesSum.toString().slice(-10));
+console.log(lastDigits);  // 9,110,846,700
