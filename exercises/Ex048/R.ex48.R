@@ -9,16 +9,15 @@ library(stringr)
 options(scipen = 999) # avoid scientific notation for this problem
 
 START <- 1
-STOP <- 10
+STOP <- 1000
 
 current_value <- START
 series_sum <- gmp::as.bigz(START)
 
 while(current_value < STOP){
   current_value <- current_value + 1;
-  series_sum <- gmp::as.bigz(series_sum + gmp::pow.bigz(current_value, current_value))
+  series_sum <- gmp::as.bigz(series_sum) + gmp::pow.bigz(current_value, current_value)
 }
 
-print(series_sum)
 last_ten_digits <- stringr::str_sub(as.character(series_sum), start=-10)
-print(last_ten_digits)
+print(last_ten_digits)  # 9,110,846,700
