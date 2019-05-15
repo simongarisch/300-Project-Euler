@@ -1,15 +1,24 @@
 #=
-If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9.
-The sum of these multiples is 23.
-Find the sum of all the multiples of 3 or 5 below 1000.
+The series, 1^1 + 2^2 + 3^3 + ... + 10^10 = 10405071317.
+
+Find the last ten digits of the series, 1^1 + 2^2 + 3^3 + ... + 1000^1000.
 =#
 
-sum = 0
-for i = 1:999
-    if i % 3 == 0 || i % 5 == 0
-        global sum
-        sum += i
+START = 1
+STOP = 1000
+
+function ex48()::Int
+    global START, STOP
+    current::Int = START
+    totsum::BigInt = BigInt(START)
+    while current < STOP
+        current += 1
+        totsum += BigInt(current) ^ current
     end
+
+    numstr::String = string(totsum)
+    last_ten_digits::Int = parse(Int, numstr[length(numstr)-9:end])
+    return last_ten_digits
 end
 
-println(sum) # 233,168
+println(ex48())  # 9,110,846,700
