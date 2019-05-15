@@ -1,13 +1,24 @@
 
-# If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9.
-# The sum of these multiples is 23.
-# Find the sum of all the multiples of 3 or 5 below 1000.
+# The series, 1^1 + 2^2 + 3^3 + ... + 10^10 = 10405071317.
+#
+# Find the last ten digits of the series, 1^1 + 2^2 + 3^3 + ... + 1000^1000.
 
-sum <- 0
-for(i in 1:999){
-  if((i %% 3 == 0) || (i %% 5 == 0)){
-    sum <- sum + i
-  }
+# https://cran.r-project.org/web/packages/gmp/index.html
+library(gmp)
+library(stringr)
+options(scipen = 999) # avoid scientific notation for this problem
+
+START <- 1
+STOP <- 10
+
+current_value <- START
+series_sum <- gmp::as.bigz(START)
+
+while(current_value < STOP){
+  current_value <- current_value + 1;
+  series_sum <- gmp::as.bigz(series_sum + gmp::pow.bigz(current_value, current_value))
 }
 
-print(sum) # 233,168
+print(series_sum)
+last_ten_digits <- stringr::str_sub(as.character(series_sum), start=-10)
+print(last_ten_digits)
