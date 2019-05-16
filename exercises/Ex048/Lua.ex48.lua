@@ -1,14 +1,44 @@
 --[[
-If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9.
-The sum of these multiples is 23.
-Find the sum of all the multiples of 3 or 5 below 1000.
---]]
+The series, 1^1 + 2^2 + 3^3 + ... + 10^10 = 10405071317.
 
-sum = 0
-for i = 1, 999 do
-  if(i % 3 == 0 or i % 5 == 0) then
-    sum = sum + i
+Find the last ten digits of the series, 1^1 + 2^2 + 3^3 + ... + 1000^1000.
+--]]
+START = 1
+STOP = 1000
+
+function split(inputstr, sep)
+  if sep == nil then
+    sep = "%s"
   end
+  local tbl = {}
+  for str in string.gmatch(inputstr, "([^"..sep.."]+)") do
+    table.insert(tbl, str)
+  end
+  return tbl
 end
 
-print(sum) -- 233,168
+exec_file_path = arg[0]  -- path of the current executing file
+tbl = split(exec_file_path, "\\")
+tbl[#tbl] = "bigint.lua"
+file_path = table.concat(tbl, "\\")
+print(file_path)
+
+-- https://github.com/empyreuma/bigint.lua
+-- bigint can be a bit slow
+bigint = dofile(file_path)
+
+current = START
+totsum = START
+while current < STOP do
+  current = current + 1
+  base = bigint.new(tostring(current))
+  exp = base
+  increment = bigint.exponentiate(base, exp)
+  incrementstr = bigint.unserialize(increment, "s")
+  incrementstr = string.sub(incrementstr, -12)  -- take only the last 12 characters
+  totsum = totsum + tonumber(incrementstr)
+end
+
+last_ten_digits = string.sub(tostring(totsum), -10)
+
+print(last_ten_digits)
