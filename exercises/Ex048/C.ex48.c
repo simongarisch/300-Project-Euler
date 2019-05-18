@@ -8,24 +8,17 @@ Find the last ten digits of the series, 1^1 + 2^2 + 3^3 + ... + 1000^1000.
 #include <string.h>
 
 #define START 1
-#define STOP 10
-#define MAXCHAR 20
+#define STOP 1000
 
 long powerof(int n);
-void slice_str(char *str, char *buffer, int start, int end);
 
 
 int main(){
   long totsum = 0;
   for(int i=START; i<=STOP; i++){
-    totsum = totsum + powerof(i);
+    totsum = (totsum + powerof(i)) % (long)1e10;
   }
-  char totstr[MAXCHAR];
-  char totstr_slice[MAXCHAR];
-  sprintf(totstr, "%ld", totsum);
-  int numchar = strlen(totstr);
-  slice_str(totstr, totstr_slice, numchar-10, numchar);
-  printf("%s\n", totstr);
+  printf("%ld\n", totsum);  // 9,110,846,700
   return 0;
 }
 
@@ -36,16 +29,7 @@ long powerof(int n){
   for(int i=2; i<=n; i++){
     result = result * n;
     // only keep the last digits
-    result = result % (long)1e12;
+    result = result % (long)1e10;
   }
   return result;
-}
-
-
-void slice_str(char *str, char *buffer, int start, int end){
-  int j = 0;
-  for(int i=start; i<=end; i++){
-    buffer[j++] = str[i];
-  }
-  buffer[j] = "\0";
 }
