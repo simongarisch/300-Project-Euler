@@ -1,14 +1,15 @@
 %{
-If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9.
-The sum of these multiples is 23.
-Find the sum of all the multiples of 3 or 5 below 1000.
+The series, 1^1 + 2^2 + 3^3 + ... + 10^10 = 10405071317.
+
+Find the last ten digits of the series, 1^1 + 2^2 + 3^3 + ... + 1000^1000.
+pkg install -forge symbolic
 %}
 
-sum = 0;
-for i = 1:999
-  if(mod(i,3) == 0 || mod(i,5) == 0)
-    sum += i;
-  end
-end
+pkg load symbolic
 
-disp(sum) # 233,168
+START = 1;
+STOP = 1000;
+vec = vpa(START:STOP);
+res = strsplit(char(sum(vec.^vec)), "."){1};
+
+disp(res(end-9:end))

@@ -41,4 +41,4 @@ end
 
 last_ten_digits = string.sub(tostring(totsum), -10)
 
-print(last_ten_digits)
+print(last_ten_digits) -- 
