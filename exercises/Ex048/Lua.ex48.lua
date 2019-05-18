@@ -12,7 +12,7 @@ function powerof(n)
   for i=2,n do
     result = result * n
     -- only keep the last digits
-    result = result % 1e12
+    result = result % 1e10
   end
   return result
 end
@@ -20,8 +20,7 @@ end
 
 totsum = 0
 for i = START,STOP do
-  totsum = totsum + powerof(i)
+  totsum = (totsum + powerof(i)) % 1e10
 end
-totsum = string.sub(string.format("%.0f",totsum), -10)
 
 print(totsum)  -- 9,110,846,700

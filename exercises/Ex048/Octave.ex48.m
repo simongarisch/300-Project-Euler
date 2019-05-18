@@ -11,12 +11,12 @@ function retval = powerof(n)
   for i = 2:n
     retval *= n;
     # only keep the last digits
-    retval = mod(retval, 1e12);
+    retval = mod(retval, 1e10);
   endfor
 endfunction
 
 x = START:STOP;
 powers = arrayfun(@(x) powerof(x), x);
-res = num2str(sum(powers))(end-9:end);
+res = mod(sum(powers), 1e10);
 
 disp(res)  # 9,110,846,700
