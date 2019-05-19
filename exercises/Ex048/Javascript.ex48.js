@@ -15,7 +15,7 @@ let seriesSum =  START;
 while(currentValue < STOP){
   currentValue++;
   // get the last 12 integers from each increment
-  let increment = parseInt(bigInt(currentValue).pow(currentValue).toString().slice(-12));
+  let increment = parseInt(bigInt(currentValue).pow(currentValue).toString().slice(-10));
   seriesSum += increment;
 }
 
