@@ -20,7 +20,6 @@ function retval = ispermutation(a, b)
 endfunction
 
 primes = (START:STOP)(find(isprime(START:STOP)));
-numprimes = length(primes);
 
 # the first condition is the increment
 cond1 = primes(find(ismember(primes+INCREMENT, primes) & ismember(primes+2*INCREMENT, primes)));
