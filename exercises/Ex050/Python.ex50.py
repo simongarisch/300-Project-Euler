@@ -15,9 +15,22 @@ MAXPRIME = int(1e6)
 
 # collect primes from largest to smallest
 primes = list(reversed(list(sympy.primerange(0, MAXPRIME))))
-numprimes = len(primes)
+found = False
 maxcounter, maxprime = 0, 0
 
+numprimes = len(primes)
+counter = numprimes
+while not found:
+    counter -= 1
+    for i in range(numprimes-counter):
+        slice = primes[i:(i+counter)]
+        slicesum = sum(slice)
+        if slicesum in primes:
+            found = True
+            maxcounter = counter
+            maxprime = slicesum
+
+'''
 for i in range(numprimes):
     prime = primes[i]
     start = i
@@ -33,5 +46,5 @@ for i in range(numprimes):
             if counter > maxcounter:
                 maxcounter = counter
                 maxprime = prime
-
+'''
 print(maxprime)
