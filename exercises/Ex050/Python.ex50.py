@@ -18,23 +18,16 @@ primeslen = len(primes)
 primes_cumsum = [0]
 for i in range(primeslen):
     primes_cumsum.append(primes_cumsum[-1] + primes[i])
-#print(primeslen)
-#print(primes)
-#print(primes_cumsum)
 
 found = False
 which_prime = 0
 which_len = primeslen
-#print(primeslen)
 
 while not found:
     for i in range(primeslen - which_len + 1):
         diff = primes_cumsum[i + which_len] - primes_cumsum[i]
         if diff > MAXPRIME:
-            continue
-        #slice = primes[i:(i + which_len - 1)]
-        #print(slice)
-        #print(diff, which_len)
+            break
         if diff in primes:
             found = True
             which_prime = diff
@@ -43,4 +36,4 @@ while not found:
         break
     which_len -= 1
 
-print(which_prime, which_len)
+print(which_prime)  # 997,651
