@@ -10,8 +10,7 @@ Which prime, below one-million, can be written as the sum of the most consecutiv
 '''
 import sympy
 
-MAXPRIME = int(1e2)
-
+MAXPRIME = int(1e3)
 
 # collect primes from largest to smallest
 primes = list(sympy.primerange(0, MAXPRIME))
@@ -21,25 +20,16 @@ primes_cumsum = [primes[0]]
 for i in range(1, primeslen):
     primes_cumsum.append(primes_cumsum[i-1] + primes[i])
 
-for i in range(primeslen):
-    print(primes[i], primes_cumsum[i])
-print("---")
-
 found = False
 which_prime = 0
-which_len = 0
-i, j = 0, primeslen - 1
+which_len = primeslen - 1
 
 while not found:
-    diff = primes_cumsum[j] - primes_cumsum[i]
-    if diff in primes:
-        found = True
-        which_prime = diff
-        which_len = j - i
-        break
-    i += 1
-    j -= 1
-    if i == j:
-        break
+    for i in range(primeslen - which_len):
+        diff = primes_cumsum[i+which_len] - primes_cumsum[i]
+        if diff in primes:
+            found = True
+            which_prime = diff
+            break
 
 print(which_prime, which_len)
