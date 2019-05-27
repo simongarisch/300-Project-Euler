@@ -7,7 +7,7 @@
 # The longest sum of consecutive primes below one-thousand that adds to a prime, contains 21 terms, and is equal to 953.
 #
 # Which prime, below one-million, can be written as the sum of the most consecutive primes?
-MAXPRIME <- 1e1
+MAXPRIME <- 1e6
 
 isprime <- function(x){
   if(x < 2){
@@ -39,7 +39,26 @@ for(i in 1:primeslen){
   primes_cumsum <- c(primes_cumsum, total)
 }
 
-for(i in 1:5){
-  print(primes[i])
-  print(primes_cumsum[i])
+found <- FALSE
+which_prime <- 0
+which_len <- primeslen
+
+while(!found){
+  for(i in 1:(primeslen - which_len + 1)){
+    diff <- primes_cumsum[i + which_len] - primes_cumsum[i]
+    if(diff > MAXPRIME){
+      break
+    }
+    if(diff %in% primes){
+      found <- TRUE
+      which_prime <- diff
+      break
+    }
+  }
+  if(found){
+    break
+  }
+  which_len = which_len - 1
 }
+
+print(which_prime)  # 997,651
