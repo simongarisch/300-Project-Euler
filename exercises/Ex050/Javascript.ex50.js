@@ -55,8 +55,7 @@ function which_prime(){
 
   var found = false;
   var which_prime = 0;
-  var which_len = 0;
-  var diff = 0;
+  var which_len = primeslen;
 
   while(!found){
     for(var i=0; i < primeslen - which_len + 1; i++){
