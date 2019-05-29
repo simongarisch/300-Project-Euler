@@ -1,14 +1,44 @@
 %{
-If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9.
-The sum of these multiples is 23.
-Find the sum of all the multiples of 3 or 5 below 1000.
+The prime 41, can be written as the sum of six consecutive primes:
+
+41 = 2 + 3 + 5 + 7 + 11 + 13
+This is the longest sum of consecutive primes that adds to a prime below one-hundred.
+
+The longest sum of consecutive primes below one-thousand that adds to a prime, contains 21 terms, and is equal to 953.
+
+Which prime, below one-million, can be written as the sum of the most consecutive primes?
 %}
+MAXPRIME = 1e6;
 
-sum = 0;
-for i = 1:999
-  if(mod(i,3) == 0 || mod(i,5) == 0)
-    sum += i;
-  end
-end
+primes = (1:MAXPRIME)(find(isprime(1:MAXPRIME)));
+primes_cumsum = [0, cumsum(primes)];
 
-disp(sum) # 233,168
+primeslen = length(primes);
+found = false;
+which_prime = 0;
+which_len = primeslen;
+
+while !found
+  for i = 1:(primeslen - which_len + 1)
+    diff = primes_cumsum(i + which_len) - primes_cumsum(i);
+    if diff > MAXPRIME
+      break;
+    endif
+    if ismember(diff, primes)
+      found = true;
+      which_prime = diff;
+      break;
+    endif
+  endfor
+  
+  if found
+    break;
+  endif
+  
+  which_len -= 1;
+  if which_len <= 0
+    break;
+  endif
+endwhile
+
+disp(which_prime)  # 997,651
