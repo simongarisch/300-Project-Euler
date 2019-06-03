@@ -8,13 +8,15 @@ The longest sum of consecutive primes below one-thousand that adds to a prime, c
 
 Which prime, below one-million, can be written as the sum of the most consecutive primes?
 */
+import java.util.*;
+
 
 public class JavaEx50{
 
     static long MAXPRIME = (long)1e6;
 
     public static void main(String[] args) {
-        System.out.println(whichPrime());  //
+        System.out.println(whichPrime());  // 997,651
     }
 
 
@@ -23,27 +25,27 @@ public class JavaEx50{
       // can be written as the sum of the most consecutive primes?
       List<Long> primes = collectPrimes(MAXPRIME);
       List<Long> cumsum = new ArrayList<Long>();
-      cumsum.add(0);
 
       long total = 0;
+      cumsum.add(total);
       for(int i=0; i<primes.size(); i++){
-        total += prime;
+        total += primes.get(i);
         cumsum.add(total);
       }
 
-      bool found = false;
-      long primesLen = primes.Count;
+      boolean found = false;
+      long primesLen = primes.size();
       long whichPrime = 0;
       long whichLen = primesLen;
       long diff = 0;
 
       while(!found){
         for(int i=0; i < primesLen - whichLen + 1; i++){
-          diff = cumsum[i+(int)whichLen] - cumsum[i];
+          diff = cumsum.get(i+(int)whichLen) - cumsum.get(i);
           if(diff > MAXPRIME){
             break;
           }
-          if(primes.Contains(diff)){
+          if(primes.contains(diff)){
             found = true;
             whichPrime = diff;
             break;
@@ -63,7 +65,7 @@ public class JavaEx50{
 
     static List<Long> collectPrimes(long maxprime){
       List<Long> primes = new ArrayList<Long>();
-      for(var i=1; i<maxprime; i++){
+      for(long i=1; i<maxprime; i++){
         if(isprime(i)){
           primes.add(i);
         }
