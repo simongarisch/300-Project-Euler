@@ -14,21 +14,29 @@ Find the smallest prime which, by replacing part of the number
 (not necessarily adjacent digits) with the same digit,
 is part of an eight prime value family.
 '''
+import itertools
 import sympy
 
-START = 10
-STOP = int(1e2)
+START = int(56e3)
+STOP = int(1e6)
 DIGITS = "0123456789"
-TARGET_PRIMES = 6
+DIGITS_EX0 = "123456789"
+TARGET_PRIMES = 7
 
 
 primes = list(sympy.primerange(START, STOP))
+
 
 def primes_in_family(family="*3"):
     global primes, DIGITS
     counter = 0
     first = None
-    for digit in DIGITS:
+    if family[0] == "*":
+        digits = DIGITS_EX0
+    else:
+        digits = DIGITS
+
+    for digit in digits:
         n = int(family.replace("*", digit))
         if n in primes:
             if counter == 0:
@@ -38,26 +46,53 @@ def primes_in_family(family="*3"):
 #print(primes_in_family())  # (6, 13)
 
 
-start = START
-checked = []  # all the numbers we have checked
+replacements_dict = {}
+def replace_index(n):
+    # get the indices of digits to replace
+    # only look to replace 1-2 digits at this stage
+    global replacements_dict
+    nlen = len(str(n))
+    replacements = replacements_dict.get(nlen)
+    if replacements is not None:
+        return replacements
+
+    rep1 = list(itertools.combinations(range(nlen), 1))
+    rep2 = []
+    if nlen > 2:
+        rep2 = list(itertools.combinations(range(nlen), 2))
+    rep1.extend(rep2)
+
+    replacements = rep1[:]
+    replacements_dict[nlen] = replacements
+    return replacements
+#print(replace_index(222))  # [(0,), (1,), (2,), (0, 1), (0, 2), (1, 2)]
+
+
+num_primes = len(primes)
+primes_index = 0  # start checking from the first prime
+checked = []      # all the numbers we have checked
 found = False
 
-while not found:
-    numstr = str(start)
-    for digit in numstr:
-        # we need to replace one or more digits with an *
-        family = numstr.replace(digit, "*")
+while not found and primes_index < num_primes:
+    numstr = str(primes[primes_index])
+    replacements = replace_index(numstr)
+    for replacement in replacements:
+        family = [i for i in numstr]
+        for index in replacement:
+            family[index] = "*"
+        family = "".join(family)
         if family not in checked:
             checked.append(family)
             counter, first = primes_in_family(family)
             if counter == TARGET_PRIMES:
+                print(family)
                 found = True
                 break
 
     if found:
         break
-    start += 1
-    if start >= STOP:
-        break
+    else:
+        first = 0
+    primes_index += 1
 
 print(first)
