@@ -14,6 +14,53 @@ Find the smallest prime which, by replacing part of the number
 (not necessarily adjacent digits) with the same digit,
 is part of an eight prime value family.
 '''
+
+import itertools
+import sympy
+
+START = 1
+STOP = int(1e3)
+TARGET_PRIMES = 6
+
+
+primes = list(sympy.primerange(START, STOP))
+strprimes = [str(prime) for prime in primes]
+
+# get the indices we need to replace with * in our search
+replacements_dict = {}
+for n in range(2, len(str(STOP))):
+    combs = []
+    for i in range(1, min(n, 3)):
+        combs.extend(list(itertools.combinations(range(n), i)))
+    replacements_dict[n] = combs
+#print(replacements_dict[2])  # [(0,), (1,)]
+#print(replacements_dict[3])  # [(0,), (1,), (2,), (0, 1), (0, 2), (1, 2)]
+
+# start with two digits and work our way up
+found = False
+ndigits = 1
+while not found:
+    ndigits += 1
+    strprimes_filtered = []
+    for strprime in strprimes:
+        if len(strprime) <= ndigits:
+            if len(strprime) == ndigits:
+                strprimes_filtered.append(strprime)
+        else:
+            break
+
+    replacements = replacements_dict[ndigits]
+    filtered_copy = strprimes_filtered[:]
+    for replacement in replacements:
+        for index, prime in enumerate(filtered_copy):
+            prime_list = list(prime)
+            for index in replacement:
+                prime_list[index] = "*"
+            filtered_copy[index] = "".join(prime_list)
+            print(filtered_copy[index])
+    found = True
+
+'''
 import itertools
 import sympy
 
@@ -96,3 +143,4 @@ while not found and primes_index < num_primes:
     primes_index += 1
 
 print(first)
+'''
