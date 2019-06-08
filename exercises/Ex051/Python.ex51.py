@@ -37,7 +37,6 @@ for n in range(2, len(str(STOP))):
     replacements_dict[n] = combs
 #print(replacements_dict[2])  # [(0,), (1,)]
 #print(replacements_dict[3])  # [(0,), (1,), (2,), (0, 1), (0, 2), (1, 2)]
-print(replacements_dict)
 
 # start with two digits and work our way up
 found = False
@@ -64,17 +63,24 @@ while not found:
     # get a dictionary with the number of times a star (such as '*3') occurs
     counter = Counter(stars)
     counter = {k:v for k,v in counter.iteritems() if v == TARGET_PRIMES}
+    print(counter)
     if len(counter) != 0:  # we have matches for the target primes
+        smallest_prime = STOP
+        section = []
         numbers = []
         for key, value in counter.iteritems():
             for digit in DIGITS:
                 value_rep = int(key.replace("*", digit))
                 if len(str(value_rep)) == ndigits:
                     if value_rep in primes:
-                        numbers.append(value_rep)
-        print(numbers)
-        smallest_prime = min(numbers)
-        found = True
+                        section.append(value_rep)
+            if len(section) == TARGET_PRIMES:
+                numbers.append(section)
+                smallest_prime = min(smallest_prime, min(section))
+
+        if len(numbers) > 0:
+            print(numbers)
+            found = True
 
 print(smallest_prime)  #
 '''
