@@ -23,7 +23,7 @@ import sympy
 
 START = 1
 STOP = int(1e6)
-TARGET_PRIMES = 7
+TARGET_PRIMES = 8
 DIGITS = "0123456789"
 
 
@@ -102,7 +102,7 @@ ndigits = 1
 result = None
 while result is None:
     ndigits += 1
-    result = ndigit_family(primes_list, ndigits, 8)
+    result = ndigit_family(primes_list, ndigits, TARGET_PRIMES)
 
 print(result)  # 121,313
 ```
