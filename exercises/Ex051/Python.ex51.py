@@ -16,15 +16,17 @@ is part of an eight prime value family.
 '''
 
 import itertools
+from collections import Counter
 import sympy
 
 START = 1
-STOP = int(1e3)
-TARGET_PRIMES = 6
-
+STOP = int(1e6)
+TARGET_PRIMES = 7
+DIGITS = "0123456789"
 
 primes = list(sympy.primerange(START, STOP))
 strprimes = [str(prime) for prime in primes]
+smallest_prime = 0
 
 # get the indices we need to replace with * in our search
 replacements_dict = {}
@@ -35,6 +37,7 @@ for n in range(2, len(str(STOP))):
     replacements_dict[n] = combs
 #print(replacements_dict[2])  # [(0,), (1,)]
 #print(replacements_dict[3])  # [(0,), (1,), (2,), (0, 1), (0, 2), (1, 2)]
+print(replacements_dict)
 
 # start with two digits and work our way up
 found = False
@@ -43,23 +46,37 @@ while not found:
     ndigits += 1
     strprimes_filtered = []
     for strprime in strprimes:
-        if len(strprime) <= ndigits:
-            if len(strprime) == ndigits:
-                strprimes_filtered.append(strprime)
-        else:
+        strlen = len(strprime)
+        if strlen == ndigits:
+            strprimes_filtered.append(strprime)
+        if strlen > ndigits:
             break
 
     replacements = replacements_dict[ndigits]
-    filtered_copy = strprimes_filtered[:]
-    for replacement in replacements:
-        for index, prime in enumerate(filtered_copy):
+    stars = []
+    for index, prime in enumerate(strprimes_filtered):
+        for replacement in replacements:
             prime_list = list(prime)
             for index in replacement:
                 prime_list[index] = "*"
-            filtered_copy[index] = "".join(prime_list)
-            print(filtered_copy[index])
-    found = True
+            stars.append("".join(prime_list))
 
+    # get a dictionary with the number of times a star (such as '*3') occurs
+    counter = Counter(stars)
+    counter = {k:v for k,v in counter.iteritems() if v == TARGET_PRIMES}
+    if len(counter) != 0:  # we have matches for the target primes
+        numbers = []
+        for key, value in counter.iteritems():
+            for digit in DIGITS:
+                value_rep = int(key.replace("*", digit))
+                if len(str(value_rep)) == ndigits:
+                    if value_rep in primes:
+                        numbers.append(value_rep)
+        print(numbers)
+        smallest_prime = min(numbers)
+        found = True
+
+print(smallest_prime)  #
 '''
 import itertools
 import sympy
