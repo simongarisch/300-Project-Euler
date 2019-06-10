@@ -13,6 +13,7 @@
 # Find the smallest prime which, by replacing part of the number
 # (not necessarily adjacent digits) with the same digit,
 # is part of an eight prime value family.
+library("stringi")
 library("arrangements")
 
 START = 1
@@ -78,4 +79,26 @@ filter_ndigit <- function(primes, n){
 
   replacements = collect_digit_replacements(n)
   stars <- c()
+  for(index in 1:length(primes_strings)){
+    prime <- primes_strings[index]
+    for(j in length(replacements)){
+      mat <- replacements[j][[1]]
+      pvec <- base::strsplit(prime, "")[[1]]
+      rows <- dim(mat)[1]
+      for(r in 1:rows){
+        mrow = mat[r,]
+        for(c in 1:length(mrow)){
+          pvec[mrow[c]] <- "*"
+        }
+        stars <- c(stars, stringi::stri_paste(pvec, collapse=""))
+      }
+    }
+  }
+  return(c(primes_filtered, stars))
 }
+primes = collect_primes(0, 1e2)
+filtered = filter_ndigit(primes, 2)
+primes_filtered = filtered[1]
+stars = filtered[2]
+print(primes_filtered)
+print(stars)
