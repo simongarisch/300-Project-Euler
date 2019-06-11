@@ -81,24 +81,36 @@ filter_ndigit <- function(primes, n){
   stars <- c()
   for(index in 1:length(primes_strings)){
     prime <- primes_strings[index]
-    for(j in length(replacements)){
+    for(j in 1:length(replacements)){
       mat <- replacements[j][[1]]
       pvec <- base::strsplit(prime, "")[[1]]
       rows <- dim(mat)[1]
       for(r in 1:rows){
         mrow = mat[r,]
+        nvec <- pvec
         for(c in 1:length(mrow)){
-          pvec[mrow[c]] <- "*"
+          nvec[mrow[c]] <- "*"
         }
-        stars <- c(stars, stringi::stri_paste(pvec, collapse=""))
+        nstr <- stringi::stri_paste(nvec, collapse="")
+        stars <- c(stars, nstr)
       }
     }
   }
-  return(c(primes_filtered, stars))
+  return(list(primes_filtered, stars))
 }
-primes = collect_primes(0, 1e2)
-filtered = filter_ndigit(primes, 2)
-primes_filtered = filtered[1]
-stars = filtered[2]
-print(primes_filtered)
-print(stars)
+# primes = collect_primes(0, 1e2)
+# filtered = filter_ndigit(primes, 2)
+# print(filtered)
+
+
+ndigit_family <- function(primes, n, target_primes){
+  # check for unique pattern groups with n or more digits
+  filtered <- filter_ndigit(primes, n)
+  primes_filtered <- filtered[[1]]
+  stars <- filtered[[2]]
+
+  tbl <- table(stars) >= target_primes
+  print(tbl)
+
+}
+print(ndigit_family(collect_primes(0, 1e3), 2, 6))
