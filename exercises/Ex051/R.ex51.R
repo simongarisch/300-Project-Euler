@@ -146,17 +146,17 @@ ndigit_family <- function(primes, n, target_primes){
     return(NULL)
   }
 }
-print(ndigit_family(collect_primes(0, 1e3), 2, 6))  # 13
-print(ndigit_family(collect_primes(0, 1e6), 5, 7))  # 56003
+#print(ndigit_family(collect_primes(0, 1e3), 2, 6))  # 13
+#print(ndigit_family(collect_primes(0, 1e6), 5, 7))  # 56003
 
 
 primes = collect_primes(START, STOP)
 
 ndigits <- 1
 result <- NULL
-while !is.null(result){
+while(!is.null(result)){
   ndigits <- ndigits + 1
   result <- ndigit_family(primes_list, ndigits, TARGET_PRIMES)
 }
 
-print(result)  # 
+print(result)  #
