@@ -14,6 +14,8 @@
 # (not necessarily adjacent digits) with the same digit,
 # is part of an eight prime value family.
 library("stringi")
+library("stringr")
+library("fastmatch")  # for a faster lookup than %in% (use %fin% instead)
 library("arrangements")
 
 START = 1
@@ -110,7 +112,51 @@ ndigit_family <- function(primes, n, target_primes){
   stars <- filtered[[2]]
 
   tbl <- table(stars) >= target_primes
-  print(tbl)
+  df <- data.frame(tbl)
+  colnames(df) <- c("meets_target")
+  df <- subset(df, meets_target == TRUE)
+  search_strings <- rownames(df)  # e.g. [1] "**" "*3"
+  min_all <- c()  # the minimum prime from all groups
 
+  for(string_index in 1:length(search_strings)){
+    search_string <- search_strings[string_index]
+    count_primes <- 0
+    primes <- c()
+    digits <- base::strsplit(DIGITS, "")[[1]]
+
+    for (digit in digits){
+      value <- stringr::str_replace_all(search_string, "[*]", digit)
+      value <- as.integer(value)
+      if(nchar(as.character(value)) == n){
+        if(value %fin% primes_filtered){
+          count_primes <- count_primes + 1
+          primes <- c(primes, value)
+        }
+      }
+    }
+
+    if(count_primes == target_primes){
+      min_all <- c(min_all, min(primes))
+    }
+  }
+
+  if(length(min_all) > 0){
+    return(min(min_all))
+  }else{
+    return(NULL)
+  }
 }
-print(ndigit_family(collect_primes(0, 1e3), 2, 6))
+print(ndigit_family(collect_primes(0, 1e3), 2, 6))  # 13
+print(ndigit_family(collect_primes(0, 1e6), 5, 7))  # 56003
+
+
+primes = collect_primes(START, STOP)
+
+ndigits <- 1
+result <- NULL
+while !is.null(result){
+  ndigits <- ndigits + 1
+  result <- ndigit_family(primes_list, ndigits, TARGET_PRIMES)
+}
+
+print(result)  # 
