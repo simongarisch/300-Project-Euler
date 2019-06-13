@@ -19,7 +19,7 @@ library("fastmatch")  # for a faster lookup than %in% (use %fin% instead)
 library("arrangements")
 
 START = 1
-STOP = 1e6
+STOP = 2e5
 TARGET_PRIMES = 8
 DIGITS = "0123456789"
 
@@ -146,17 +146,17 @@ ndigit_family <- function(primes, n, target_primes){
     return(NULL)
   }
 }
-#print(ndigit_family(collect_primes(0, 1e3), 2, 6))  # 13
-#print(ndigit_family(collect_primes(0, 1e6), 5, 7))  # 56003
+print(ndigit_family(collect_primes(0, 1e3), 2, 6))  # 13
+print(ndigit_family(collect_primes(0, 1e5), 5, 7))  # 56003
 
 
 primes = collect_primes(START, STOP)
 
-ndigits <- 1
+ndigits <- 5
 result <- NULL
-while(!is.null(result)){
+while(is.null(result)){
   ndigits <- ndigits + 1
-  result <- ndigit_family(primes_list, ndigits, TARGET_PRIMES)
+  result <- ndigit_family(primes, ndigits, TARGET_PRIMES)
 }
 
 print(result)  #
