@@ -146,17 +146,27 @@ ndigit_family <- function(primes, n, target_primes){
     return(NULL)
   }
 }
-print(ndigit_family(collect_primes(0, 1e3), 2, 6))  # 13
-print(ndigit_family(collect_primes(0, 1e5), 5, 7))  # 56003
+#print(ndigit_family(collect_primes(0, 1e3), 2, 6))  # 13
+#print(ndigit_family(collect_primes(0, 1e5), 5, 7))  # 56003
+
+# for code profiling...
+primes <- collect_primes(0, 1e5)
+library(profvis)
+profvis({
+  f <- function() {
+    ndigit_family(primes, 5, 7)
+  }
+  f()
+})
 
 
-primes = collect_primes(START, STOP)
+#primes = collect_primes(START, STOP)
 
-ndigits <- 5
-result <- NULL
-while(is.null(result)){
-  ndigits <- ndigits + 1
-  result <- ndigit_family(primes, ndigits, TARGET_PRIMES)
-}
-
-print(result)  #
+# ndigits <- 5
+# result <- NULL
+# while(is.null(result)){
+#   ndigits <- ndigits + 1
+#   result <- ndigit_family(primes, ndigits, TARGET_PRIMES)
+# }
+#
+# print(result)  #
