@@ -17,6 +17,8 @@ library("stringi")
 library("stringr")
 library("fastmatch")  # for a faster lookup than %in% (use %fin% instead)
 library("arrangements")
+library("profvis")
+
 
 START = 1
 STOP = 2e5
@@ -94,7 +96,7 @@ filter_ndigit <- function(primes, n){
           nvec[mrow[c]] <- "*"
         }
         nstr <- stringi::stri_paste(nvec, collapse="")
-        stars <- c(stars, nstr)
+        stars <- append(stars, nstr)
       }
     }
   }
@@ -151,7 +153,6 @@ ndigit_family <- function(primes, n, target_primes){
 
 # for code profiling...
 primes <- collect_primes(0, 1e5)
-library(profvis)
 profvis({
   f <- function() {
     ndigit_family(primes, 5, 7)
