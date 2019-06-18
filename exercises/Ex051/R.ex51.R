@@ -59,7 +59,7 @@ collect_digit_replacements <- function(ndigits){
   # get combinations of digits we'll need to replace
   combs <- list()
   counter <- 0
-  indices <- 1:ndigits
+  indices <- 1:(ndigits-1)
   for(i in indices){
     counter <- counter + 1
     a <- arrangements::combinations(indices, i, replace=FALSE)
@@ -152,22 +152,22 @@ ndigit_family <- function(primes, n, target_primes){
 #print(ndigit_family(collect_primes(0, 1e5), 5, 7))  # 56003
 
 # for code profiling...
-primes <- collect_primes(0, 1e5)
-profvis({
-  f <- function() {
-    ndigit_family(primes, 5, 7)
-  }
-  f()
-})
+#primes <- collect_primes(0, 1e5)
+#profvis({
+#  f <- function() {
+#    ndigit_family(primes, 5, 7)
+#  }
+#  f()
+#})
 
 
-#primes = collect_primes(START, STOP)
+primes = collect_primes(START, STOP)
 
-# ndigits <- 5
-# result <- NULL
-# while(is.null(result)){
-#   ndigits <- ndigits + 1
-#   result <- ndigit_family(primes, ndigits, TARGET_PRIMES)
-# }
-#
-# print(result)  #
+ndigits <- 5
+result <- NULL
+while(is.null(result)){
+  ndigits <- ndigits + 1
+  result <- ndigit_family(primes, ndigits, TARGET_PRIMES)
+}
+
+print(result)  #
