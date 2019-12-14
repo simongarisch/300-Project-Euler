@@ -32,8 +32,12 @@ func main() {
 	//fmt.Println(len(numstr)) // 1038
 	//fmt.Println(numstr[0:4]) // '7316'
 
-	numstr = strings.Replace(numstr, "\n", "", -1)
-	numstr = strings.Replace(numstr, "\t", "", -1)
+	toReplace := []string{"\n", "\t"}
+	for _, str := range toReplace {
+		numstr = strings.Replace(numstr, str, "", -1)
+	}
+	//numstr = strings.Replace(numstr, "\n", "", -1)
+	//numstr = strings.Replace(numstr, "\t", "", -1)
 
 	var greatest = 0
 	for i := 0; i < (len(numstr) - 12); i++ {
