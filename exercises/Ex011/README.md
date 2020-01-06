@@ -68,7 +68,7 @@ def largest_product(num, sublist):
     else:
         return num
 
-left2right = 0  # get the maximum prodict from left to right
+left2right = 0  # get the maximum product from left to right
 for row in grid:
     for icol in range(cols-3):
         sublist = row[icol:icol+4]
