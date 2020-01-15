@@ -24,7 +24,7 @@ and significant figure we're working with.
 If we divide my a int (i) then the maximum number of potential remainders we can have is (i-1)
 For example, if we have x / 12, possible remainders (if there are any) include
 1, 2, 3, ... 11.
-If we find the same remainder again them the pattern will repeat.
+If we find the same remainder again then the pattern will repeat.
 
 ```python
 longest_pattern = 0   # the longest recurring cycle
