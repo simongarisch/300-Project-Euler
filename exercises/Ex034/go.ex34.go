@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"strconv"
 )
 
@@ -9,17 +10,6 @@ func factorial(n int) int {
 		return 1
 	}
 	return n * factorial(n-1)
-}
-
-func pow(a, b int) int {
-	if b == 0 {
-		return 1
-	}
-	result := a
-	for i := 2; i <= b; i++ {
-		result *= a
-	}
-	return result
 }
 
 // returns true if x is equal to the sum its digit factorials,
@@ -42,6 +32,44 @@ func isCurious(x int) (bool, error) {
 	return false, nil
 }
 
+func pow(a, b int) int {
+	result := 1
+	for i := 1; i <= b; i++ {
+		result *= a
+	}
+	return result
+}
+
+func getMaxDigits() int {
+	digit := 1
+	for {
+		if factorial(9)*digit <= pow(digit-1, 10) {
+			break
+		}
+		digit++
+	}
+	return digit
+}
+
 func main() {
 	//fmt.Println(isCurious(145))  // true <nil>
+	digits := getMaxDigits()
+	var curiousNumbers []int
+
+	for x := 3; x < pow(10, digits); x++ {
+		curious, err := isCurious(x)
+		if err != nil {
+			panic(err)
+		}
+		if curious {
+			curiousNumbers = append(curiousNumbers, x)
+		}
+	}
+
+	sumCurious := 0
+	for _, number := range curiousNumbers {
+		sumCurious += number
+	}
+
+	fmt.Println(sumCurious) // 40,730
 }
