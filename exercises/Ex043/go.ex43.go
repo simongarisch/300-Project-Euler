@@ -2,12 +2,13 @@ package main
 
 import (
 	"fmt"
+	"sort"
 	"strconv"
 
 	prmt "github.com/gitchander/permutation"
 )
 
-const digits = "123456789"
+const digits = "0123456789"
 
 func intFromIndices(s string, i1, i2, i3, div int) (bool, error) {
 	concat := string(s[i1]) + string(s[i2]) + string(s[i3])
@@ -81,7 +82,6 @@ func sliceToNumber(slice []string) (int, error) {
 func main() {
 	//fmt.Println(hasProperty(1406357289)) // true <nil>
 	sumpan := 0
-	//numbers := len(digits)
 
 	var chars []string
 	for _, num := range digits {
@@ -97,8 +97,8 @@ func main() {
 		}
 		perms = append(perms, num)
 	}
-	//sort.Ints(perms)
-	//fmt.Println(perms)
+	sort.Ints(perms)
+
 	for _, perm := range perms {
 		hasprop, err := hasProperty(perm)
 		if err != nil {
@@ -109,5 +109,5 @@ func main() {
 		}
 	}
 
-	fmt.Println(sumpan) //
+	fmt.Println(sumpan) // 16,695,334,890
 }
