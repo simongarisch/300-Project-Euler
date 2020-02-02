@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"math"
+	"sort"
 )
 
 const maxn = 1e4
@@ -23,16 +24,22 @@ func isPrime(x int) bool {
 }
 
 func generateOddCompos(n int) []int {
-	var compos []int
+	compos := make(map[int]int)
 	for i := 2; i <= n; i++ {
 		for j := 2; j <= n; j++ {
 			mult := i * j
 			if mult%2 == 1 {
-				compos = append(compos, mult)
+				compos[mult] = mult
 			}
 		}
 	}
-	return compos
+
+	var unique []int
+	for _, compo := range compos {
+		unique = append(unique, compo)
+	}
+	sort.Ints(unique)
+	return unique
 }
 
 func generatePrimes(n int) []int {
@@ -66,13 +73,6 @@ func findSmallest(n int) int {
 		}
 	}
 
-	for i := 0; i < 10; i++ {
-		fmt.Println(compos[i], primes[i], squares[i])
-	}
-
-	x, ok := searchmap[5777]
-	fmt.Println(x, ok)
-
 	smallest := 0
 	for _, compo := range compos {
 		_, ok := searchmap[compo]
@@ -88,5 +88,5 @@ func findSmallest(n int) int {
 
 func main() {
 	smallest := findSmallest(maxn)
-	fmt.Println(smallest) //
+	fmt.Println(smallest) // 5,777
 }
