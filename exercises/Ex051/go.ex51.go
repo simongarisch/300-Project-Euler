@@ -1,8 +1,11 @@
 package main
 
 import (
+	"fmt"
 	"math"
+	"sort"
 	"strconv"
+	"strings"
 
 	gocomb "github.com/mxschmitt/golang-combinations"
 )
@@ -60,9 +63,145 @@ func collectDigitReplacements(ndigits int) [][]int {
 	return filtered
 }
 
+func str2slice(s string) []string {
+	var result []string
+	for _, char := range s {
+		charstr := string(char)
+		result = append(result, charstr)
+	}
+	return result
+}
+
+func slice2str(slice []string) string {
+	s := ""
+	for _, char := range slice {
+		s += string(char)
+	}
+	return s
+}
+
+// return only numbers with n digits
+// also return numbers with combinations of * inserted
+func filterNdigit(primesSlice []int, n int) ([]int, []string) {
+	var primesFiltered []int
+	var primesStrings []string
+	for _, prime := range primesSlice {
+		primestr := strconv.Itoa(prime)
+		if len(primestr) == n {
+			primesFiltered = append(primesFiltered, prime)
+			primesStrings = append(primesStrings, primestr)
+		}
+	}
+
+	replacements := collectDigitReplacements(n)
+	var stars []string
+	for _, prime := range primesStrings {
+		for _, replacement := range replacements {
+			pslice := str2slice(prime)
+			for _, index := range replacement {
+				pslice[index] = "*"
+			}
+			stars = append(stars, slice2str(pslice))
+		}
+	}
+
+	return primesFiltered, stars
+}
+
+func isin(elem int, slice []int) bool {
+	for _, value := range slice {
+		if value == elem {
+			return true
+		}
+	}
+	return false
+}
+
+func countInstances(slice []string, s string) int {
+	count := 0
+	for _, value := range slice {
+		if value == s {
+			count++
+		}
+	}
+	return count
+}
+
+func makeCounterMap(slice []string) map[string]int {
+	result := make(map[string]int)
+	for _, value := range slice {
+		_, ok := result[value]
+		if !ok {
+			result[value] = countInstances(slice, value)
+		}
+	}
+	return result
+}
+
+func minIntSlice(slice []int) int {
+	sort.Ints(slice)
+	return slice[0]
+}
+
+// check for unique pattern groups with n or more digits
+func ndigitFamily(primesSlice []int, n int, targetPrimes int) int {
+	primesFiltered, stars := filterNdigit(primesSlice, n)
+	counterMap := makeCounterMap(stars)
+	var minAll []int // the minimum prime from all groups
+
+	for key := range counterMap {
+		value := counterMap[key]
+		if value < targetPrimes {
+			continue
+		}
+
+		countPrimes := 0
+		var primes []int
+		for _, digit := range digits {
+			digitstr := string(digit)
+			valuestr := strings.ReplaceAll(key, "*", digitstr)
+			valueint, _ := strconv.Atoi(valuestr)
+			if len(valuestr) == n {
+				if isin(valueint, primesFiltered) {
+					countPrimes++
+					primes = append(primes, valueint)
+				}
+			}
+		}
+
+		if countPrimes == targetPrimes {
+			minAll = append(minAll, minIntSlice(primes))
+		}
+	}
+
+	if len(minAll) == 0 {
+		return -1
+	}
+	return minIntSlice(minAll)
+}
+
 func main() {
 	//fmt.Println(collectPrimes(0, 20)) // [2 3 5 7 11 13 17 19]
 	//fmt.Println(collectDigitReplacements(2)) // [[0] [1]]
 	//fmt.Println(collectDigitReplacements(3)) // [[0] [1] [0 1] [2] [0 2] [1 2]]
 
+	//primesSlice := collectPrimes(0, 1e2)
+	//primesFiltered, stars := filterNdigit(primesSlice, 2)
+	//fmt.Println(primesFiltered) // [11 13 17 19 23 29 31 37 41 ...
+	//fmt.Println(stars)          // [*1 1* *3 1* *7 1* *9 1* ...
+
+	//fmt.Println(makeCounterMap([]string{"1", "2", "3", "2", "3"})) // map[1:1 2:2 3:2]
+
+	primesSlice := collectPrimes(start, stop)
+	ndigits := 1
+	result := -1
+	for {
+		if result != -1 {
+			break
+		}
+		ndigits++
+		result = ndigitFamily(primesSlice, ndigits, targetPrimes)
+	}
+
+	fmt.Println(result) //
 }
