@@ -1,3 +1,14 @@
+/*
+https://medium.com/code-adventures/profiling-golang-851db2d9ae24
+go get github.com/pkg/profile
+
+go build go.ex51.go
+./go.ex51.exe
+This will give you the location of cpu.pprof which we can turn to pdf...
+
+go tool pprof --pdf ./go.ex51.exe path\to\cpu.pprof > cpuprofile.pdf
+*/
+
 package main
 
 import (
@@ -117,23 +128,20 @@ func isin(elem int, slice []int) bool {
 	return false
 }
 
-func countInstances(slice []string, s string) int {
-	count := 0
-	for _, value := range slice {
-		if value == s {
-			count++
-		}
-	}
-	return count
-}
-
 func makeCounterMap(slice []string) map[string]int {
 	result := make(map[string]int)
+	sort.Strings(slice)
+
+	prevValue := ""
+	count := 0
 	for _, value := range slice {
-		_, ok := result[value]
-		if !ok {
-			result[value] = countInstances(slice, value)
+		if value != prevValue {
+			count = 1
+		} else {
+			count++
 		}
+		result[value] = count
+		prevValue = value
 	}
 	return result
 }
@@ -191,6 +199,11 @@ func main() {
 	//fmt.Println(stars)          // [*1 1* *3 1* *7 1* *9 1* ...
 
 	//fmt.Println(makeCounterMap([]string{"1", "2", "3", "2", "3"})) // map[1:1 2:2 3:2]
+	//fmt.Println(ndigitFamily(collectPrimes(0, 1e3), 2, 6)) // 13
+	//fmt.Println(ndigitFamily(collectPrimes(0, 1e6), 5, 7)) // 56003
+
+	//defer profile.Start().Stop()
+	//fmt.Println(ndigitFamily(collectPrimes(0, 1e6), 5, 7))
 
 	primesSlice := collectPrimes(start, stop)
 	ndigits := 1
@@ -203,5 +216,5 @@ func main() {
 		result = ndigitFamily(primesSlice, ndigits, targetPrimes)
 	}
 
-	fmt.Println(result) //
+	fmt.Println(result) // 121,313
 }
